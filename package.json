@@ -1,0 +1,35 @@
+{
+  "name": "eyewitness",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
+  "main": "app/app.js",
+  "scripts": {
+    "deploy-production": "node ./scripts/deploy/deploy --version=minor --environment=production",
+    "deploy-staging": "node ./scripts/deploy/deploy --version=patch --environment=staging",
+    "start-development": "npm install && ./node_modules/.bin/nodemon ./app/app.js",
+    "start-production": "node ./app/app.js",
+    "test": "echo \"Placeholder tests.\""
+  },
+  "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
+  "dependencies": {
+    "@atchai/hippocamp": "^0.0.16",
+    "config-ninja": "^1.0.2",
+    "handlebars": "^4.0.10",
+    "moment": "^2.18.1"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-recombix": "latest",
+    "eslint-plugin-filenames": "latest",
+    "eslint-plugin-json": "latest",
+    "eslint-plugin-node": "^4.2.1",
+    "eslint-plugin-promise": "latest",
+    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git",
+    "ngrok": "^2.2.9",
+    "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": ">=8"
+  }
+}
