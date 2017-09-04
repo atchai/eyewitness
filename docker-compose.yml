@@ -1,0 +1,53 @@
+version: '3'
+
+networks:
+
+  stack-network:
+    driver: bridge
+
+volumes:
+
+  mongodb-data:
+    driver: local
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    environment:
+      - NODE_ENV=development
+      - TZ=Europe/London
+      - PROVIDER_ID=thestar
+    volumes:
+      - ./app:/src/app
+      - ./package.json:/src/package.json
+      - ./package-lock.json:/src/package-lock.json
+    ports:
+      - "5000:5000"
+    networks:
+      - stack-network
+    command: npm run start-development
+    tty: true
+    restart: on-failure
+
+  mongodb:
+    image: mongo:3.4
+    networks:
+      - stack-network
+    command: mongod
+    volumes:
+      - mongodb-data:/data/db
+    restart: on-failure
+
+  mongoclient:
+    image: mongoclient/mongoclient:2.2.0
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://mongodb:27017/eyewitness
+    networks:
+      - stack-network
+    ports:
+      - "3000:3000"
+    restart: on-failure

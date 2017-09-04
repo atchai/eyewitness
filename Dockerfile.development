@@ -1,0 +1,40 @@
+# EYEWITNESS CHATBOT - DEVELOPMENT DOCKERFILE
+
+# Use the official node base image and allow upgrades to any new minor version on redeploy.
+FROM node:8
+MAINTAINER Atchai <enquiries@atchai.com>
+
+# Prepare the software inside the container.
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y \
+      vim \
+      ntp \
+    && rm -rf /var/lib/apt/lists/*
+#      ^^ Keep the image size down by removing the packages list.
+
+# Fix the time inside the container by starting the ntp service and setting the timezone.
+RUN ntpd -gq && service ntp start
+RUN echo Europe/London >/etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
+# Copy GitHub SSH keys.
+# COPY ./ssl/test_github_rsa /root/.ssh/test_github_rsa
+# COPY ./ssl/test_github_rsa.pub /root/.ssh/test_github_rsa.pub
+# RUN chmod 600 /root/.ssh/test_github_rsa
+
+# Setup SSH config.
+# RUN echo "Host *\n  IdentitiesOnly yes\n  StrictHostKeyChecking no\n  IdentityFile ~/.ssh/test_github_rsa" >> /root/.ssh/config
+
+# Ensure we run commands inside the correct directory.
+WORKDIR /src
+
+# Install our depedencies.
+COPY .npmrc /src/.npmrc
+COPY package.json /src/package.json
+COPY package-lock.json /src/package-lock.json
+RUN npm install
+
+# Add all our application files.
+COPY app /src/app
+
+# Run the application.
+CMD ["npm", "run", "start-development"]
