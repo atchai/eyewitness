@@ -1,0 +1,33 @@
+{
+	"loggers": {
+		"terminal": {
+			"logLevel": "debug",
+			"pretty": false
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://XXX"
+		}
+	},
+	"adapters": {
+		"facebook": {
+			"verifyToken": "XXX",
+			"accessToken": "XXX"
+		}
+	},
+	"baseUrl": null,
+	"greetingText": "[GREETING TEXT GOES HERE]",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://www.google.co.uk",
+		"sharing": true
+	}, {
+		"type": "basic",
+		"label": "Restart Bot"
+	}],
+	"messageVariables": {
+
+	}
+}

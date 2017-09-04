@@ -1,0 +1,8 @@
+{
+	"baseUrl": "the-star.co.ke",
+	"messageVariables": {
+		"provider": {
+			"name": "The Star"
+		}
+	}
+}

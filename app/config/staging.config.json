@@ -1,0 +1,20 @@
+{
+	"loggers": {
+		"terminal": {
+			"logLevel": "silly",
+			"pretty": false
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://XXX"
+		}
+	},
+	"adapters": {
+		"facebook": {
+			"verifyToken": "XXX",
+			"accessToken": "XXX"
+		}
+	},
+	"baseUrl": "https://staging-eyewitness.atchai.com"
+}

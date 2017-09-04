@@ -1,0 +1,25 @@
+{
+	"loggers": {
+		"terminal": {
+			"logLevel": "verbose",
+			"pretty": true
+		},
+		"filesystem": {
+			"logLevel": "silly",
+			"directory": "./logs",
+			"rotation": "hourly"
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://mongodb:27017/eyewitness"
+		}
+	},
+	"adapters": {
+		"facebook": {
+			"verifyToken": "XXX",
+			"accessToken": "XXX"
+		}
+	},
+	"baseUrl": "https://hippocamp.eu.ngrok.io"
+}

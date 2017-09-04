@@ -1,0 +1,8 @@
+{
+	"baseUrl": "sabc.co.za",
+	"messageVariables": {
+		"provider": {
+			"name": "SABC"
+		}
+	}
+}
