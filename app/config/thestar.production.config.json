@@ -2,7 +2,8 @@
 	"baseUrl": "the-star.co.ke",
 	"messageVariables": {
 		"provider": {
-			"name": "The Star"
+			"name": "The Star",
+			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml"
 		}
 	}
 }
