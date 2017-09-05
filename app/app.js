@@ -46,7 +46,14 @@ chatbot.configure(new DatabaseMongo(config.databases.mongo));
 
 // Scheduler.
 chatbot.configure(new SchedulerSimple({
-	executeEvery: `1 minute`,
+	executeEvery: `minute`,
+	tasks: [{
+		actions: [{
+			type: `execute-hook`,
+			hook: `feedIngester`,
+		}],
+		runEvery: `hour`,
+	}],
 }));
 
 // Adapters.
