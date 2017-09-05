@@ -1,12 +1,12 @@
 'use strict';
 
 /*
- * SCHEMA: Story
+ * SCHEMA: Article
  */
 
 module.exports = function (Schema, Property) {
 
-	return new Schema(`Story`, {
+	return new Schema(`Article`, {
 		feedId: new Property(`string`),
 		storyId: new Property(`string`),
 		storyUrl: new Property(`string`),
