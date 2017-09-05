@@ -14,9 +14,10 @@
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
   "dependencies": {
     "@atchai/hippocamp": "^0.0.16",
+    "cheerio": "^1.0.0-rc.2",
     "config-ninja": "^1.0.2",
-    "handlebars": "^4.0.10",
-    "moment": "^2.18.1"
+    "mongoose": "^4.11.10",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "eslint": "latest",
