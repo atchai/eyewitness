@@ -53,6 +53,12 @@ chatbot.configure(new SchedulerSimple({
 			hook: `feedIngester`,
 		}],
 		runEvery: `hour`,
+	}, {
+		actions: [{
+			type: `execute-hook`,
+			hook: `newsNotifications`,
+		}],
+		runEvery: `hour`,
 	}],
 }));
 
