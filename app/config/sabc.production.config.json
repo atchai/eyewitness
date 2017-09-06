@@ -3,7 +3,7 @@
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
-			"rssFeedUrl": null
+			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml"
 		}
 	}
 }
