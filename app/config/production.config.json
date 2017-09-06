@@ -29,5 +29,8 @@
 	}],
 	"messageVariables": {
 
+	},
+	"readServer": {
+		"port": 5000
 	}
 }
