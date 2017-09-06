@@ -1,0 +1,9 @@
+{
+	"baseUrl": "the-amity-gazette.com",
+	"messageVariables": {
+		"provider": {
+			"name": "The Amity Gazette",
+			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml"
+		}
+	}
+}
