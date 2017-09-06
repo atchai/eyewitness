@@ -1,4 +1,10 @@
 {
+	"adapters": {
+		"facebook": {
+			"verifyToken": "Ip9BhC027cenge0cXhQ61Dzh3AHmD467egFGXq3U",
+			"accessToken": "EAAWiWZCZBizhMBAMiCnTMVgoZBaclC7wjQcSY5Yr7hDHfogvSUAN4kNQ2phoD4gm4L13pxZAvuYv0QVRgZArjwRTkvXWSUrZB3bsWSl2gbnqQWfgxHHOdEUS4hqT9VDAA6RjYt3gfZASyodxuAlP7DQEJYZCXrwt1YNk2baYdbdJZCAZDZD"
+		}
+	},
 	"baseUrl": "the-amity-gazette.com",
 	"messageVariables": {
 		"provider": {
