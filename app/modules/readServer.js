@@ -12,7 +12,6 @@ const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.v
 const http = require(`http`);
 const mongoose = require(`mongoose`);
 const ArticleModel = require(`../models/article`);
-const ReadModel = require(`../models/read`);
 
 /*
  * Pulls the feed, article and user IDs from the URL.
@@ -54,14 +53,9 @@ async function handleRequests (req, res) {
 		return res.end(`Article not found.`);
 	}
 
-	// Mark the article as read.
-	const docRead = new ReadModel({
-		userId,
-		feedId,
-		articleId,
-	});
-
-	await docRead.save();
+	// Mark the article as read by the given user.
+	docArticle._readByUsers.push(userId);
+	await docArticle.save();
 
 	// Redirect the user to the article URL.
 	return res.writeHead(302, { 'Location': docArticle.articleUrl }).end();
