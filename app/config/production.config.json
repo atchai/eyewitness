@@ -12,8 +12,8 @@
 	},
 	"adapters": {
 		"facebook": {
-			"verifyToken": "XXX",
-			"accessToken": "XXX"
+			"verifyToken": null,
+			"accessToken": null
 		}
 	},
 	"baseUrl": null,
