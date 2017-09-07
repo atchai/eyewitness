@@ -16,7 +16,7 @@ const xml2js = require(`xml2js`);
  */
 async function downloadUrl (input) {
 
-	return await new new Promise((resolve, reject) => {
+	return await new Promise((resolve, reject) => {
 
 		const url = new URL(input);
 		const httpModule = (url.protocol === `https:` ? https : http);
