@@ -20,7 +20,7 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git",
+    "hippocamp-development": "git+ssh://git@github.com/atchai/hippocamp.git",
     "eslint": "latest",
     "eslint-config-recombix": "latest",
     "eslint-plugin-filenames": "latest",
