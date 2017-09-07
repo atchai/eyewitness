@@ -28,7 +28,15 @@
 		"label": "Restart Bot"
 	}],
 	"messageVariables": {
-
+		"provider": {
+			"name": "Unknown",
+			"rssFeedUrl": null,
+			"timezoneOffset": 0,
+			"notifications": {
+				"notBeforeHour": 8,
+				"notAfterHour": 20
+			}
+		}
 	},
 	"readServer": {
 		"port": 5000

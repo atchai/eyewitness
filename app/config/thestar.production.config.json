@@ -3,7 +3,8 @@
 	"messageVariables": {
 		"provider": {
 			"name": "The Star",
-			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml"
+			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml",
+			"timezoneOffset": 3
 		}
 	}
 }

@@ -3,7 +3,8 @@
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
-			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml"
+			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml",
+			"timezoneOffset": 2
 		}
 	}
 }

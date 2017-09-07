@@ -45,6 +45,14 @@ function filterUsersWithOutstandingNews (outstandingNewsUsers) {
  */
 module.exports = async function newsNotifications (action, variables, { database, sendMessage }) {
 
+	const notBeforeHour = variables.provider.notifications.notBeforeHour;
+	const notAfterHour = variables.provider.notifications.notAfterHour;
+	const now = moment.utc().add(variables.provider.timezoneOffset, `hours`);
+	const hours = now.hours();
+
+	// Skip if we're outside the allowed notification hours.
+	if (hours < notBeforeHour || hours > notAfterHour) { return; }
+
 	const recUsers = await loadAllUsers(database);
 	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadArticleForUser(database, recUser));
 	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
