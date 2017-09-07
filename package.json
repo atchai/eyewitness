@@ -20,15 +20,16 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git",
     "eslint": "latest",
     "eslint-config-recombix": "latest",
     "eslint-plugin-filenames": "latest",
     "eslint-plugin-json": "latest",
     "eslint-plugin-node": "^4.2.1",
     "eslint-plugin-promise": "latest",
-    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git",
     "ngrok": "^2.2.9",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "object-extender": "^2.0.3"
   },
   "engines": {
     "node": ">=8"
