@@ -49,7 +49,7 @@ module.exports = async function newsNotifications (action, variables, { database
 	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadArticleForUser(database, recUser));
 	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
 	const recFilteredUsers = filterUsersWithOutstandingNews(outstandingNewsUsers);
-
+	const articleChangesToMake = [];
 
 	// Send message to each user.
 	const sendMessagePromises = recFilteredUsers.map(item => {
@@ -75,10 +75,25 @@ module.exports = async function newsNotifications (action, variables, { database
 			},
 		};
 
+		// Remember the change we need to make to the article documents.
+		articleChangesToMake.push({
+			recArticle,
+			changes: {
+				$addToSet: { _receivedByUsers: recUser._id },
+			},
+		});
+
 		return sendMessage(item.recUser, message);
 
 	});
 
 	await Promise.all(sendMessagePromises);
+
+	// Update all the article documents.
+	const updateArticlePromises = articleChangesToMake.map(item =>
+		database.update(`Article`, item.recArticle, item.changes)
+	);
+
+	await Promise.all(updateArticlePromises);
 
 };
