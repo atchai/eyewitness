@@ -17,12 +17,12 @@ RUN ntpd -gq && service ntp start
 RUN echo Europe/London >/etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 # Copy GitHub SSH keys.
-# COPY ./ssl/test_github_rsa /root/.ssh/test_github_rsa
-# COPY ./ssl/test_github_rsa.pub /root/.ssh/test_github_rsa.pub
-# RUN chmod 600 /root/.ssh/test_github_rsa
+COPY ./ssl/id_eyewitness /root/.ssh/id_eyewitness
+COPY ./ssl/id_eyewitness.pub /root/.ssh/id_eyewitness.pub
+RUN chmod 600 /root/.ssh/id_eyewitness
 
 # Setup SSH config.
-# RUN echo "Host *\n  IdentitiesOnly yes\n  StrictHostKeyChecking no\n  IdentityFile ~/.ssh/test_github_rsa" >> /root/.ssh/config
+RUN echo "Host *\n  IdentitiesOnly yes\n  StrictHostKeyChecking no\n  IdentityFile ~/.ssh/id_eyewitness" >> /root/.ssh/config
 
 # Ensure we run commands inside the correct directory.
 WORKDIR /src
