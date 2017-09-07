@@ -25,7 +25,7 @@ const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 const chatbot = new Hippocamp({
 	packageJsonPath: `../package.json`,
 	baseUrl: config.baseUrl,
-	port: 5000,
+	port: config.hippocampServer.port,
 	enableUserProfile: false,
 	greetingText: config.greetingText,
 	menu: config.menu,

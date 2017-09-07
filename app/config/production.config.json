@@ -38,7 +38,10 @@
 			}
 		}
 	},
-	"readServer": {
+	"hippocampServer": {
 		"port": 5000
+	},
+	"readServer": {
+		"port": 6000
 	}
 }
