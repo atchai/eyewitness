@@ -4,6 +4,8 @@
  * HOOK: News Notifications
  */
 
+const moment = require(`moment`);
+
 /*
  * Returns an array of all the user documents.
  */
