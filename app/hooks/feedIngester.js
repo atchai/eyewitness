@@ -60,7 +60,7 @@ function calculateHashFromUrl (_input) {
  * Converts multiple RSS feed item to an Eyewitness article.
  */
 async function convertFeedToArticles (feedId, json) {
-	const promises = json.channel.item.map(item => convertFeedItemToArticle(feedId, item));
+	const promises = json.rss.channel[0].item.map(item => convertFeedItemToArticle(feedId, item));
 	return await Promise.all(promises);
 }
 
@@ -70,18 +70,18 @@ async function convertFeedToArticles (feedId, json) {
 async function convertFeedItemToArticle (feedId, item) {
 
 	// Grab the page as a virtual DOM.
-	const articlePageHtml = await downloadUrl(item.link);
+	const articlePageHtml = await downloadUrl(item.link[0]);
 	const $dom = cheerio.load(articlePageHtml);
 
 	// Pull out the rich preview values from the page.
 	const imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || null;
-	const title = $dom(`head > meta[property="og:title"]`).attr(`content`) || item.title || null;
-	const description = $dom(`head > meta[property="og:description"]`).attr(`content`) || item.description || null;
+	const title = $dom(`head > meta[property="og:title"]`).attr(`content`) || item.title[0] || null;
+	const description = $dom(`head > meta[property="og:description"]`).attr(`content`) || item.description[0] || null;
 
 	return Object({
 		feedId,
-		articleId: calculateHashFromUrl(item.link),
-		articleUrl: item.link,
+		articleId: calculateHashFromUrl(item.link[0]),
+		articleUrl: item.link[0],
 		imageUrl,
 		title,
 		description,
