@@ -21,5 +21,12 @@
 			"accessToken": "EAAWiWZCZBizhMBAMiCnTMVgoZBaclC7wjQcSY5Yr7hDHfogvSUAN4kNQ2phoD4gm4L13pxZAvuYv0QVRgZArjwRTkvXWSUrZB3bsWSl2gbnqQWfgxHHOdEUS4hqT9VDAA6RjYt3gfZASyodxuAlP7DQEJYZCXrwt1YNk2baYdbdJZCAZDZD"
 		}
 	},
-	"baseUrl": "https://hippocamp.eu.ngrok.io"
+	"messageVariables": {
+		"provider": {
+			"name": "The Amity Gazette",
+			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml",
+			"timezoneOffset": 0
+		}
+	},
+	"baseUrl": "https://eyewitness.eu.ngrok.io"
 }
