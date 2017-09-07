@@ -33,6 +33,27 @@ services:
     tty: true
     restart: on-failure
 
+  read-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    environment:
+      - NODE_ENV=development
+      - TZ=Europe/London
+      - ENTRY_POINT=read-server
+      - PROVIDER_ID=
+    volumes:
+      - ./app:/src/app
+      - ./package.json:/src/package.json
+      - ./package-lock.json:/src/package-lock.json
+    ports:
+      - "5000:5000"
+    networks:
+      - stack-network
+    command: npm run start-development
+    tty: true
+    restart: on-failure
+
   mongodb:
     image: mongo:3.4
     networks:
