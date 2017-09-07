@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
-  "main": "app/app.js",
+  "main": "app/entryPoint.js",
   "scripts": {
     "deploy-production": "node ./scripts/deploy/deploy --version=minor --environment=production",
     "deploy-staging": "node ./scripts/deploy/deploy --version=patch --environment=staging",
-    "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/app.js",
-    "start-production": "node ./app/app.js",
+    "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
+    "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""
   },
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
