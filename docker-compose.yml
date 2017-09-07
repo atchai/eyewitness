@@ -19,8 +19,8 @@ services:
     environment:
       - NODE_ENV=development
       - TZ=Europe/London
-      - PROVIDER_ID=thestar
       - ENTRY_POINT=app
+      - PROVIDER_ID=
     volumes:
       - ./app:/src/app
       - ./package.json:/src/package.json
