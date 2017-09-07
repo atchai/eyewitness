@@ -21,7 +21,17 @@ async function downloadUrl (input) {
 		const url = new URL(input);
 		const httpModule = (url.protocol === `https:` ? https : http);
 
-		httpModule.request(url, (err, data) => (err ? reject(err) : resolve(data)));
+		httpModule.get(url, res => {
+
+			res.setEncoding(`utf8`);
+
+			let data = ``;
+
+			res.on(`data`, chunk => data += chunk);
+			res.on(`error`, err => reject(err));
+			res.on(`end`, () => resolve(data));
+
+		});
 
 	});
 
