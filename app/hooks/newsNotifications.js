@@ -57,7 +57,7 @@ module.exports = async function newsNotifications (action, variables, { database
 		const { recUser, recArticle } = item;
 		const message = {
 			direction: `outgoing`,
-			channelName: recUser.channel. name,
+			channelName: recUser.channel.name,
 			channelUserId: recUser.channel.userId,
 			
 		};
