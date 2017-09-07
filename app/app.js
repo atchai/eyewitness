@@ -7,8 +7,11 @@
 // Ensure we always work relative to this script.
 process.chdir(__dirname);
 
+const path = require(`path`);
 const packageJson = require(`../package.json`);
-const localConfigName = `${process.env.PROVIDER_ID}.${process.env.NODE_ENV || `development`}`;
+const providerId = process.env.PROVIDER_ID;
+const env = process.env.NODE_ENV || `development`;
+const localConfigName = path.join(`providers`, providerId, `${providerId}.${env}`);
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
 	localConfig: [localConfigName],
 	requireLocalConfig: true,
