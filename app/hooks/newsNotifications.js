@@ -8,22 +8,22 @@
  * Returns an array of all the user documents.
  */
 async function loadAllUsers (database) {
-	return await database.models.User.find({}).lean().exec();
+	return await database.find(`User`, {});
 }
 
 /*
- * Returns a dictionary containing the latest unread article for the given user, or null.
+ * Returns a dictionary containing the latest unread article record and the user record for the given user, or null.
  */
 async function getLatestUnreadArticleForUser (database, recUser) {
 
 	const conditions = {
 		_readByUsers: { $nin: [recUser._id] },
 	};
-	const recArticle = await database.models.Articles.findOne(conditions)
-		.sort({ 'articleDate': `desc` })
-		.lean()
-		.exec();
+	const options = {
+		sort: { articleDate: `desc` },
+	};
 
+	const recArticle = await database.get(`Article`, conditions, options);
 	if (!recArticle) { return null; }
 
 	return {
