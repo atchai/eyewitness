@@ -1,4 +1,10 @@
 {
+	"adapters": {
+		"facebook": {
+			"verifyToken": "jjfWKrQfdtDSEC2Zkx42KJ9pIaprpXcJLvfGJ7nb",
+			"accessToken": "XXX"
+		}
+	},
 	"baseUrl": "the-star.co.ke",
 	"messageVariables": {
 		"provider": {

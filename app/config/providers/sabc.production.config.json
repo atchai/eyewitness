@@ -1,4 +1,10 @@
 {
+	"adapters": {
+		"facebook": {
+			"verifyToken": "XXXXX",
+			"accessToken": "XXXXX"
+		}
+	},
 	"baseUrl": "sabc.co.za",
 	"messageVariables": {
 		"provider": {

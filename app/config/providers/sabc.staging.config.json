@@ -1,0 +1,16 @@
+{
+	"adapters": {
+		"facebook": {
+			"verifyToken": "jzMaRwGYyFpPknm9x0HnugFsZ7EULA0QibGHpawe",
+			"accessToken": "EAABpxhPyBiIBAEvxsiTY4Ymuk9ZBeVGmIjXj8pMEVPnIL1KZC6Ytd8QZBbOXegV4tpz2JaaYBIcaHaeJsmRSdkj3pkSM8DoUDptXY4YsEeV05ycxprouQWWOPfYDDKziirZAZB604wtbAZAzfNE5RbV0ArdZCgQ9if35tkJVR9rpQZDZD"
+		}
+	},
+	"baseUrl": "sabc.co.za",
+	"messageVariables": {
+		"provider": {
+			"name": "SABC",
+			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml",
+			"timezoneOffset": 2
+		}
+	}
+}

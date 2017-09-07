@@ -10,11 +10,5 @@
 			"connectionString": "mongodb://XXX"
 		}
 	},
-	"adapters": {
-		"facebook": {
-			"verifyToken": "XXX",
-			"accessToken": "XXX"
-		}
-	},
 	"baseUrl": "https://staging-eyewitness.atchai.com"
 }
