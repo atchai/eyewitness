@@ -1,0 +1,15 @@
+{
+	"uri": "/articles",
+	"type": "basic",
+	"actions": [{
+		"type": "execute-hook",
+		"hook": "moreNews"
+	}],
+	"prompt": {
+		"type": "options",
+		"options": [{
+			"label": "More Stories",
+			"nextUri": "/articles/more"
+		}]
+	}
+}
