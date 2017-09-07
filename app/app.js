@@ -4,6 +4,8 @@
  * EYEWITNESS CHATBOT
  */
 
+/* eslint no-console: 0 */
+
 // Ensure we always work relative to this script.
 process.chdir(__dirname);
 
@@ -27,48 +29,61 @@ const DatabaseMongo = Hippocamp.require(`databases/mongo`);
 const SchedulerSimple = Hippocamp.require(`schedulers/simple`);
 const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 
-// A new chatbot!
-const chatbot = new Hippocamp({
-	packageJsonPath: `../package.json`,
-	baseUrl: config.baseUrl,
-	port: config.hippocampServer.port,
-	enableUserProfile: false,
-	greetingText: config.greetingText,
-	menu: config.menu,
-	messageVariables: config.messageVariables,
-	directories: {
-		conversation: `./conversation`,
-		hooks: `./hooks`,
-	},
-	debugMode: (config.env.id === `development`),
-});
+async function main () {
 
-// Loggers.
-chatbot.configure(new LoggerTerminal(config.loggers.terminal));
-if (config.loggers.filesystem) { chatbot.configure(new LoggerFilesystem(config.loggers.filesystem)); }
+	// A new chatbot!
+	const chatbot = new Hippocamp({
+		packageJsonPath: `../package.json`,
+		baseUrl: config.baseUrl,
+		port: config.hippocampServer.port,
+		enableUserProfile: false,
+		greetingText: config.greetingText,
+		menu: config.menu,
+		messageVariables: config.messageVariables,
+		directories: {
+			conversation: `./conversation`,
+			hooks: `./hooks`,
+		},
+		debugMode: (config.env.id === `development`),
+	});
 
-// Databases.
-chatbot.configure(new DatabaseMongo(config.databases.mongo));
+	// Loggers.
+	await chatbot.configure(new LoggerTerminal(config.loggers.terminal));
+	if (config.loggers.filesystem) { await chatbot.configure(new LoggerFilesystem(config.loggers.filesystem)); }
 
-// Scheduler.
-chatbot.configure(new SchedulerSimple({
-	executeEvery: `minute`,
-	tasks: [{
-		actions: [{
-			type: `execute-hook`,
-			hook: `feedIngester`,
+	// Databases.
+	await chatbot.configure(new DatabaseMongo(config.databases.mongo));
+
+	// Scheduler.
+	await chatbot.configure(new SchedulerSimple({
+		executeEvery: `minute`,
+		tasks: [{
+			actions: [{
+				type: `execute-hook`,
+				hook: `feedIngester`,
+			}],
+			runEvery: `hour`,
+		}, {
+			actions: [{
+				type: `execute-hook`,
+				hook: `newsNotifications`,
+			}],
+			runEvery: `hour`,
 		}],
-		runEvery: `hour`,
-	}, {
-		actions: [{
-			type: `execute-hook`,
-			hook: `newsNotifications`,
-		}],
-		runEvery: `hour`,
-	}],
-}));
+	}));
 
-// Adapters.
-chatbot.configure(new AdapterFacebook(config.adapters.facebook));
+	// Adapters.
+	await chatbot.configure(new AdapterFacebook(config.adapters.facebook));
 
-chatbot.start();
+	await chatbot.start();
+
+}
+
+/*
+ * Run task.
+ */
+main()
+	.catch(err => {
+		console.error(err.stack);
+		process.exit(1);
+	});
