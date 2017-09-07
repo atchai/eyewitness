@@ -96,11 +96,11 @@ async function insertNewArticles (database, feedId, articles) {
 
 	const promises = articles.map(article => {
 
-		database.models.Article.update(
-			{ feedId, articleId: article.articleId },
-			{ $setOnInsert: article },
-			{ upsert: true }
-		);
+		const conditions = { feedId, articleId: article.articleId };
+		const changes = { $setOnInsert: article };
+		const options = { upsert: true };
+
+		return database.update(`Article`, conditions, changes, options);
 
 	});
 
