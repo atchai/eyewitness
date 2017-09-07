@@ -59,7 +59,20 @@ module.exports = async function newsNotifications (action, variables, { database
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
 			channelUserId: recUser.channel.userId,
-			
+			carousel: {
+				sharing: true,
+				elements: [{
+					label: recArticle.title,
+					text: recArticle.description,
+					imageUrl: recArticle.imageUrl,
+					buttons: [{
+						type: `url`,
+						label: `Read`,
+						payload: recArticle.articleUrl,
+						sharing: true,
+					}],
+				}],
+			},
 		};
 
 		return sendMessage(item.recUser, message);
