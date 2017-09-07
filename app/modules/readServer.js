@@ -102,33 +102,21 @@ async function startReadServer () {
 }
 
 /*
- * Run task if called directly.
+ * Run task.
  */
-if (require.main === module) {
+Promise.resolve()
+	.then(() => {
 
-	Promise.resolve()
-		.then(() => {
+		// Ensure we always work relative to this script.
+		process.chdir(__dirname);
 
-			// Ensure we always work relative to this script.
-			process.chdir(__dirname);
+		// Force Mongoose to use native promises.
+		mongoose.Promise = global.Promise;
 
-			// Force Mongoose to use native promises.
-			mongoose.Promise = global.Promise;
-
-		})
-		.then(() => connectToDatabase())
-		.then(() => startReadServer())
-		.catch(err => {
-			console.error(err.stack);
-			process.exit(1);
-		});
-
-}
-
-/*
- * Export.
- */
-module.exports = {
-	connectToDatabase,
-	startReadServer,
-};
+	})
+	.then(() => connectToDatabase())
+	.then(() => startReadServer())
+	.catch(err => {
+		console.error(err.stack);
+		process.exit(1);
+	});
