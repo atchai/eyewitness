@@ -63,12 +63,14 @@ async function main () {
 				hook: `feedIngester`,
 			}],
 			runEvery: `hour`,
+			maxRuns: 0,
 		}, {
 			actions: [{
 				type: `execute-hook`,
 				hook: `newsNotifications`,
 			}],
 			runEvery: `hour`,
+			maxRuns: 0,
 		}],
 	}));
 
