@@ -14,6 +14,7 @@ module.exports = function (Schema, Property, Reference) {
 		imageUrl: new Property(`string`),
 		title: new Property(`string`),
 		description: new Property(`string`),
+		isPriority: new Property(`boolean`),
 		_receivedByUsers: [new Reference(`User`)],
 		_readByUsers: [new Reference(`User`)],
 		ingestedDate: new Property(`date`, Date.now),
