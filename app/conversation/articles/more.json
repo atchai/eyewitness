@@ -1,0 +1,13 @@
+{
+	"uri": "/articles/more",
+	"type": "basic",
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "OK let's see what other articles we have for you..."
+		}
+	}, {
+		"type": "change-step",
+		"nextUri": "/articles"
+	}]
+}
