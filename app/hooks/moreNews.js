@@ -4,6 +4,9 @@
  * HOOK: More News
  */
 
+const packageJson = require(`../../package.json`);
+const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+
 /*
  * Returns an array of all the articles the given user has not yet received, sorted newest first.
  */
@@ -24,25 +27,6 @@ async function getUnreceivedArticles (database, recUser, limit = 0) {
 }
 
 /*
- * Converts the given article into a carousel element.
- */
-function prepareArticleElement (recUser, recArticle) {
-
-	return Object({
-		label: recArticle.title,
-		text: recArticle.description,
-		imageUrl: recArticle.imageUrl,
-		buttons: [{
-			type: `url`,
-			label: `Read`,
-			payload: recArticle.articleUrl,
-			sharing: true,
-		}],
-	});
-
-}
-
-/*
  * Returns the message stating there are no more news articles to read.
  */
 function prepareNoArticlesMessage (MessageObject, recUser) {
@@ -57,9 +41,28 @@ function prepareNoArticlesMessage (MessageObject, recUser) {
 }
 
 /*
+ * Converts the given article into a carousel element.
+ */
+function prepareArticleElement (variables, recUser, recArticle) {
+
+	return Object({
+		label: recArticle.title,
+		text: recArticle.description,
+		imageUrl: recArticle.imageUrl,
+		buttons: [{
+			type: `url`,
+			label: `Read`,
+			payload: `${variables.baseUrl}:${config.readServer.port}/${recArticle.feedId}/${recArticle._id}/${recUser._id}`,
+			sharing: true,
+		}],
+	});
+
+}
+
+/*
  * Returns the message containing the prepared carousel element.
  */
-function prepareCarouselMessage (MessageObject, recUser, recArticles) {
+function prepareCarouselMessage (MessageObject, variables, recUser, recArticles) {
 
 	return new MessageObject({
 		direction: `outgoing`,
@@ -67,7 +70,7 @@ function prepareCarouselMessage (MessageObject, recUser, recArticles) {
 		channelUserId: recUser.channel.userId,
 		carousel: {
 			sharing: true,
-			elements: recArticles.map(recArticle => prepareArticleElement(recUser, recArticle)),
+			elements: recArticles.map(recArticle => prepareArticleElement(variables, recUser, recArticle)),
 		},
 	});
 
@@ -101,7 +104,7 @@ module.exports = async function moreNews (action, variables, { database, Message
 	}
 
 	// Send the news articles.
-	const message = prepareCarouselMessage(MessageObject, recUser, recArticles);
+	const message = prepareCarouselMessage(MessageObject, variables, recUser, recArticles);
 	await sendMessage(recUser, message);
 
 	// Mark articles as recieved by the user.
