@@ -51,7 +51,7 @@ function prepareNoArticlesMessage (MessageObject, recUser) {
 		direction: `outgoing`,
 		channelName: recUser.channel.name,
 		channelUserId: recUser.channel.userId,
-		text: `Whoops! There are no other news articles to read!`,
+		text: `Whoops! There are no more news articles to read just yet!`,
 	});
 
 }
@@ -74,6 +74,19 @@ function prepareCarouselMessage (MessageObject, recUser, recArticles) {
 }
 
 /*
+ * Marks the given articles as received by the given user.
+ */
+async function markArticlesAsReceived (database, recUser, recArticles) {
+
+	const markPromises = recArticles.map(recArticle =>
+		database.update(`Article`, recArticle, { $push: { _receivedByUsers: recUser._id } })
+	);
+
+	return await Promise.all(markPromises);
+
+}
+
+/*
  * The hook itself.
  */
 module.exports = async function moreNews (action, variables, { database, MessageObject, recUser, sendMessage }) {
@@ -90,5 +103,8 @@ module.exports = async function moreNews (action, variables, { database, Message
 	// Send the news articles.
 	const message = prepareCarouselMessage(MessageObject, recUser, recArticles);
 	await sendMessage(recUser, message);
+
+	// Mark articles as recieved by the user.
+	await markArticlesAsReceived(database, recUser, recArticles);
 
 };
