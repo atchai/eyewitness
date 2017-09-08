@@ -1,0 +1,47 @@
+{
+	"containerDefinitions": [{
+		"name": "eyewitness-app",
+		"image": "538881967423.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
+		"memoryReservation": 128,
+		"essential": true,
+		"portMappings": [{
+			"containerPort": 5000,
+			"hostPort": 5000,
+			"protocol": "tcp"
+		}, {
+			"containerPort": 6000,
+			"hostPort": 6000,
+			"protocol": "tcp"
+		}],
+		"environment": [{
+			"name": "NODE_ENV",
+			"value": "production"
+		}, {
+			"name": "MONGODB_HOST",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "MONGODB_REPLICA_SET",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "MONGODB_PORT",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "MONGODB_DATABASE",
+			"value": "mindbot"
+		}, {
+			"name": "MONGODB_USER",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "MONGODB_PASS",
+			"value": "{{REPLACE_ME}}"
+		}],
+		"logConfiguration": {
+			"logDriver": "awslogs",
+			"options": {
+				"awslogs-region": "{{REPLACE_ME}}",
+				"awslogs-group": "{{REPLACE_ME}}",
+				"awslogs-stream-prefix": "eyewitness-app"
+			}
+		}
+	}]
+}
