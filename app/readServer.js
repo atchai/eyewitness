@@ -6,12 +6,12 @@
 
 /* eslint no-console: 0 */
 
-const packageJson = require(`../../package.json`);
+const packageJson = require(`./../package.json`);
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `../config`);
 
 const http = require(`http`);
 const mongoose = require(`mongoose`);
-const ArticleModel = require(`../models/article`);
+const ArticleModel = require(`./models/article`);
 
 /*
  * Pulls the feed, article and user IDs from the URL.
