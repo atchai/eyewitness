@@ -20,6 +20,7 @@ async function getLatestUnreadArticleForUser (database, recUser) {
 
 	const conditions = {
 		_readByUsers: { $nin: [recUser._id] },
+		isPriority: true,
 	};
 	const options = {
 		sort: { articleDate: `desc` },
