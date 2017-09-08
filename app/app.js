@@ -41,6 +41,7 @@ async function main () {
 		menu: config.menu,
 		messageVariables: config.messageVariables,
 		directories: {
+			commands: `./commands`,
 			conversation: `./conversation`,
 			hooks: `./hooks`,
 			models: `./models`,
