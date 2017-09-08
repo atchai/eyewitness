@@ -112,7 +112,7 @@ async function insertNewArticles (database, feedId, articles) {
 
 		const conditions = { feedId, articleId: article.articleId };
 		const changes = { $setOnInsert: article };
-		const options = { upsert: true };
+		const options = { upsert: true, useConditions: true };
 
 		return database.update(`Article`, conditions, changes, options);
 
