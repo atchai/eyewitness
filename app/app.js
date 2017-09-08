@@ -59,6 +59,7 @@ async function main () {
 	await chatbot.configure(new SchedulerSimple({
 		executeEvery: `minute`,
 		tasks: [{
+			taskId: `feed-ingester`,
 			actions: [{
 				type: `execute-hook`,
 				hook: `feedIngester`,
@@ -66,6 +67,7 @@ async function main () {
 			runEvery: `hour`,
 			maxRuns: 0,
 		}, {
+			taskId: `news-notifications`,
 			actions: [{
 				type: `execute-hook`,
 				hook: `newsNotifications`,
