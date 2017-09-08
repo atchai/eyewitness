@@ -14,9 +14,12 @@ const xml2js = require(`xml2js`);
 /*
  * Downloads the given URL.
  */
-async function downloadUrl (input) {
+async function downloadUrl (input, numRedirects = 0) {
 
 	return await new Promise((resolve, reject) => {
+
+		const maxRedirects = 5;
+		if (numRedirects > maxRedirects) { return reject(new Error(`${maxRedirects} redirects are the maximum allowed.`)); }
 
 		const url = new URL(input);
 		const httpModule = (url.protocol === `https:` ? https : http);
@@ -24,6 +27,17 @@ async function downloadUrl (input) {
 		httpModule.get(url, res => {
 
 			res.setEncoding(`utf8`);
+
+			// Are we redirecting?
+			if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+				const redirectPromise = downloadUrl(res.headers.location, numRedirects + 1);
+				return resolve(redirectPromise);
+			}
+
+			// Cope with server errors.
+			if (res.statusCode >= 400) {
+				return reject(new Error(`Server returned error status code of "${res.statusCode}".`));
+			}
 
 			let data = ``;
 
