@@ -43,6 +43,7 @@ async function main () {
 		directories: {
 			conversation: `./conversation`,
 			hooks: `./hooks`,
+			models: `./models`,
 		},
 		debugMode: (config.env.id === `development`),
 	});
