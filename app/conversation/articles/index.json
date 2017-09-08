@@ -4,12 +4,14 @@
 	"actions": [{
 		"type": "execute-hook",
 		"hook": "moreNews"
-	}],
-	"prompt": {
-		"type": "options",
-		"options": [{
-			"label": "More Stories",
-			"nextUri": "/articles/more"
-		}]
-	}
+	}, {
+		"type": "send-message",
+		"message": {
+			"text": "Want more?",
+			"options": [{
+				"label": "More Articles",
+				"nextUri": "/articles/more"
+			}]
+		}
+	}]
 }

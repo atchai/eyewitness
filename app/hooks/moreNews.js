@@ -65,7 +65,6 @@ function prepareCarouselMessage (MessageObject, recUser, recArticles) {
 		direction: `outgoing`,
 		channelName: recUser.channel.name,
 		channelUserId: recUser.channel.userId,
-		text: `Here's some more news for you!`,
 		carousel: {
 			sharing: true,
 			elements: recArticles.map(recArticle => prepareArticleElement(recUser, recArticle)),

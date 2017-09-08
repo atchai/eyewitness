@@ -2,7 +2,6 @@
 	"uri": "/introduction",
 	"type": "basic",
 	"actions": [{
-	}, {
 		"type": "send-message",
 		"message": {
 			"text": "Hi {{firstName}}, welcome to {{provider.name}}."
@@ -15,7 +14,7 @@
 	}, {
 		"type": "send-message",
 		"message": {
-			"text": "Here's our top stories:"
+			"text": "Here's our top stories..."
 		}
 	}, {
 		"type": "change-step",
