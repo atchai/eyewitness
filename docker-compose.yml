@@ -47,7 +47,7 @@ services:
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
     ports:
-      - "5000:5000"
+      - "6000:6000"
     networks:
       - stack-network
     command: npm run start-development
