@@ -13,8 +13,14 @@ const packageJson = require(`./../package.json`);
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`);
 
 const http = require(`http`);
-const mongoose = require(`mongoose`);
+const Hippocamp = require(`@atchai/hippocamp`);
+const DatabaseMongo = Hippocamp.require(`databases/mongo`);
 const ArticleModel = require(`./models/article`);
+
+// Instantiate the database.
+const database = new DatabaseMongo({ connectionString: config.databases.mongo.connectionString });
+Hippocamp.prepareDependencies(database);
+database.addModel(ArticleModel);
 
 /*
  * Pulls the feed, article and user IDs from the URL.
@@ -46,35 +52,24 @@ async function handleRequests (req, res) {
 	}
 
 	// Check the article exists in the database.
-	const docArticle = await ArticleModel.findOne({
+	const recArticle = await database.get(`Article`, {
 		_id: articleId,
 		feedId,
-	}).exec();
+	});
 
-	if (!docArticle) {
+	if (!recArticle) {
 		res.statusCode = 404;
 		return res.end(`Article not found.`);
 	}
 
 	// Mark the article as read by the given user.
-	docArticle._readByUsers.push(userId);
-	await docArticle.save();
+	await database.update(`Article`, recArticle, {
+		$addToSet: { _readByUsers: userId },
+	});
 
 	// Redirect the user to the article URL.
-	return res.writeHead(302, { 'Location': docArticle.articleUrl }).end();
-
-}
-
-/*
- * Connects to the Eyewitness chatbot database.
- */
-async function connectToDatabase () {
-
-	const connectionString = config.databases.mongo.connectionString;
-
-	return await mongoose.connect(connectionString, {
-		useMongoClient: true,
-	});
+	res.writeHead(302, { 'Location': recArticle.articleUrl });
+	res.end();
 
 }
 
@@ -108,16 +103,7 @@ async function startReadServer () {
  * Run task.
  */
 Promise.resolve()
-	.then(() => {
-
-		// Ensure we always work relative to this script.
-		process.chdir(__dirname);
-
-		// Force Mongoose to use native promises.
-		mongoose.Promise = global.Promise;
-
-	})
-	.then(() => connectToDatabase())
+	.then(() => database.connect())
 	.then(() => startReadServer())
 	.catch(err => {
 		console.error(err.stack);
