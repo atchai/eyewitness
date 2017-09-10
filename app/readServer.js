@@ -10,7 +10,7 @@
 process.chdir(__dirname);
 
 const packageJson = require(`./../package.json`);
-const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `../config`);
+const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`);
 
 const http = require(`http`);
 const mongoose = require(`mongoose`);
