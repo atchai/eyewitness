@@ -22,7 +22,7 @@ const ArticleModel = require(`./models/article`);
  */
 function parseIncomingUrl (url) {
 
-	const [ , feedId, articleId, userId ] = url.match(/\/([a-z0-9])\/([a-z0-9])\/([a-z0-9])\/?/) || [];
+	const [ , feedId, articleId, userId ] = url.match(/^\/([a-z0-9]+)\/([a-z0-9]+)\/([a-z0-9]+)\/?$/i) || [];
 
 	return {
 		feedId,
