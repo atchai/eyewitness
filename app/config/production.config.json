@@ -42,6 +42,6 @@
 		"port": 5000
 	},
 	"readServer": {
-		"port": 6000
+		"port": 5001
 	}
 }
