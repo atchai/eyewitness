@@ -6,6 +6,9 @@
 
 /* eslint no-console: 0 */
 
+// Ensure we always work relative to this script.
+process.chdir(__dirname);
+
 const packageJson = require(`./../package.json`);
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `../config`);
 
