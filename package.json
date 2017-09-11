@@ -5,8 +5,8 @@
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy-production": "node ./scripts/deploy/deploy --version=minor --environment=production",
-    "deploy-staging": "node ./scripts/deploy/deploy --version=patch --environment=staging",
+    "deploy-sabc-production": "node ./scripts/deploy/deploy --version=minor --provider=sabc --environment=production",
+    "deploy-sabc-staging": "node ./scripts/deploy/deploy --version=patch --provider=sabc --environment=staging",
     "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""
