@@ -18,11 +18,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.sabc.co.za",
-		"port": null
+		"baseUrl": "https://eyewitness-app.sabc.co.za"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.sabc.co.za",
-		"port": null
+		"baseUrl": "https://eyewitness-read.sabc.co.za"
 	}
 }

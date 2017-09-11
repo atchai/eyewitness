@@ -46,7 +46,7 @@ function prepareNoArticlesMessage (MessageObject, recUser) {
 function prepareArticleElement (variables, recUser, recArticle) {
 
 	const baseUrl = config.readServer.baseUrl;
-	const port = (config.readServer.port ? `:${config.readServer.port}` : ``);
+	const port = (config.readServer.portInUrl ? `:${config.readServer.port}` : ``);
 	const articleId = recArticle._id;
 	const feedId = recArticle.feedId;
 	const userId = recUser._id;

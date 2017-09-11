@@ -30,10 +30,10 @@
 	},
 	"hippocampServer": {
 		"baseUrl": "https://eyewitness.eu.ngrok.io",
-		"port": 5000
+		"portInUrl": true
 	},
 	"readServer": {
 		"baseUrl": "http://localhost",
-		"port": 5001
+		"portInUrl": true
 	}
 }

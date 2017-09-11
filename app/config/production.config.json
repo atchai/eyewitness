@@ -39,10 +39,12 @@
 	},
 	"hippocampServer": {
 		"baseUrl": null,
-		"port": null
+		"port": 5000,
+		"portInUrl": false
 	},
 	"readServer": {
 		"baseUrl": null,
-		"port": null
+		"port": 5001,
+		"portInUrl": false
 	}
 }

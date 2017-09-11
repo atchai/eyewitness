@@ -19,11 +19,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.the-star.co.ke",
-		"port": null
+		"baseUrl": "https://eyewitness-app.the-star.co.ke"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.the-star.co.ke",
-		"port": null
+		"baseUrl": "https://eyewitness-read.the-star.co.ke"
 	}
 }

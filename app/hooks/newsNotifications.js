@@ -70,7 +70,7 @@ module.exports = async function newsNotifications (action, variables, { database
 
 		const { recUser, recArticle } = item;
 		const baseUrl = config.readServer.baseUrl;
-		const port = (config.readServer.port ? `:${config.readServer.port}` : ``);
+		const port = (config.readServer.portInUrl ? `:${config.readServer.port}` : ``);
 		const articleId = recArticle._id;
 		const feedId = recArticle.feedId;
 		const userId = recUser._id;

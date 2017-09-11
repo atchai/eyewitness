@@ -18,11 +18,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app-thestar-staging.atchai.com",
-		"port": null
+		"baseUrl": "https://eyewitness-app-thestar-staging.atchai.com"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read-thestar-staging.atchai.com",
-		"port": null
+		"baseUrl": "https://eyewitness-read-thestar-staging.atchai.com"
 	}
 }
