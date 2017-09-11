@@ -36,7 +36,7 @@ async function main () {
 		packageJsonPath: `../package.json`,
 		baseUrl: config.baseUrl,
 		port: config.hippocampServer.port,
-		enableUserProfile: false,
+		enableUserProfile: true,
 		greetingText: config.greetingText,
 		menu: config.menu,
 		messageVariables: config.messageVariables,
