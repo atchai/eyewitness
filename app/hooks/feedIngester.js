@@ -8,6 +8,7 @@ const crypto = require(`crypto`);
 const http = require(`http`);
 const https = require(`https`);
 const { URL } = require(`url`);
+const zlib = require(`zlib`);
 const cheerio = require(`cheerio`);
 const xml2js = require(`xml2js`);
 
@@ -26,7 +27,15 @@ async function downloadUrl (input, numRedirects = 0) {
 
 		httpModule.get(url, res => {
 
-			res.setEncoding(`utf8`);
+			let stream;
+
+			if (res.headers[`content-encoding`] === `gzip`) {
+				stream = zlib.createGunzip();
+				res.pipe(stream);
+			}
+			else {
+				stream = res;
+			}
 
 			// Are we redirecting?
 			if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
@@ -41,9 +50,9 @@ async function downloadUrl (input, numRedirects = 0) {
 
 			let data = ``;
 
-			res.on(`data`, chunk => data += chunk);
-			res.on(`error`, err => reject(err));
-			res.on(`end`, () => resolve(data));
+			stream.on(`data`, chunk => data += chunk);
+			stream.on(`error`, err => reject(err));
+			stream.on(`end`, () => resolve(data));
 
 		});
 
