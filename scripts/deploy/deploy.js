@@ -164,8 +164,10 @@ Promise.resolve()
 
 	})
 	.then(([ appTaskDefinition, readServerTaskDefinition ]) => {
-		cache.newTaskDefinitions.app = JSON.parse(appTaskDefinition).taskDefinition;
-		cache.newTaskDefinitions.readServer = JSON.parse(readServerTaskDefinition).taskDefinition;
+		cache.newTaskDefinitions = {
+			app: JSON.parse(appTaskDefinition).taskDefinition,
+			readServer: JSON.parse(readServerTaskDefinition).taskDefinition,
+		};
 	})
 
 	// Update AWS ECS services with new task definition.
