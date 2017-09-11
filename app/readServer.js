@@ -43,6 +43,12 @@ function parseIncomingUrl (url) {
  */
 async function handleRequests (req, res) {
 
+	// Health check endpoint.
+	if (req.url === `/health-check`) {
+		res.statusCode = 200;
+		return res.end(`OK`);
+	}
+
 	// Pull the IDs from the URL.
 	const { feedId, articleId, userId } = parseIncomingUrl(req.url);
 
