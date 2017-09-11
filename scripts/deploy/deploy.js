@@ -85,6 +85,8 @@ const clusterName = `eyewitness-${environment}`;
 const awsLogsGroup = `eyewitness/${provider}/${environment}`;
 const appServiceName = `eyewitness-app-${provider}-${environment}`;
 const readServerServiceName = `eyewitness-read-${provider}-${environment}`;
+const appTaskFamily = appServiceName;
+const readServerTaskFamily = readServerServiceName;
 
 // Begin!
 Promise.resolve()
@@ -144,14 +146,14 @@ Promise.resolve()
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
-			`--family "eyewitness-app"`,
+			`--family "${appTaskFamily}"`,
 			`--container-definitions "${escapedAppContainerJson}"`,
 		].join(` `);
 		const readServerArgs = [
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
-			`--family "eyewitness-read-server"`,
+			`--family "${readServerTaskFamily}"`,
 			`--container-definitions "${escapedReadServerContainerJson}"`,
 		].join(` `);
 
