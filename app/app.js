@@ -34,7 +34,7 @@ async function main () {
 	// A new chatbot!
 	const chatbot = new Hippocamp({
 		packageJsonPath: `../package.json`,
-		baseUrl: config.baseUrl,
+		baseUrl: config.hippocampServer.baseUrl,
 		port: config.hippocampServer.port,
 		enableUserProfile: true,
 		greetingText: config.greetingText,
