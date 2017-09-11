@@ -7,6 +7,8 @@
   "scripts": {
     "deploy-sabc-production": "node ./scripts/deploy/deploy --version=minor --provider=sabc --environment=production",
     "deploy-sabc-staging": "node ./scripts/deploy/deploy --version=patch --provider=sabc --environment=staging",
+    "deploy-thestar-production": "node ./scripts/deploy/deploy --version=minor --provider=thestar --environment=production",
+    "deploy-thestar-staging": "node ./scripts/deploy/deploy --version=patch --provider=thestar --environment=staging",
     "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""
