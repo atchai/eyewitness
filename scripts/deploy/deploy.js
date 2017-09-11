@@ -215,7 +215,7 @@ Promise.resolve()
 			process.stderr.write(`Git working directory not clean! You must commit all your changes.\n`);
 		}
 		else {
-			process.stderr.write(`${err.message}\n`);
+			process.stderr.write(`${err.stack}\n`);
 		}
 
 		process.stderr.write(`\n`);
