@@ -16,6 +16,9 @@
 			}, {
 				"name": "PROVIDER_ID",
 				"value": "sabc"
+			}, {
+				"name": "ENTRY_POINT",
+				"value": "app"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",
@@ -43,7 +46,10 @@
 				"value": "{{REPLACE_ME}}"
 			}, {
 				"name": "PROVIDER_ID",
-				"value": ""
+				"value": "sabc"
+			}, {
+				"name": "ENTRY_POINT",
+				"value": "read-server"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",
