@@ -14,7 +14,6 @@ const WORKING_DIR = path.join(__dirname, `../../`);
 const AWS_PROFILE = `eyewitness-ci-atchai`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `538881967423.dkr.ecr.eu-west-1.amazonaws.com`;
-const AWS_TASK_FAMILY = `eyewitness-app`;
 const IMAGE_NAME = `eyewitness-app`;
 const cache = {};
 
@@ -145,14 +144,14 @@ Promise.resolve()
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
-			`--family "${AWS_TASK_FAMILY}"`,
+			`--family "eyewitness-app"`,
 			`--container-definitions "${escapedAppContainerJson}"`,
 		].join(` `);
 		const readServerArgs = [
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
-			`--family "${AWS_TASK_FAMILY}"`,
+			`--family "eyewitness-read-server"`,
 			`--container-definitions "${escapedReadServerContainerJson}"`,
 		].join(` `);
 
