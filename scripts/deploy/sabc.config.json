@@ -37,8 +37,8 @@
 			"memoryReservation": 128,
 			"essential": true,
 			"portMappings": [{
-				"containerPort": 6000,
-				"hostPort": 6000,
+				"containerPort": 5001,
+				"hostPort": 5001,
 				"protocol": "tcp"
 			}],
 			"environment": [{
