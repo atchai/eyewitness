@@ -65,7 +65,8 @@ async function main () {
 				type: `execute-hook`,
 				hook: `feedIngester`,
 			}],
-			runEvery: `hour`,
+			// runEvery: `hour`,
+			runEvery: `minute`,
 			maxRuns: 0,
 		}, {
 			taskId: `news-notifications`,
@@ -73,7 +74,8 @@ async function main () {
 				type: `execute-hook`,
 				hook: `newsNotifications`,
 			}],
-			runEvery: `hour`,
+			// runEvery: `hour`,
+			runEvery: `minute`,
 			maxRuns: 0,
 		}],
 	}));
