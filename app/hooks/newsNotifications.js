@@ -4,6 +4,9 @@
  * HOOK: News Notifications
  */
 
+const packageJson = require(`../../package.json`);
+const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+
 const moment = require(`moment`);
 
 /*
@@ -66,6 +69,12 @@ module.exports = async function newsNotifications (action, variables, { database
 	const sendMessagePromises = recFilteredUsers.map(item => {
 
 		const { recUser, recArticle } = item;
+		const baseUrl = config.readServer.baseUrl;
+		const port = (config.readServer.port ? `:${config.readServer.port}` : ``);
+		const articleId = recArticle._id;
+		const feedId = recArticle.feedId;
+		const userId = recUser._id;
+		const readUrl = `${baseUrl}${port}/${feedId}/${articleId}/${userId}`;
 		const message = {
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
@@ -79,7 +88,7 @@ module.exports = async function newsNotifications (action, variables, { database
 					buttons: [{
 						type: `url`,
 						label: `Read`,
-						payload: recArticle.articleUrl,
+						payload: readUrl,
 						sharing: true,
 					}],
 				}],
