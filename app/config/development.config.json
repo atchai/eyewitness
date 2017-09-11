@@ -28,5 +28,12 @@
 			"timezoneOffset": 0
 		}
 	},
-	"baseUrl": "https://eyewitness.eu.ngrok.io"
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness.eu.ngrok.io",
+		"port": 5000
+	},
+	"readServer": {
+		"baseUrl": "http://localhost",
+		"port": 5001
+	}
 }

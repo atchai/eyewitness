@@ -9,6 +9,5 @@
 		"mongo": {
 			"connectionString": "mongodb://XXX"
 		}
-	},
-	"baseUrl": "https://staging-eyewitness.atchai.com"
+	}
 }

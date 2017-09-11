@@ -10,12 +10,19 @@
 			"connectionString": "mongodb://eyewitness-user-St6exXR8r9ONTbHimRy7jIDqkyXeehIqJdkDYAS9:vUqMWWj4uQjRPS28IntnCHS6A3uV4SdjYXYQ0rPkuIMCve6lSnqJQzh8oQ4eI1cPR1BzG79xgMfCRPKc@eyewitness-db-thestar-staging-1065078073.eu-west-1.elb.amazonaws.com:47296/eyewitness?authSource=admin"
 		}
 	},
-	"baseUrl": "eyewitness-app-thestar-staging.atchai.com",
 	"messageVariables": {
 		"provider": {
 			"name": "The Star",
 			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml",
 			"timezoneOffset": 3
 		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app-thestar-staging.atchai.com",
+		"port": null
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read-thestar-staging.atchai.com",
+		"port": null
 	}
 }

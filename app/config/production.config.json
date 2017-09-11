@@ -16,7 +16,6 @@
 			"accessToken": null
 		}
 	},
-	"baseUrl": null,
 	"greetingText": "[GREETING TEXT GOES HERE]",
 	"menu": [{
 		"type": "url",
@@ -39,9 +38,11 @@
 		}
 	},
 	"hippocampServer": {
-		"port": 5000
+		"baseUrl": null,
+		"port": null
 	},
 	"readServer": {
-		"port": 5001
+		"baseUrl": null,
+		"port": null
 	}
 }

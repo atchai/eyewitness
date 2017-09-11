@@ -10,12 +10,19 @@
 			"connectionString": "mongodb://eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb:sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W@eyewitness-db-sabc-staging-1975733167.eu-west-1.elb.amazonaws.com:47295/eyewitness?authSource=admin"
 		}
 	},
-	"baseUrl": "eyewitness-app-sabc-staging.atchai.com",
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
 			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml",
 			"timezoneOffset": 2
 		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app-sabc-staging.atchai.com",
+		"port": null
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read-sabc-staging.atchai.com",
+		"port": null
 	}
 }

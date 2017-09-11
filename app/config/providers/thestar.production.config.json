@@ -17,5 +17,13 @@
 			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml",
 			"timezoneOffset": 3
 		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app.the-star.co.ke",
+		"port": null
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read.the-star.co.ke",
+		"port": null
 	}
 }

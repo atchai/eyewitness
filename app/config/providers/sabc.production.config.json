@@ -10,12 +10,19 @@
 			"connectionString": null
 		}
 	},
-	"baseUrl": "sabc.co.za",
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
 			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml",
 			"timezoneOffset": 2
 		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app.sabc.co.za",
+		"port": null
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read.sabc.co.za",
+		"port": null
 	}
 }
