@@ -16,27 +16,6 @@
 			}, {
 				"name": "PROVIDER_ID",
 				"value": "sabc"
-			}, {
-				"name": "MONGODB_HOST",
-				"value": "eyewitness-db-sabc-staging-1975733167.eu-west-1.elb.amazonaws.com"
-			}, {
-				"name": "MONGODB_REPLICA_SET",
-				"value": ""
-			}, {
-				"name": "MONGODB_AUTH_DB",
-				"value": "admin"
-			}, {
-				"name": "MONGODB_PORT",
-				"value": "47295"
-			}, {
-				"name": "MONGODB_DATABASE",
-				"value": "eyewitness"
-			}, {
-				"name": "MONGODB_USER",
-				"value": "eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb"
-			}, {
-				"name": "MONGODB_PASS",
-				"value": "sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",
@@ -65,27 +44,6 @@
 			}, {
 				"name": "PROVIDER_ID",
 				"value": ""
-			}, {
-				"name": "MONGODB_HOST",
-				"value": "eyewitness-db-sabc-staging-1975733167.eu-west-1.elb.amazonaws.com"
-			}, {
-				"name": "MONGODB_REPLICA_SET",
-				"value": ""
-			}, {
-				"name": "MONGODB_AUTH_DB",
-				"value": "admin"
-			}, {
-				"name": "MONGODB_PORT",
-				"value": "47295"
-			}, {
-				"name": "MONGODB_DATABASE",
-				"value": "eyewitness"
-			}, {
-				"name": "MONGODB_USER",
-				"value": "eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb"
-			}, {
-				"name": "MONGODB_PASS",
-				"value": "sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",

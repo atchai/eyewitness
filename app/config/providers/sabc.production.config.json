@@ -5,6 +5,11 @@
 			"accessToken": "XXXXX"
 		}
 	},
+	"databases": {
+		"mongo": {
+			"connectionString": null
+		}
+	},
 	"baseUrl": "sabc.co.za",
 	"messageVariables": {
 		"provider": {

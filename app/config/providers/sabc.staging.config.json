@@ -5,6 +5,11 @@
 			"accessToken": "EAABpxhPyBiIBAEvxsiTY4Ymuk9ZBeVGmIjXj8pMEVPnIL1KZC6Ytd8QZBbOXegV4tpz2JaaYBIcaHaeJsmRSdkj3pkSM8DoUDptXY4YsEeV05ycxprouQWWOPfYDDKziirZAZB604wtbAZAzfNE5RbV0ArdZCgQ9if35tkJVR9rpQZDZD"
 		}
 	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb:sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W@eyewitness-db-sabc-staging-1975733167.eu-west-1.elb.amazonaws.com:47295/eyewitness?authSource=admin"
+		}
+	},
 	"baseUrl": "sabc.co.za",
 	"messageVariables": {
 		"provider": {

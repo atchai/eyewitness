@@ -7,7 +7,7 @@
 	},
 	"databases": {
 		"mongo": {
-			"connectionString": "mongodb://XXX"
+			"connectionString": null
 		}
 	},
 	"adapters": {
