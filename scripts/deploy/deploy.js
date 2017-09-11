@@ -9,7 +9,6 @@
 const path = require(`path`);
 const { spawn } = require(`child_process`);
 const extender = require(`object-extender`);
-const taskDefinitionOriginal = require(`./task.config.json`);
 
 const WORKING_DIR = path.join(__dirname, `../../`);
 const AWS_PROFILE = `eyewitness-ci-atchai`;
@@ -68,24 +67,25 @@ if (versionType !== `major` && versionType !== `minor` && versionType !== `patch
 	throw new Error(`--version flag is required and must be one of "major", "minor" or "patch".`);
 }
 
+// Grab the provider argument.
+const provider = process.argv[3].split(`=`)[1];
+if (!provider) {
+	throw new Error(`--provider flag is required.`);
+}
+
 // Grab the environment argument.
-const environment = process.argv[3].split(`=`)[1];
-if (environment !== `production` && versionType !== `staging`) {
+const environment = process.argv[4].split(`=`)[1];
+if (environment !== `production` && environment !== `staging`) {
 	throw new Error(`--environment flag is required and must be one of "production" or "staging".`);
 }
 
 // Figure out the correct resources to use for the given environment.
+const taskDefinitionOriginal = require(`./${provider}.config.json`);
 const branch = (environment === `production` ? `master` : `develop`);
-const clusterName = `mindbot`;
-const serviceName = `mindbot-${environment}`;
-const awsLogsGroup = `mindbot-${environment}`;
-const facebookPageId = (environment === `production` ? `1723939907886378` : `525442377791543`);
-const facebookPageToken = (environment === `production` ? `EAAY1bfU5pIUBABsxmWmFZAyqcXpL9PnhuqABagsRfz2uT8Rp779kN11RskvRrwDom6RY4pWUvZATC2W0I4SpEbZCSpr4ddYS6Wkp6dZB037uAuRHHFQAkNtJBl07WM6b5v1HjsfzdcG1IMEWu36ruPpueszOfSEG0SGzURfXMQZDZD` : `EAAFDH119eMoBAIQqlduvroJtP8bECEPWlqpYAnrroAWooFZAReaEVn4qNmI7iVepUfLsDteVFIFjxT9Dkj3jIZBEEAIdppoy7UBqgKWaZCO5B17n1ZAcFb232lPpnhQ7jBD2r2PkmScdVNtcfBqCzsWutCFsCVfAZBKRA55WmEAZDZD`);
-const databaseHost = (environment === `production` ? `ds119194-a0.mlab.com` : `mongo`);
-const databaseReplicaSet = (environment === `production` ? `rs-ds119194` : ``);
-const databasePort = (environment === `production` ? `19194` : `27017`);
-const databaseUser = (environment === `production` ? `mindbot-user-UYjDel4MXYy0WxaWMESK` : `mindbot-user`);
-const databasePass = (environment === `production` ? `sSBnD8sb8i6b5oM04VrA8zshScP6eoP5REMbiZt9` : `12345678`);
+const clusterName = `eyewitness-${environment}`;
+const awsLogsGroup = `eyewitness/${provider}/${environment}`;
+const appServiceName = `eyewitness-app-${provider}-${environment}`;
+const readServerServiceName = `eyewitness-read-${provider}-${environment}`;
 
 // Begin!
 Promise.resolve()
@@ -117,76 +117,86 @@ Promise.resolve()
 	.then(() => execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:latest`))
 	.then(() => execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:${cache.version}`))
 
-	// Update AWS ECS task definition with new image tag.
+	// Update AWS ECS task definitions with new image tag.
 	.then(() => process.stdout.write(`\n\n[Updating AWS ECS task definition]\n`))
 	.then(() => {
 
 		// Prepare the task definition.
 		const taskDefinition = extender.clone(taskDefinitionOriginal);
-		const appContainer = taskDefinition.containerDefinitions[0];
-		const redisContainer = taskDefinition.containerDefinitions[1];
-		const appFacebookPageIdEnvVar = appContainer.environment.find(item => item.name === `FACEBOOK_PAGE_ID`);
-		const appFacebookPageTokenEnvVar = appContainer.environment.find(item => item.name === `FACEBOOK_PAGE_TOKEN`);
-		const appMongoHostEnvVar = appContainer.environment.find(item => item.name === `MONGODB_HOST`);
-		const appMongoReplicaSetEnvVar = appContainer.environment.find(item => item.name === `MONGODB_REPLICA_SET`);
-		const appMongoPortEnvVar = appContainer.environment.find(item => item.name === `MONGODB_PORT`);
-		const appMongoUserEnvVar = appContainer.environment.find(item => item.name === `MONGODB_USER`);
-		const appMongoPassEnvVar = appContainer.environment.find(item => item.name === `MONGODB_PASS`);
+		const appTask = taskDefinition[`eyewitness-app`];
+		const readServerTask = taskDefinition[`eyewitness-read-server`];
+		const appContainer = appTask.containerDefinitions[0];
+		const readServerContainer = readServerTask.containerDefinitions[0];
 
-		// Apply logs configuration.
+		// Set NODE_ENV environment variable on containers.
+		appContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
+		readServerContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
+
+		// Set AWS logs config on containers.
 		appContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
 		appContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
-		redisContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
-		redisContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
+		readServerContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
+		readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
 
-		// Update environment variables.
-		appFacebookPageIdEnvVar.value = facebookPageId;
-		appFacebookPageTokenEnvVar.value = facebookPageToken;
-		appMongoHostEnvVar.value = databaseHost;
-		appMongoReplicaSetEnvVar.value = databaseReplicaSet;
-		appMongoPortEnvVar.value = databasePort;
-		appMongoUserEnvVar.value = databaseUser;
-		appMongoPassEnvVar.value = databasePass;
-
-		// Update the host ports for staging deployments.
-		if (environment !== `production`) {
-			const appRabbitMqUrlEnvVar = appContainer.environment.find(item => item.name === `RABBITMQ_URL`);
-
-			appRabbitMqUrlEnvVar.value = appRabbitMqUrlEnvVar.value.replace(/:5672$/, `:5673`);
-			appContainer.portMappings[0].hostPort = 81;
-			appContainer.portMappings[1].hostPort = 8081;
-			redisContainer.portMappings[0].hostPort = 5673;
-		}
-
-		const containerDefinitionsJson = JSON.stringify(taskDefinition.containerDefinitions);
-		const escapedContainerDefinitionsJson = containerDefinitionsJson.replace(/"/g, `\\"`);
-		const args = [
+		// Prepare the AWS CLI commands.
+		const escapedAppContainerJson = JSON.stringify(appTask.containerDefinitions).replace(/"/g, `\\"`);
+		const escapedReadServerContainerJson = JSON.stringify(readServerTask.containerDefinitions).replace(/"/g, `\\"`);
+		const appArgs = [
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
 			`--family "${AWS_TASK_FAMILY}"`,
-			`--container-definitions "${escapedContainerDefinitionsJson}"`,
+			`--container-definitions "${escapedAppContainerJson}"`,
+		].join(` `);
+		const readServerArgs = [
+			`--profile "${AWS_PROFILE}"`,
+			`--region "${AWS_REGION}"`,
+			`--output "json"`,
+			`--family "${AWS_TASK_FAMILY}"`,
+			`--container-definitions "${escapedReadServerContainerJson}"`,
 		].join(` `);
 
-		return execute(`aws ecs register-task-definition ${args}`);
+		// Execute the AWS CLI commands.
+		return Promise.all([
+			execute(`aws ecs register-task-definition ${appArgs}`),
+			execute(`aws ecs register-task-definition ${readServerArgs}`),
+		]);
 
 	})
-	.then(newTaskDefinition => cache.newTaskDefinition = JSON.parse(newTaskDefinition).taskDefinition)
+	.then(([ appTaskDefinition, readServerTaskDefinition ]) => {
+		cache.newTaskDefinitions.app = JSON.parse(appTaskDefinition).taskDefinition;
+		cache.newTaskDefinitions.readServer = JSON.parse(readServerTaskDefinition).taskDefinition;
+	})
 
-	// Update AWS ECS service with new task definition.
+	// Update AWS ECS services with new task definition.
 	.then(() => process.stdout.write(`\n\n[Updating AWS ECS service]\n`))
 	.then(() => {
 
-		const args = [
+		// Prepare the AWS CLI commands.
+		const appTaskDefinition = cache.newTaskDefinitions.app;
+		const readServerTaskDefinition = cache.newTaskDefinitions.readServer;
+		const appArgs = [
 			`--profile "${AWS_PROFILE}"`,
 			`--region "${AWS_REGION}"`,
 			`--output "json"`,
 			`--cluster "${clusterName}"`,
-			`--service "${serviceName}"`,
-			`--task-definition "${cache.newTaskDefinition.family}:${cache.newTaskDefinition.revision}"`,
+			`--service "${appServiceName}"`,
+			`--task-definition "${appTaskDefinition.family}:${appTaskDefinition.revision}"`,
+		].join(` `);
+		const readServerArgs = [
+			`--profile "${AWS_PROFILE}"`,
+			`--region "${AWS_REGION}"`,
+			`--output "json"`,
+			`--cluster "${clusterName}"`,
+			`--service "${readServerServiceName}"`,
+			`--task-definition "${readServerTaskDefinition.family}:${readServerTaskDefinition.revision}"`,
 		].join(` `);
 
-		return execute(`aws ecs update-service ${args}`);
+		// Execute the AWS CLI commands.
+		return Promise.all([
+			execute(`aws ecs update-service ${appArgs}`),
+			execute(`aws ecs update-service ${readServerArgs}`),
+		]);
 
 	})
 
