@@ -17,15 +17,7 @@
 		}
 	},
 	"greetingText": "[GREETING TEXT GOES HERE]",
-	"menu": [{
-		"type": "url",
-		"label": "Send us a story",
-		"payload": "https://www.google.co.uk",
-		"sharing": true
-	}, {
-		"type": "basic",
-		"label": "Restart Bot"
-	}],
+	"menu": null,
 	"messageVariables": {
 		"provider": {
 			"name": "Unknown",

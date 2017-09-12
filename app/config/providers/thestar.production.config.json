@@ -10,7 +10,12 @@
 			"connectionString": null
 		}
 	},
-	"baseUrl": "the-star.co.ke",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a Story",
+		"payload": "https://form.jotformeu.com/72542344644355",
+		"sharing": true
+	}],
 	"messageVariables": {
 		"provider": {
 			"name": "The Star",

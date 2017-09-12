@@ -10,6 +10,12 @@
 			"connectionString": null
 		}
 	},
+	"menu": [{
+		"type": "url",
+		"label": "Send us a Story",
+		"payload": "https://form.jotformeu.com/72493800344354",
+		"sharing": true
+	}],
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",

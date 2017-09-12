@@ -10,6 +10,12 @@
 			"connectionString": "mongodb://eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb:sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W@eyewitness-db-sabc-staging-1975733167.eu-west-1.elb.amazonaws.com:47295/eyewitness?authSource=admin"
 		}
 	},
+	"menu": [{
+		"type": "url",
+		"label": "Send us a Story",
+		"payload": "https://form.jotformeu.com/72493800344354",
+		"sharing": true
+	}],
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
