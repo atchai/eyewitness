@@ -15,26 +15,35 @@ const xml2js = require(`xml2js`);
 /*
  * Downloads the given URL.
  */
-async function downloadUrl (input, numRedirects = 0) {
+async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true) {
 
 	return await new Promise((resolve, reject) => {
 
+		// Don't get stuck in a redirect loop!
 		const maxRedirects = 5;
-		if (numRedirects > maxRedirects) { return reject(new Error(`${maxRedirects} redirects are the maximum allowed.`)); }
 
+		if (numRedirects > maxRedirects) {
+			if (rejectOnHttpError) {
+				return reject(new Error(`${maxRedirects} redirects are the maximum allowed.`));
+			}
+			else {
+				return resolve(null);
+			}
+		}
+
+		// Prepare the module to use.
 		const url = new URL(input);
 		const httpModule = (url.protocol === `https:` ? https : http);
 
+		// Make the request.
 		httpModule.get(url, res => {
 
-			let stream;
+			let stream = res;
 
+			// Decompress request if necessary.
 			if (res.headers[`content-encoding`] === `gzip`) {
 				stream = zlib.createGunzip();
 				res.pipe(stream);
-			}
-			else {
-				stream = res;
 			}
 
 			// Are we redirecting?
@@ -45,13 +54,18 @@ async function downloadUrl (input, numRedirects = 0) {
 
 			// Cope with server errors.
 			if (res.statusCode >= 400) {
-				return reject(new Error(`Server returned error status code of "${res.statusCode}".`));
+				if (rejectOnHttpError) {
+					return reject(new Error(`Server returned error status code of "${res.statusCode}".`));
+				}
+				else {
+					return resolve(null);
+				}
 			}
 
 			let data = ``;
 
 			stream.on(`data`, chunk => data += chunk);
-			stream.on(`error`, err => reject(err));
+			stream.on(`error`, err => (rejectOnHttpError ? reject(err) : resolve(null)));
 			stream.on(`end`, () => resolve(data));
 
 		});
