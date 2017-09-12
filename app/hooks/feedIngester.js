@@ -107,13 +107,19 @@ async function convertFeedToArticles (feedId, json) {
 async function convertFeedItemToArticle (feedId, item) {
 
 	// Grab the page as a virtual DOM.
-	const articlePageHtml = await downloadUrl(item.link[0]);
-	const $dom = cheerio.load(articlePageHtml);
+	const articlePageHtml = await downloadUrl(item.link[0], 0, false);
+	let imageUrl = null;
+	let title = item.title[0] || null;
+	let description = item.description[0] || null;
 
-	// Pull out the rich preview values from the page.
-	const imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || null;
-	const title = $dom(`head > meta[property="og:title"]`).attr(`content`) || item.title[0] || null;
-	const description = $dom(`head > meta[property="og:description"]`).attr(`content`) || item.description[0] || null;
+	// If we have page, try to pull out the rich preview values from the meta tags.
+	if (articlePageHtml) {
+		const $dom = cheerio.load(articlePageHtml);
+
+		imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || imageUrl;
+		title = $dom(`head > meta[property="og:title"]`).attr(`content`) || title;
+		description = $dom(`head > meta[property="og:description"]`).attr(`content`) || description;
+	}
 
 	return Object({
 		feedId,
