@@ -188,9 +188,18 @@ async function insertNewArticles (database, feedId, articles) {
  * The hook itself.
  */
 module.exports = async function feedIngester (action, variables, { database }) {
+	/* eslint no-console: 0 */
 
 	const rssFeedUrl = variables.provider.rssFeedUrl;
-	const xml = await downloadUrl(variables.provider.rssFeedUrl);
+	let xml;
+
+	try {
+		xml = await downloadUrl(variables.provider.rssFeedUrl, 0, true, false);
+	}
+	catch (err) {
+		return console.error(`Failed to download RSS feed because of "${err}".`);
+	}
+
 	const json = await parseXml(xml);
 	const feedId = calculateHashFromUrl(rssFeedUrl);
 	const articles = await convertFeedToArticles(feedId, json);
