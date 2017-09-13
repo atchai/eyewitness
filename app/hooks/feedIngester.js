@@ -67,7 +67,8 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 			// Cope with server errors.
 			if (res.statusCode >= 400) {
 				if (rejectOnHttpError) {
-					return reject(new Error(`Server returned error status code of "${res.statusCode}".`));
+					const err = new Error(`Request to "${url.toString()}" failed with a status code of "${res.statusCode}".`);
+					return reject(err);
 				}
 				else {
 					return resolve(null);
@@ -77,8 +78,28 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 			let data = ``;
 
 			stream.on(`data`, chunk => data += chunk);
-			stream.on(`error`, err => (rejectOnHttpError ? reject(err) : resolve(null)));
+			stream.on(`error`, _err => {
+
+				if (rejectOnHttpError) {
+					const err = new Error(`Request to "${url.toString()}" failed because of "${_err}".`);
+					return reject(err);
+				}
+
+				return resolve(null);
+
+			});
 			stream.on(`end`, () => resolve(data));
+
+		});
+
+		req.on(`error`, _err => {
+
+			if (rejectOnHttpError) {
+				const err = new Error(`Request to "${url.toString()}" failed because of "${_err}".`);
+				return reject(err);
+			}
+
+			return resolve(null);
 
 		});
 
