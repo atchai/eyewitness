@@ -15,7 +15,7 @@ const xml2js = require(`xml2js`);
 /*
  * Downloads the given URL.
  */
-async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true) {
+async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, sendUA = true) {
 
 	return await new Promise((resolve, reject) => {
 
@@ -34,9 +34,21 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true) {
 		// Prepare the module to use.
 		const url = new URL(input);
 		const httpModule = (url.protocol === `https:` ? https : http);
+		const headers = {};
+
+		// Do we need to send the user agent header?
+		if (sendUA) {
+			headers[`user-agent`] =
+				`Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36`;
+		}
 
 		// Make the request.
-		httpModule.get(url, res => {
+		const req = httpModule.get({
+			protocol: url.protocol,
+			hostname: url.hostname,
+			path: url.pathname,
+			headers,
+		}, res => {
 
 			let stream = res;
 
@@ -48,7 +60,7 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true) {
 
 			// Are we redirecting?
 			if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-				const redirectPromise = downloadUrl(res.headers.location, numRedirects + 1);
+				const redirectPromise = downloadUrl(res.headers.location, numRedirects + 1, rejectOnHttpError, sendUA);
 				return resolve(redirectPromise);
 			}
 
