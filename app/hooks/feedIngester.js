@@ -141,7 +141,7 @@ async function convertFeedItemToArticle (feedId, item) {
 
 	// Grab the page as a virtual DOM.
 	const articlePageHtml = await downloadUrl(item.link[0], 0, false);
-	let imageUrl = null;
+	let imageUrl = item.enclosure && item.enclosure[0].$.url;
 	let title = item.title[0] || null;
 	let description = item.description[0] || null;
 
