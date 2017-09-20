@@ -34,6 +34,14 @@
 			"timezoneOffset": 0
 		}
 	},
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "1 minute"
+		},
+		"news-notifications": {
+			"runEvery": "1 minute"
+		}
+	},
 	"hippocampServer": {
 		"baseUrl": "https://eyewitness.eu.ngrok.io",
 		"portInUrl": true

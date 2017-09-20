@@ -29,6 +29,14 @@
 			}
 		}
 	},
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "5 minutes"
+		},
+		"news-notifications": {
+			"runEvery": "5 minutes"
+		}
+	},
 	"hippocampServer": {
 		"baseUrl": null,
 		"port": 5000,
