@@ -4,12 +4,16 @@
  * HOOK: Feed Ingester
  */
 
+const packageJson = require(`../../package.json`);
+const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+
 const crypto = require(`crypto`);
 const http = require(`http`);
 const https = require(`https`);
 const { URL } = require(`url`);
 const zlib = require(`zlib`);
 const cheerio = require(`cheerio`);
+const moment = require(`moment`);
 const xml2js = require(`xml2js`);
 
 /*
@@ -144,6 +148,20 @@ async function convertFeedItemToArticle (feedId, item) {
 	let imageUrl = item.enclosure && item.enclosure[0].$.url;
 	let title = item.title[0] || null;
 	let description = item.description[0] || null;
+	const timezoneOffset = config.messageVariables.provider.timezoneOffset;
+	let articleDate;
+
+	// Get the date of the article in a format we can use.
+	if (item.pubDate && item.pubDate.length) {
+		const pubDate = item.pubDate[0].replace(/\s[a-z]{2,}$/i, ``);
+		const dateFormats = [`ddd, DD MMM YYYY HH:mm:ss`, `ddd, D MMM YYYY H:m:s`];
+		articleDate = moment.utc(pubDate, dateFormats).subtract(timezoneOffset, `hours`);
+	}
+
+	// Otherwise just use the current date.
+	else {
+		articleDate = moment.utc().add(timezoneOffset, `hours`);
+	}
 
 	// If we have page, try to pull out the rich preview values from the meta tags.
 	if (articlePageHtml) {
@@ -158,6 +176,7 @@ async function convertFeedItemToArticle (feedId, item) {
 		feedId,
 		articleId: calculateHashFromUrl(item.link[0]),
 		articleUrl: item.link[0],
+		articleDate: articleDate.valueOf(),
 		imageUrl,
 		title,
 		description,
