@@ -22,15 +22,15 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "hippocamp-development": "git+ssh://git@github.com/atchai/hippocamp.git",
-    "eslint": "latest",
+    "eslint": "^4.7.2",
     "eslint-config-recombix": "latest",
     "eslint-plugin-filenames": "latest",
     "eslint-plugin-json": "latest",
     "eslint-plugin-node": "^4.2.1",
     "eslint-plugin-promise": "latest",
+    "hippocamp-development": "git+ssh://git@github.com/atchai/hippocamp.git",
     "ngrok": "^2.2.9",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.12.1",
     "object-extender": "^2.0.3"
   },
   "engines": {
