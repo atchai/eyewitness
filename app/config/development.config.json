@@ -23,7 +23,7 @@
 	},
 	"menu": [{
 		"type": "url",
-		"label": "Send us a Story",
+		"label": "Send us a story",
 		"payload": "https://www.google.co.uk",
 		"sharing": true
 	}],

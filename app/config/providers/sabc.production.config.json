@@ -12,7 +12,7 @@
 	},
 	"menu": [{
 		"type": "url",
-		"label": "Send us a Story",
+		"label": "Send us a story",
 		"payload": "https://form.jotformeu.com/72493800344354",
 		"sharing": true
 	}],
