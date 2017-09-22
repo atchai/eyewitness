@@ -40,6 +40,7 @@ async function main () {
 		greetingText: config.greetingText,
 		menu: config.menu,
 		messageVariables: config.messageVariables,
+		allowUserTextReplies: false,
 		directories: {
 			commands: `./commands`,
 			conversation: `./conversation`,
