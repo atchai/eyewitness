@@ -4,14 +4,5 @@
 	"actions": [{
 		"type": "execute-hook",
 		"hook": "moreNews"
-	}, {
-		"type": "send-message",
-		"message": {
-			"text": "Want more?",
-			"options": [{
-				"label": "More Articles",
-				"nextUri": "/articles/more"
-			}]
-		}
 	}]
 }

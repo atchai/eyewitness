@@ -79,6 +79,10 @@ function prepareCarouselMessage (MessageObject, variables, recUser, recArticles)
 			sharing: true,
 			elements: recArticles.map(recArticle => prepareArticleElement(variables, recUser, recArticle)),
 		},
+		options: [{
+			label: `More Articles`,
+			nextUri: `/articles/more`,
+		}],
 	});
 
 }
