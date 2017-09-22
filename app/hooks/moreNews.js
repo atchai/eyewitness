@@ -80,7 +80,7 @@ function prepareCarouselMessage (MessageObject, variables, recUser, recArticles)
 			elements: recArticles.map(recArticle => prepareArticleElement(variables, recUser, recArticle)),
 		},
 		options: [{
-			label: `More Articles`,
+			label: `More stories`,
 			nextUri: `/articles/more`,
 		}],
 	});
