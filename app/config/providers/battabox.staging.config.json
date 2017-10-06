@@ -1,0 +1,38 @@
+{
+	"adapters": {
+		"facebook": {
+			"verifyToken": "vD8MiGEigU0MdPXcEi3a5at7ifEq0tgmi4b2H3f8",
+			"accessToken": "EAAEY8nBbtywBANrHy19rGlmOZAWXKWKRJsMFDgSTFaZBSy69FnBY6fG0c9iAFbZAXdpO9K5lhqxyCCAoui64Gio4JC47KlYhTBWfNHjliJkgH4NwxYADr2QZBdfmJPwnFHc7h3k77bKpOCZARrOfha5kko8E6fAYqBwVSD0Pb5gZDZD"
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://eyewitness-user-St6exXR8r9ONTbHimRy7jIDqkyXeehIqJdkDYAS9:vUqMWWj4uQjRPS28IntnCHS6A3uV4SdjYXYQ0rPkuIMCve6lSnqJQzh8oQ4eI1cPR1BzG79xgMfCRPKc@eyewitness-db-battabox-staging-1065078073.eu-west-1.elb.amazonaws.com:47296/eyewitness?authSource=admin"
+		}
+	},
+	"greetingText": "Welcome to BattaBox's news bot!",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://form.jotformeu.com/72784007544358",
+		"sharing": true
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
+	"messageVariables": {
+		"provider": {
+			"name": "BattaBox",
+			"rssFeedUrl": "https://battabox.com/feed/",
+			"timezoneOffset": 1
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app-battabox-staging.atchai.com"
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read-battabox-staging.atchai.com"
+	}
+}
