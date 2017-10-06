@@ -10,6 +10,7 @@
 			"connectionString": null
 		}
 	},
+	"greetingText": "Welcome to SABC's news bot!",
 	"menu": [{
 		"type": "url",
 		"label": "Send us a story",

@@ -16,7 +16,7 @@
 			"accessToken": null
 		}
 	},
-	"greetingText": "[GREETING TEXT GOES HERE]",
+	"greetingText": "Welcome to the Eyewitness news bot!",
 	"menu": null,
 	"messageVariables": {
 		"provider": {
