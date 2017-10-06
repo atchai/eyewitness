@@ -13,6 +13,7 @@ const https = require(`https`);
 const { URL } = require(`url`);
 const zlib = require(`zlib`);
 const cheerio = require(`cheerio`);
+const escapeRegExp = require(`escape-regexp`);
 const moment = require(`moment`);
 const xml2js = require(`xml2js`);
 
@@ -133,23 +134,26 @@ function calculateHashFromUrl (_input) {
 /*
  * Converts multiple RSS feed item to an Eyewitness article.
  */
-async function convertFeedToArticles (feedId, json) {
-	const promises = json.rss.channel[0].item.map(item => convertFeedItemToArticle(feedId, item));
+async function convertFeedToArticles (variables, feedId, json) {
+	const promises = json.rss.channel[0].item.map(item => convertFeedItemToArticle(variables, feedId, item));
 	return await Promise.all(promises);
 }
 
 /*
  * Converts a single RSS feed item to an Eyewitness article.
  */
-async function convertFeedItemToArticle (feedId, item) {
+async function convertFeedItemToArticle (variables, feedId, item) {
 
 	// Grab the page as a virtual DOM.
 	const articlePageHtml = await downloadUrl(item.link[0], 0, false);
+	const timezoneOffset = config.messageVariables.provider.timezoneOffset;
+	const itemPriorityField = variables.provider.itemPriorityField;
+	const itemPriorityValue = variables.provider.itemPriorityValue;
 	let imageUrl = item.enclosure && item.enclosure[0].$.url;
 	let title = item.title[0] || null;
 	let description = item.description[0] || null;
-	const timezoneOffset = config.messageVariables.provider.timezoneOffset;
-	let articleDate;
+	let articleDate = moment.utc().add(timezoneOffset, `hours`);
+	let isPriority = false;
 
 	// Get the date of the article in a format we can use.
 	if (item.pubDate && item.pubDate.length) {
@@ -158,18 +162,21 @@ async function convertFeedItemToArticle (feedId, item) {
 		articleDate = moment.utc(pubDate, dateFormats).subtract(timezoneOffset, `hours`);
 	}
 
-	// Otherwise just use the current date.
-	else {
-		articleDate = moment.utc().add(timezoneOffset, `hours`);
-	}
-
 	// If we have page, try to pull out the rich preview values from the meta tags.
 	if (articlePageHtml) {
 		const $dom = cheerio.load(articlePageHtml);
-
 		imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || imageUrl;
 		title = $dom(`head > meta[property="og:title"]`).attr(`content`) || title;
 		description = $dom(`head > meta[property="og:description"]`).attr(`content`) || description;
+	}
+
+	// Check if the item is breaking news.
+	if (itemPriorityField && itemPriorityValue && item[itemPriorityField]) {
+		const itemPriorityRegExp = new RegExp(escapeRegExp(itemPriorityValue), `i`);
+		const fieldValues = (Array.isArray(item[itemPriorityField]) ? item[itemPriorityField] : [item[itemPriorityField]]);
+		const matchingValue = fieldValues.find(value => value.match(itemPriorityRegExp));
+
+		isPriority = Boolean(matchingValue);
 	}
 
 	return Object({
@@ -180,6 +187,7 @@ async function convertFeedItemToArticle (feedId, item) {
 		imageUrl,
 		title,
 		description,
+		isPriority,
 	});
 
 }
@@ -221,7 +229,7 @@ module.exports = async function feedIngester (action, variables, { database }) {
 
 	const json = await parseXml(xml);
 	const feedId = calculateHashFromUrl(rssFeedUrl);
-	const articles = await convertFeedToArticles(feedId, json);
+	const articles = await convertFeedToArticles(variables, feedId, json);
 
 	await insertNewArticles(database, feedId, articles);
 
