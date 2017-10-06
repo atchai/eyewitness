@@ -19,7 +19,7 @@ async function loadAllUsers (database) {
 /*
  * Returns a dictionary containing the latest unread article record and the user record for the given user, or null.
  */
-async function getLatestUnreadArticleForUser (database, recUser) {
+async function getLatestUnreadPriorityArticleForUser (database, recUser) {
 
 	const conditions = {
 		_readByUsers: { $nin: [recUser._id] },
@@ -60,7 +60,7 @@ module.exports = async function newsNotifications (action, variables, { database
 	if (hours < notBeforeHour || hours > notAfterHour) { return; }
 
 	const recUsers = await loadAllUsers(database);
-	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadArticleForUser(database, recUser));
+	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadPriorityArticleForUser(database, recUser));
 	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
 	const recFilteredUsers = filterUsersWithOutstandingNews(outstandingNewsUsers);
 	const articleChangesToMake = [];
