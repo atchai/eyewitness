@@ -7,7 +7,7 @@
 	},
 	"databases": {
 		"mongo": {
-			"connectionString": "mongodb://eyewitness-user-St6exXR8r9ONTbHimRy7jIDqkyXeehIqJdkDYAS9:vUqMWWj4uQjRPS28IntnCHS6A3uV4SdjYXYQ0rPkuIMCve6lSnqJQzh8oQ4eI1cPR1BzG79xgMfCRPKc@eyewitness-db-battabox-staging-1065078073.eu-west-1.elb.amazonaws.com:47296/eyewitness?authSource=admin"
+			"connectionString": "mongodb://eyewitness-user-ZAnSNJCeNuWgR4LwFLhGh3B4TCf8PuIsUZCV0pj6:xVKahdfIMFRvRbxV4qD6Q78c2bvgn4zN0ZCO32ePMDDrQI8kNz0KMQwkvKzbAm4cDEPJlaxlZgs3Je1L@eyewitness-db-battabox-staging-308018010.eu-west-1.elb.amazonaws.com:47297/eyewitness?authSource=admin"
 		}
 	},
 	"greetingText": "Welcome to BattaBox's news bot!",
