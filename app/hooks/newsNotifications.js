@@ -22,7 +22,7 @@ async function loadAllUsers (database) {
 async function getLatestUnreadPriorityArticleForUser (database, recUser) {
 
 	const conditions = {
-		_readByUsers: { $nin: [recUser._id] },
+		_receivedByUsers: { $nin: [recUser._id] },
 		isPriority: true,
 	};
 	const options = {
