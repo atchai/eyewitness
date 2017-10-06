@@ -49,7 +49,7 @@ function filterUsersWithOutstandingNews (outstandingNewsUsers) {
 /*
  * The hook itself.
  */
-module.exports = async function newsNotifications (action, variables, { database, sendMessage }) {
+module.exports = async function newsNotifications (action, variables, { database, MessageObject, sendMessage }) {
 
 	const notBeforeHour = variables.provider.notifications.notBeforeHour;
 	const notAfterHour = variables.provider.notifications.notAfterHour;
@@ -75,7 +75,7 @@ module.exports = async function newsNotifications (action, variables, { database
 		const feedId = recArticle.feedId;
 		const userId = recUser._id;
 		const readUrl = `${baseUrl}${port}/${feedId}/${articleId}/${userId}`;
-		const message = {
+		const message = new MessageObject({
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
 			channelUserId: recUser.channel.userId,
@@ -93,7 +93,7 @@ module.exports = async function newsNotifications (action, variables, { database
 					}],
 				}],
 			},
-		};
+		});
 
 		// Remember the change we need to make to the article documents.
 		articleChangesToMake.push({
