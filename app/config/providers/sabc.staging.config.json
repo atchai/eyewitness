@@ -16,6 +16,11 @@
 		"label": "Send us a story",
 		"payload": "https://form.jotformeu.com/72493800344354",
 		"sharing": true
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
 	}],
 	"messageVariables": {
 		"provider": {

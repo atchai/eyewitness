@@ -21,12 +21,6 @@
 			"accessToken": "EAAWiWZCZBizhMBAMiCnTMVgoZBaclC7wjQcSY5Yr7hDHfogvSUAN4kNQ2phoD4gm4L13pxZAvuYv0QVRgZArjwRTkvXWSUrZB3bsWSl2gbnqQWfgxHHOdEUS4hqT9VDAA6RjYt3gfZASyodxuAlP7DQEJYZCXrwt1YNk2baYdbdJZCAZDZD"
 		}
 	},
-	"menu": [{
-		"type": "url",
-		"label": "Send us a story",
-		"payload": "https://www.google.co.uk",
-		"sharing": true
-	}],
 	"messageVariables": {
 		"provider": {
 			"name": "The Amity Gazette",

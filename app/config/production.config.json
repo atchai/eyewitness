@@ -17,7 +17,17 @@
 		}
 	},
 	"greetingText": "Welcome to the Eyewitness news bot!",
-	"menu": null,
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://www.google.co.uk",
+		"sharing": true
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
 	"messageVariables": {
 		"provider": {
 			"name": "Unknown",
