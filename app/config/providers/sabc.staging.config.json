@@ -1,10 +1,10 @@
 {
 	"adapters": {
-		"facebook": {
+		"STAGING_facebook": {
 			"verifyToken": "jzMaRwGYyFpPknm9x0HnugFsZ7EULA0QibGHpawe",
 			"accessToken": "EAABpxhPyBiIBAEvxsiTY4Ymuk9ZBeVGmIjXj8pMEVPnIL1KZC6Ytd8QZBbOXegV4tpz2JaaYBIcaHaeJsmRSdkj3pkSM8DoUDptXY4YsEeV05ycxprouQWWOPfYDDKziirZAZB604wtbAZAzfNE5RbV0ArdZCgQ9if35tkJVR9rpQZDZD"
 		},
-		"PRODUCTION_facebook": {
+		"facebook": {
 			"verifyToken": "jzMaRwGYyFpPknm9x0HnugFsZ7EULA0QibGHpawe",
 			"accessToken": "EAAXYZCJQhLPwBAFhbs14nHCphALNsox65vtIlDLb9T7kYnQfhdTnU8XHFkAW9rwFXA1JGgZAxnYKuRqS2uGB0HNS60DcCPvWmZBLcdhVoFIH1yiawKIaeNECNNpu0BufCveV6vZBmr91L5g6Iyrf2sLEpAEzK2y47N72f84j2wZDZD"
 		}
