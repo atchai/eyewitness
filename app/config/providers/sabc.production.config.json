@@ -1,8 +1,8 @@
 {
 	"adapters": {
 		"facebook": {
-			"verifyToken": "XXXXX",
-			"accessToken": "XXXXX"
+			"verifyToken": "I6v6oP5fRRhw7tKoCOkWqG9iu05EGdRH1HrxiM2b",
+			"accessToken": "EAAHWcmvsRA8BAKixsHDPDLGZCYzlWWpSQa1fMfmCUpSN1deitHENR6a1VGlysbvZAqWH5THQtsNHmZBizWVLZAFV0CGt39NME7UdtFbdWOpFAPCNsjKfDcJXtyJWW9NXsGRfBB9ZALcC7i7ZAwpStZCPDDnoycquzs5kZABuzmZCTM4VJONJuv6OK"
 		}
 	},
 	"databases": {
