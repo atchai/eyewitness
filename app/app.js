@@ -41,7 +41,7 @@ async function main () {
 		misunderstoodText: null,
 		menu: config.menu,
 		messageVariables: config.messageVariables,
-		allowUserTextReplies: false,
+		allowUserTextReplies: true,
 		directories: {
 			commands: `./commands`,
 			conversation: `./conversation`,
