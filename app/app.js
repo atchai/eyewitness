@@ -38,6 +38,7 @@ async function main () {
 		port: config.hippocampServer.port,
 		enableUserProfile: true,
 		greetingText: config.greetingText,
+		misunderstoodText: null,
 		menu: config.menu,
 		messageVariables: config.messageVariables,
 		allowUserTextReplies: false,
