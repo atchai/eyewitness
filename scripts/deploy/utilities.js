@@ -14,7 +14,7 @@ const WORKING_DIR = path.join(__dirname, `../../`);
  */
 async function execute (command) {
 
-	await new Promise((resolve, reject) => {
+	const output = await new Promise((resolve, reject) => {
 
 		const [ commandToRun, ...commandArgs ] = command.split(/\s+/g);
 
@@ -49,6 +49,8 @@ async function execute (command) {
 		});
 
 	});
+
+	return output;
 
 }
 
