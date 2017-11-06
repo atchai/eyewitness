@@ -6,11 +6,9 @@
 
 /* eslint node/no-unpublished-require: 0 */
 
-const path = require(`path`);
-const { spawn } = require(`child_process`);
 const extender = require(`object-extender`);
+const { execute } = require(`./utilities`);
 
-const WORKING_DIR = path.join(__dirname, `../../`);
 const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
@@ -18,47 +16,7 @@ const IMAGE_NAME = `eyewitness-app`;
 const cache = {};
 
 /*
- * Executes the given command and returns a promise.
  */
-function execute (command) {
-
-	return new Promise((resolve, reject) => {
-
-		const [ commandToRun, ...commandArgs ] = command.split(/\s+/g);
-
-		const child = spawn(commandToRun, commandArgs, {
-			cwd: WORKING_DIR,
-			env: process.env,
-			shell: true,
-		});
-
-		let stdout = ``;
-		let stderr = ``;
-
-		child.stdout.on(`data`, data => {
-			stdout += data;
-			process.stdout.write(data);
-		});
-		child.stderr.on(`data`, data => {
-			stderr += data;
-			process.stderr.write(data);
-		});
-
-		child.on(`error`, err => reject(err));
-
-		child.on(`close`, (code) => {
-			if (code) {
-				const err = new Error(`Command exited unexpectedly with error code "${code}"!`);
-				err.stderr = stderr;
-				return reject(err);
-			}
-
-			return resolve(stdout);
-		});
-
-	});
-
-}
 
 // Grab the version argument.
 const versionType = process.argv[2];
