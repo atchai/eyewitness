@@ -5,7 +5,7 @@
 		"memoryReservation": 96,
 		"essential": true,
 		"portMappings": [{
-			"containerPort": 5000,
+			"containerPort": -1,
 			"hostPort": 0,
 			"protocol": "tcp"
 		}],
@@ -14,7 +14,7 @@
 			"value": "{{REPLACE_ME}}"
 		}, {
 			"name": "PROVIDER_ID",
-			"value": "battabox"
+			"value": "{{REPLACE_ME}}"
 		}, {
 			"name": "ENTRY_POINT",
 			"value": "bot"
@@ -33,7 +33,7 @@
 		"memoryReservation": 96,
 		"essential": true,
 		"portMappings": [{
-			"containerPort": 5001,
+			"containerPort": -1,
 			"hostPort": 0,
 			"protocol": "tcp"
 		}],
@@ -42,7 +42,7 @@
 			"value": "{{REPLACE_ME}}"
 		}, {
 			"name": "PROVIDER_ID",
-			"value": "battabox"
+			"value": "{{REPLACE_ME}}"
 		}, {
 			"name": "ENTRY_POINT",
 			"value": "read-server"

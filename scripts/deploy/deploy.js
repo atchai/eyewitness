@@ -9,6 +9,8 @@
 const extender = require(`object-extender`);
 const { execute } = require(`./utilities`);
 
+const TASK_DEFINITION_ORIGINAL = require(`./task.config.json`);
+const PORTS_CONFIG = require(`./ports.config.json`);
 const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
@@ -41,7 +43,6 @@ async function main () {
 	}
 
 	// Figure out the correct resources to use for the given environment.
-	const taskDefinitionOriginal = require(`./tasks/${provider}.config.json`);  // eslint-disable-line
 	const branch = (environment === `production` ? `master` : `develop`);
 	const clusterName = `eyewitness-${environment}`;
 	const awsLogsGroup = `eyewitness/${environment}/${provider}`;
@@ -92,13 +93,23 @@ async function main () {
 	process.stdout.write(`\n\n[Updating AWS ECS task definition]\n`);
 
 	// Prepare the task definition.
-	const taskDefinition = extender.clone(taskDefinitionOriginal);
+	const taskDefinition = extender.clone(TASK_DEFINITION_ORIGINAL);
 	const botContainer = taskDefinition.containerDefinitions[0];
 	const readServerContainer = taskDefinition.containerDefinitions[1];
 
 	// Set NODE_ENV environment variable on containers.
 	botContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
 	readServerContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
+
+	// Set PROVIDER_ID environment variable on containers.
+	botContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
+	readServerContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
+
+	// Set container ports.
+	const botPort = PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.bot;
+	const readServerPort =  PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.readServer;
+	botContainer.portMappings[0].containerPort = botPort;
+	readServerContainer.portMappings[0].containerPort = readServerPort;
 
 	// Set AWS logs config on containers.
 	botContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;

@@ -1,0 +1,11 @@
+{
+	"providers": {
+		"battabox": 5000,
+		"sabc": 5100,
+		"thestar": 5200
+	},
+	"containerOffsets": {
+		"bot": 0,
+		"readServer": 1
+	}
+}
