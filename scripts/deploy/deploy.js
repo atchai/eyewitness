@@ -13,6 +13,8 @@ const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
+const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`];
+const ALLOWED_ENVIRONMENTS = [`production`, `staging`];
 
 /*
  * The main function.
@@ -21,20 +23,20 @@ async function main () {
 
 	// Grab the version argument.
 	const versionType = process.argv[2];
-	if (versionType !== `major` && versionType !== `minor` && versionType !== `patch`) {
-		throw new Error(`--version flag is required and must be one of "major", "minor" or "patch".`);
+	if (!ALLOWED_VERSION_TYPES.includes(versionType)) {
+		throw new Error(`Version argument is required and must be one of: ${ALLOWED_VERSION_TYPES}.`);
 	}
 
 	// Grab the provider argument.
 	const provider = process.argv[3];
 	if (!provider) {
-		throw new Error(`--provider flag is required.`);
+		throw new Error(`Provider argument is required.`);
 	}
 
 	// Grab the environment argument.
 	const environment = process.argv[4];
-	if (environment !== `production` && environment !== `staging`) {
-		throw new Error(`--environment flag is required and must be one of "production" or "staging".`);
+	if (!ALLOWED_ENVIRONMENTS.includes(environment)) {
+		throw new Error(`Environment argument is required and must be one of: ${ALLOWED_ENVIRONMENTS}.`);
 	}
 
 	// Figure out the correct resources to use for the given environment.
