@@ -41,7 +41,7 @@ async function main () {
 	}
 
 	// Figure out the correct resources to use for the given environment.
-	const taskDefinitionOriginal = require(`./${provider}.config.json`);  // eslint-disable-line
+	const taskDefinitionOriginal = require(`./tasks/${provider}.config.json`);  // eslint-disable-line
 	const branch = (environment === `production` ? `master` : `develop`);
 	const clusterName = `eyewitness-${environment}`;
 	const awsLogsGroup = `eyewitness/${environment}/${provider}`;
