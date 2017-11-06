@@ -61,19 +61,19 @@ function execute (command) {
 }
 
 // Grab the version argument.
-const versionType = process.argv[2].split(`=`)[1];
 if (versionType !== `major` && versionType !== `minor` && versionType !== `patch`) {
 	throw new Error(`--version flag is required and must be one of "major", "minor" or "patch".`);
+const versionType = process.argv[2];
 }
 
 // Grab the provider argument.
-const provider = process.argv[3].split(`=`)[1];
+const provider = process.argv[3];
 if (!provider) {
 	throw new Error(`--provider flag is required.`);
 }
 
 // Grab the environment argument.
-const environment = process.argv[4].split(`=`)[1];
+const environment = process.argv[4];
 if (environment !== `production` && environment !== `staging`) {
 	throw new Error(`--environment flag is required and must be one of "production" or "staging".`);
 }
