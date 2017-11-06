@@ -13,7 +13,7 @@ const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
-const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`];
+const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`, `existing`];
 const ALLOWED_ENVIRONMENTS = [`production`, `staging`];
 
 /*
@@ -48,36 +48,42 @@ async function main () {
 	const readServerServiceName = `eyewitness-read-${provider}`;
 	const botTaskFamily = botServiceName;
 	const readServerTaskFamily = readServerServiceName;
+	let version;
 
 	// Switch to the correct branch.
 	process.stdout.write(`\n\n[Switching to ${branch} branch]\n`);
 	await execute(`git checkout ${branch}`);
 
-	// Bump the version.
-	process.stdout.write(`\n\n[Bumping version number]\n`);
-	const versionString = await execute(`npm version ${versionType}`);
-	const version = versionString.match(/v(\d+\.\d+\.\d+)/)[1];
+	// Don't do the following if we aren't bumping the version number.
+	if (versionType !== `existing`) {
 
-	// Get Docker login token.
-	process.stdout.write(`\n\n[Retrieving Docker login token from AWS]\n`);
-	const dockerLoginCommand = await execute(
-		`aws ecr get-login --no-include-email --profile "${AWS_PROFILE}" --region "${AWS_REGION}"`
-	);
+		// Bump the version.
+		process.stdout.write(`\n\n[Bumping version number]\n`);
+		const versionString = await execute(`npm version ${versionType}`);
+		version = versionString.match(/v(\d+\.\d+\.\d+)/)[1];
 
-	// Login to Docker.
-	process.stdout.write(`\n\n[Logging into AWS Docker repository]\n`);
-	await execute(dockerLoginCommand);
+		// Get Docker login token.
+		process.stdout.write(`\n\n[Retrieving Docker login token from AWS]\n`);
+		const dockerLoginCommand = await execute(
+			`aws ecr get-login --no-include-email --profile "${AWS_PROFILE}" --region "${AWS_REGION}"`
+		);
 
-	// Build and tag new Docker image.
-	process.stdout.write(`\n\n[Building and tagging Docker image]\n`);
-	await execute(
-		`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_URL}/${IMAGE_NAME}:latest -t ${AWS_REPO_URL}/${IMAGE_NAME}:${version} .`
-	);
+		// Login to Docker.
+		process.stdout.write(`\n\n[Logging into AWS Docker repository]\n`);
+		await execute(dockerLoginCommand);
 
-	// Push to AWS container repo (one after the other to take advantage of layer caching in ECR).
-	process.stdout.write(`\n\n[Pushing Docker image to AWS repository]\n`);
-	await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:latest`);
-	await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:${version}`);
+		// Build and tag new Docker image.
+		process.stdout.write(`\n\n[Building and tagging Docker image]\n`);
+		await execute(
+			`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_URL}/${IMAGE_NAME}:latest -t ${AWS_REPO_URL}/${IMAGE_NAME}:${version} .`
+		);
+
+		// Push to AWS container repo (one after the other to take advantage of layer caching in ECR).
+		process.stdout.write(`\n\n[Pushing Docker image to AWS repository]\n`);
+		await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:latest`);
+		await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:${version}`);
+
+	}
 
 	// Update AWS ECS task definitions with new image tag.
 	process.stdout.write(`\n\n[Updating AWS ECS task definition]\n`);
@@ -155,9 +161,14 @@ async function main () {
 		execute(`aws ecs update-service ${updateServiceReadServerArgs}`),
 	]);
 
-	// Push the changes and tag to the remote repo.
-	process.stdout.write(`\n\n[Pushing version change to Git repository]\n`);
-	await execute(`git push && git push origin v${version}`);
+	// Don't do the following if we aren't bumping the version number.
+	if (versionType !== `existing`) {
+
+		// Push the changes and tag to the remote repo.
+		process.stdout.write(`\n\n[Pushing version change to Git repository]\n`);
+		await execute(`git push && git push origin v${version}`);
+
+	}
 
 	// Tidy up.
 	process.stdout.write(`\n\n[Done!]\n`);
