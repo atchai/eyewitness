@@ -2,7 +2,7 @@
 	"eyewitness-app": {
 		"containerDefinitions": [{
 			"name": "eyewitness-app",
-			"image": "538881967423.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
+			"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
 			"memoryReservation": 96,
 			"essential": true,
 			"portMappings": [{
@@ -33,7 +33,7 @@
 	"eyewitness-read-server": {
 		"containerDefinitions": [{
 			"name": "eyewitness-read-server",
-			"image": "538881967423.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
+			"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
 			"memoryReservation": 96,
 			"essential": true,
 			"portMappings": [{
