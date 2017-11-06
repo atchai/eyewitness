@@ -17,6 +17,9 @@
 		"payload": "https://form.jotformeu.com/72812934044354",
 		"sharing": true
 	}, {
+		"type": "basic",
+		"label": "More stories"
+	}, {
 		"type": "url",
 		"label": "Privacy policy",
 		"payload": "https://atchai.com/docs/eyewitness-policy/",
