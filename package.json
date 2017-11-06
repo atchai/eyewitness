@@ -5,12 +5,7 @@
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy-battabox-production": "node ./scripts/deploy/deploy --version=minor --provider=battabox --environment=production",
-    "deploy-battabox-staging": "node ./scripts/deploy/deploy --version=patch --provider=battabox --environment=staging",
-    "deploy-sabc-production": "node ./scripts/deploy/deploy --version=minor --provider=sabc --environment=production",
-    "deploy-sabc-staging": "node ./scripts/deploy/deploy --version=patch --provider=sabc --environment=staging",
-    "deploy-thestar-production": "node ./scripts/deploy/deploy --version=minor --provider=thestar --environment=production",
-    "deploy-thestar-staging": "node ./scripts/deploy/deploy --version=patch --provider=thestar --environment=staging",
+    "deploy": "node ./scripts/deploy/deploy",
     "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
     "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
