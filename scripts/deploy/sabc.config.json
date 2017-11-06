@@ -25,7 +25,7 @@
 				"options": {
 					"awslogs-region": "{{REPLACE_ME}}",
 					"awslogs-group": "{{REPLACE_ME}}",
-					"awslogs-stream-prefix": "eyewitness-app"
+					"awslogs-stream-prefix": "bot"
 				}
 			}
 		}]
@@ -56,7 +56,7 @@
 				"options": {
 					"awslogs-region": "{{REPLACE_ME}}",
 					"awslogs-group": "{{REPLACE_ME}}",
-					"awslogs-stream-prefix": "eyewitness-read-server"
+					"awslogs-stream-prefix": "read-server"
 				}
 			}
 		}]
