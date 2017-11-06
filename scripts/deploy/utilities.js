@@ -55,8 +55,53 @@ async function execute (command) {
 }
 
 /*
+ * Registers a new task definition on AWS.
+ */
+async function registerTaskDefinition (awsProfile, awsRegion, taskFamily, taskDefinition) {
+
+	// Prepare the AWS CLI command.
+	const escapedContainerJson = JSON.stringify(taskDefinition.containerDefinitions).replace(/"/g, `\\"`);
+	const registerTaskDefinitionArgs = [
+		`--profile "${awsProfile}"`,
+		`--region "${awsRegion}"`,
+		`--output "json"`,
+		`--family "${taskFamily}"`,
+		`--container-definitions "${escapedContainerJson}"`,
+	].join(` `);
+
+	// Execute the AWS CLI command.
+	const newTaskDefinitionOutput = await execute(`aws ecs register-task-definition ${registerTaskDefinitionArgs}`);
+	const newTaskDefinition = JSON.parse(newTaskDefinitionOutput).taskDefinition;
+
+	return newTaskDefinition;
+
+}
+
+/*
+ *  Updates the given service on AWS.
+ */
+async function updateService (awsProfile, awsRegion, clusterName, serviceName, taskDefinition) {
+
+	// Prepare the AWS CLI command.
+	const updateServiceArgs = [
+		`--profile "${awsProfile}"`,
+		`--region "${awsRegion}"`,
+		`--output "json"`,
+		`--cluster "${clusterName}"`,
+		`--service "${serviceName}"`,
+		`--task-definition "${taskDefinition.family}:${taskDefinition.revision}"`,
+	].join(` `);
+
+	// Execute the AWS CLI command.
+	await execute(`aws ecs update-service ${updateServiceArgs}`);
+
+}
+
+/*
  * Export.
  */
 module.exports = {
 	execute,
+	registerTaskDefinition,
+	updateService,
 };

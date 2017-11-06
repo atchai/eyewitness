@@ -7,7 +7,7 @@
 /* eslint node/no-unpublished-require: 0 */
 
 const extender = require(`object-extender`);
-const { execute } = require(`./utilities`);
+const { execute, registerTaskDefinition, updateService } = require(`./utilities`);
 
 const TASK_DEFINITION_ORIGINAL = require(`./task.config.json`);
 const PORTS_CONFIG = require(`./ports.config.json`);
@@ -117,35 +117,20 @@ async function main () {
 	readServerContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
 	readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
 
-	// Prepare the AWS CLI commands.
-	const escapedContainerJson = JSON.stringify(taskDefinition.containerDefinitions).replace(/"/g, `\\"`);
-	const registerTaskDefinitionArgs = [
-		`--profile "${AWS_PROFILE}"`,
-		`--region "${AWS_REGION}"`,
-		`--output "json"`,
-		`--family "${taskFamily}"`,
-		`--container-definitions "${escapedContainerJson}"`,
-	].join(` `);
+	// Right now AWS ECS requires us to create separate services for each exposed container.
+	const botPseudoTaskDefinition = { containerDefinitions: [botContainer] };
+	const readServerPseudoTaskDefinition = { containerDefinitions: [readServerContainer] };
 
-	// Execute the AWS CLI commands.
-	const newTaskDefinitionOutput = await execute(`aws ecs register-task-definition ${registerTaskDefinitionArgs}`);
-	const newTaskDefinition = JSON.parse(newTaskDefinitionOutput).taskDefinition;
+	const newBotTaskDefinition =
+		await registerTaskDefinition(AWS_PROFILE, AWS_REGION, `${taskFamily}-bot`, botPseudoTaskDefinition);
+	const newReadServerTaskDefinition =
+		await registerTaskDefinition(AWS_PROFILE, AWS_REGION, `${taskFamily}-read-server`, readServerPseudoTaskDefinition);
 
 	// Update AWS ECS services with new task definition.
 	process.stdout.write(`\n\n[Updating AWS ECS service]\n`);
 
-	// Prepare the AWS CLI commands.
-	const updateServiceArgs = [
-		`--profile "${AWS_PROFILE}"`,
-		`--region "${AWS_REGION}"`,
-		`--output "json"`,
-		`--cluster "${clusterName}"`,
-		`--service "${serviceName}"`,
-		`--task-definition "${newTaskDefinition.family}:${newTaskDefinition.revision}"`,
-	].join(` `);
-
-	// Execute the AWS CLI commands (in parallel).
-	await execute(`aws ecs update-service ${updateServiceArgs}`);
+	await updateService(AWS_PROFILE, AWS_REGION, clusterName, `${serviceName}-bot`, newBotTaskDefinition);
+	await updateService(AWS_PROFILE, AWS_REGION, clusterName, `${serviceName}-read-server`, newReadServerTaskDefinition);
 
 	// Tidy up.
 	process.stdout.write(`\n\n[Done!]\n`);
