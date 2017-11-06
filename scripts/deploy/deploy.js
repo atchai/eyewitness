@@ -11,7 +11,7 @@ const { spawn } = require(`child_process`);
 const extender = require(`object-extender`);
 
 const WORKING_DIR = path.join(__dirname, `../../`);
-const AWS_PROFILE = `eyewitness-ci-atchai`;
+const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
