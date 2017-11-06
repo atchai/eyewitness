@@ -61,9 +61,9 @@ function execute (command) {
 }
 
 // Grab the version argument.
-if (versionType !== `major` && versionType !== `minor` && versionType !== `patch`) {
-	throw new Error(`--version flag is required and must be one of "major", "minor" or "patch".`);
 const versionType = process.argv[2];
+if (versionType !== `major` && versionType !== `minor` && versionType !== `patch` && versionType !== `none`) {
+	throw new Error(`--version flag is required and must be one of "major", "minor", "patch" or "none".`);
 }
 
 // Grab the provider argument.
