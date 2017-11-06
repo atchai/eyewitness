@@ -1,7 +1,7 @@
 {
-	"app": {
+	"bot": {
 		"containerDefinitions": [{
-			"name": "app",
+			"name": "bot",
 			"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
 			"memoryReservation": 96,
 			"essential": true,
@@ -18,7 +18,7 @@
 				"value": "thestar"
 			}, {
 				"name": "ENTRY_POINT",
-				"value": "app"
+				"value": "bot"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",

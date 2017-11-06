@@ -18,7 +18,7 @@
 				"value": "battabox"
 			}, {
 				"name": "ENTRY_POINT",
-				"value": "app"
+				"value": "bot"
 			}],
 			"logConfiguration": {
 				"logDriver": "awslogs",
