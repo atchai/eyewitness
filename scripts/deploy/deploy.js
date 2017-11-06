@@ -45,10 +45,8 @@ async function main () {
 	const branch = (environment === `production` ? `master` : `develop`);
 	const clusterName = `eyewitness-${environment}`;
 	const awsLogsGroup = `eyewitness/${environment}/${provider}`;
-	const botServiceName = `eyewitness-bot-${provider}`;
-	const readServerServiceName = `eyewitness-read-${provider}`;
-	const botTaskFamily = botServiceName;
-	const readServerTaskFamily = readServerServiceName;
+	const serviceName = `eyewitness-${provider}`;
+	const taskFamily = serviceName;
 	let version;
 
 	// Switch to the correct branch.
@@ -84,6 +82,10 @@ async function main () {
 		await execute(`docker push ${AWS_REPO_IMAGE_URL}:latest`);
 		await execute(`docker push ${AWS_REPO_IMAGE_URL}:${version}`);
 
+		// Push the changes and tag to the remote repo.
+		process.stdout.write(`\n\n[Pushing version change to Git repository]\n`);
+		await execute(`git push && git push origin v${version}`);
+
 	}
 
 	// Update AWS ECS task definitions with new image tag.
@@ -91,10 +93,8 @@ async function main () {
 
 	// Prepare the task definition.
 	const taskDefinition = extender.clone(taskDefinitionOriginal);
-	const botTask = taskDefinition[`bot`];
-	const readServerTask = taskDefinition[`read-server`];
-	const botContainer = botTask.containerDefinitions[0];
-	const readServerContainer = readServerTask.containerDefinitions[0];
+	const botContainer = taskDefinition.containerDefinitions[0];
+	const readServerContainer = taskDefinition.containerDefinitions[1];
 
 	// Set NODE_ENV environment variable on containers.
 	botContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
@@ -107,69 +107,34 @@ async function main () {
 	readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
 
 	// Prepare the AWS CLI commands.
-	const escapedBotContainerJson = JSON.stringify(botTask.containerDefinitions).replace(/"/g, `\\"`);
-	const escapedReadServerContainerJson = JSON.stringify(readServerTask.containerDefinitions).replace(/"/g, `\\"`);
-	const registerTaskDefinitionBotArgs = [
+	const escapedContainerJson = JSON.stringify(taskDefinition.containerDefinitions).replace(/"/g, `\\"`);
+	const registerTaskDefinitionArgs = [
 		`--profile "${AWS_PROFILE}"`,
 		`--region "${AWS_REGION}"`,
 		`--output "json"`,
-		`--family "${botTaskFamily}"`,
-		`--container-definitions "${escapedBotContainerJson}"`,
-	].join(` `);
-	const registerTaskDefinitionReadServerArgs = [
-		`--profile "${AWS_PROFILE}"`,
-		`--region "${AWS_REGION}"`,
-		`--output "json"`,
-		`--family "${readServerTaskFamily}"`,
-		`--container-definitions "${escapedReadServerContainerJson}"`,
+		`--family "${taskFamily}"`,
+		`--container-definitions "${escapedContainerJson}"`,
 	].join(` `);
 
 	// Execute the AWS CLI commands.
-	const [ botTaskDefinition, readServerTaskDefinition ] = await Promise.all([
-		execute(`aws ecs register-task-definition ${registerTaskDefinitionBotArgs}`),
-		execute(`aws ecs register-task-definition ${registerTaskDefinitionReadServerArgs}`),
-	]);
-
-	const newTaskDefinitions = {
-		bot: JSON.parse(botTaskDefinition).taskDefinition,
-		readServer: JSON.parse(readServerTaskDefinition).taskDefinition,
-	};
+	const newTaskDefinitionOutput = await execute(`aws ecs register-task-definition ${registerTaskDefinitionArgs}`);
+	const newTaskDefinition = JSON.parse(newTaskDefinitionOutput).taskDefinition;
 
 	// Update AWS ECS services with new task definition.
 	process.stdout.write(`\n\n[Updating AWS ECS service]\n`);
 
 	// Prepare the AWS CLI commands.
-	const updateServiceBotArgs = [
+	const updateServiceArgs = [
 		`--profile "${AWS_PROFILE}"`,
 		`--region "${AWS_REGION}"`,
 		`--output "json"`,
 		`--cluster "${clusterName}"`,
-		`--service "${botServiceName}"`,
-		`--task-definition "${newTaskDefinitions.bot.family}:${newTaskDefinitions.bot.revision}"`,
-	].join(` `);
-	const updateServiceReadServerArgs = [
-		`--profile "${AWS_PROFILE}"`,
-		`--region "${AWS_REGION}"`,
-		`--output "json"`,
-		`--cluster "${clusterName}"`,
-		`--service "${readServerServiceName}"`,
-		`--task-definition "${newTaskDefinitions.readServer.family}:${newTaskDefinitions.readServer.revision}"`,
+		`--service "${serviceName}"`,
+		`--task-definition "${newTaskDefinition.family}:${newTaskDefinition.revision}"`,
 	].join(` `);
 
 	// Execute the AWS CLI commands (in parallel).
-	await Promise.all([
-		execute(`aws ecs update-service ${updateServiceBotArgs}`),
-		execute(`aws ecs update-service ${updateServiceReadServerArgs}`),
-	]);
-
-	// Don't do the following if we aren't bumping the version number.
-	if (versionType !== `existing`) {
-
-		// Push the changes and tag to the remote repo.
-		process.stdout.write(`\n\n[Pushing version change to Git repository]\n`);
-		await execute(`git push && git push origin v${version}`);
-
-	}
+	await execute(`aws ecs update-service ${updateServiceArgs}`);
 
 	// Tidy up.
 	process.stdout.write(`\n\n[Done!]\n`);
