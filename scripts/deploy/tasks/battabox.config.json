@@ -1,7 +1,7 @@
 {
-	"eyewitness-app": {
+	"bot": {
 		"containerDefinitions": [{
-			"name": "eyewitness-app",
+			"name": "bot",
 			"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
 			"memoryReservation": 96,
 			"essential": true,
@@ -30,9 +30,9 @@
 			}
 		}]
 	},
-	"eyewitness-read-server": {
+	"read-server": {
 		"containerDefinitions": [{
-			"name": "eyewitness-read-server",
+			"name": "read-server",
 			"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
 			"memoryReservation": 96,
 			"essential": true,
