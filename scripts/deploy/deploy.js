@@ -13,6 +13,7 @@ const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
+const AWS_REPO_IMAGE_URL = `${AWS_REPO_URL}/${IMAGE_NAME}`;
 const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`, `existing`];
 const ALLOWED_ENVIRONMENTS = [`production`, `staging`];
 
@@ -75,13 +76,13 @@ async function main () {
 		// Build and tag new Docker image.
 		process.stdout.write(`\n\n[Building and tagging Docker image]\n`);
 		await execute(
-			`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_URL}/${IMAGE_NAME}:latest -t ${AWS_REPO_URL}/${IMAGE_NAME}:${version} .`
+			`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_IMAGE_URL}:latest -t ${AWS_REPO_IMAGE_URL}:${version} .`
 		);
 
 		// Push to AWS container repo (one after the other to take advantage of layer caching in ECR).
 		process.stdout.write(`\n\n[Pushing Docker image to AWS repository]\n`);
-		await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:latest`);
-		await execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:${version}`);
+		await execute(`docker push ${AWS_REPO_IMAGE_URL}:latest`);
+		await execute(`docker push ${AWS_REPO_IMAGE_URL}:${version}`);
 
 	}
 
