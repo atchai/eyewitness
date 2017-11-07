@@ -46,7 +46,7 @@ async function main () {
 	const branch = (environment === `production` ? `master` : `develop`);
 	const clusterName = `eyewitness-${environment}`;
 	const awsLogsGroup = `eyewitness/${environment}/${provider}`;
-	const serviceName = `eyewitness-${provider}`;
+	const serviceName = `${environment}-${provider}`;
 	const taskFamily = serviceName;
 	let version;
 
