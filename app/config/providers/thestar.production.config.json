@@ -7,7 +7,7 @@
 	},
 	"databases": {
 		"mongo": {
-			"connectionString": null
+			"connectionString": "mongodb://user-RTxvs1QCR2huHBMgnUx1:nln6tAczL3hNluFtD1a2EiXEntsiWfsIMYpEtqr2MLLt6tot5p8k81EhVinF@ds253145-a0.mlab.com:53145,ds253145-a1.mlab.com:53145/eyewitness-production-thestar?replicaSet=rs-ds253145"
 		}
 	},
 	"greetingText": "Welcome to The Star's news bot!",
