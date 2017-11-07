@@ -24,9 +24,26 @@
 	"messageVariables": {
 		"provider": {
 			"name": "The Amity Gazette",
-			"rssFeedUrl": "https://www.the-star.co.ke/taxonomy/term/all/rss.xml",
-			"timezoneOffset": 0
+			"rssFeedUrl": "https://battabox.com/feed/",
+			"timezoneOffset": 0,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking-news"
 		}
 	},
-	"baseUrl": "https://eyewitness.eu.ngrok.io"
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "1 minute"
+		},
+		"news-notifications": {
+			"runEvery": "1 minute"
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness.eu.ngrok.io",
+		"portInUrl": true
+	},
+	"readServer": {
+		"baseUrl": "http://localhost",
+		"portInUrl": true
+	}
 }

@@ -1,0 +1,59 @@
+{
+	"containerDefinitions": [{
+		"name": "bot",
+		"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
+		"memoryReservation": 96,
+		"essential": true,
+		"portMappings": [{
+			"containerPort": -1,
+			"hostPort": 0,
+			"protocol": "tcp"
+		}],
+		"environment": [{
+			"name": "NODE_ENV",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "PROVIDER_ID",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "ENTRY_POINT",
+			"value": "bot"
+		}],
+		"logConfiguration": {
+			"logDriver": "awslogs",
+			"options": {
+				"awslogs-region": "{{REPLACE_ME}}",
+				"awslogs-group": "{{REPLACE_ME}}",
+				"awslogs-stream-prefix": "bot"
+			}
+		}
+	}, {
+		"name": "read-server",
+		"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
+		"memoryReservation": 96,
+		"essential": true,
+		"portMappings": [{
+			"containerPort": -1,
+			"hostPort": 0,
+			"protocol": "tcp"
+		}],
+		"environment": [{
+			"name": "NODE_ENV",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "PROVIDER_ID",
+			"value": "{{REPLACE_ME}}"
+		}, {
+			"name": "ENTRY_POINT",
+			"value": "read-server"
+		}],
+		"logConfiguration": {
+			"logDriver": "awslogs",
+			"options": {
+				"awslogs-region": "{{REPLACE_ME}}",
+				"awslogs-group": "{{REPLACE_ME}}",
+				"awslogs-stream-prefix": "read-server"
+			}
+		}
+	}]
+}

@@ -5,10 +5,12 @@
 			"pretty": false
 		}
 	},
-	"databases": {
-		"mongo": {
-			"connectionString": "mongodb://XXX"
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "1 minute"
+		},
+		"news-notifications": {
+			"runEvery": "1 minute"
 		}
-	},
-	"baseUrl": "https://staging-eyewitness.atchai.com"
+	}
 }

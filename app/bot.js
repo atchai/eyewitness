@@ -15,7 +15,7 @@ const packageJson = require(`../package.json`);
 const providerId = process.env.PROVIDER_ID;
 const loadProviderConfig = Boolean(providerId);
 const env = process.env.NODE_ENV || `development`;
-const localConfigName = path.join(`providers`, providerId, `${providerId}.${env}`);
+const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
 	localConfig: (localConfigName ? [localConfigName] : []),
@@ -34,12 +34,14 @@ async function main () {
 	// A new chatbot!
 	const chatbot = new Hippocamp({
 		packageJsonPath: `../package.json`,
-		baseUrl: config.baseUrl,
+		baseUrl: config.hippocampServer.baseUrl,
 		port: config.hippocampServer.port,
-		enableUserProfile: false,
+		enableUserProfile: true,
 		greetingText: config.greetingText,
+		misunderstoodText: null,
 		menu: config.menu,
 		messageVariables: config.messageVariables,
+		allowUserTextReplies: true,
 		directories: {
 			commands: `./commands`,
 			conversation: `./conversation`,
@@ -65,8 +67,7 @@ async function main () {
 				type: `execute-hook`,
 				hook: `feedIngester`,
 			}],
-			// runEvery: `hour`,
-			runEvery: `minute`,
+			runEvery: config.scheduledTasks[`feed-ingester`].runEvery,
 			maxRuns: 0,
 		}, {
 			taskId: `news-notifications`,
@@ -74,8 +75,7 @@ async function main () {
 				type: `execute-hook`,
 				hook: `newsNotifications`,
 			}],
-			// runEvery: `hour`,
-			runEvery: `minute`,
+			runEvery: config.scheduledTasks[`news-notifications`].runEvery,
 			maxRuns: 0,
 		}],
 	}));

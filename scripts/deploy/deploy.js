@@ -6,217 +6,152 @@
 
 /* eslint node/no-unpublished-require: 0 */
 
-const path = require(`path`);
-const { spawn } = require(`child_process`);
 const extender = require(`object-extender`);
+const { execute, registerTaskDefinition, updateService } = require(`./utilities`);
 
-const WORKING_DIR = path.join(__dirname, `../../`);
-const AWS_PROFILE = `eyewitness-ci-atchai`;
+const TASK_DEFINITION_ORIGINAL = require(`./task.config.json`);
+const PORTS_CONFIG = require(`./ports.config.json`);
+const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
-const AWS_REPO_URL = `538881967423.dkr.ecr.eu-west-1.amazonaws.com`;
-const AWS_TASK_FAMILY = `eyewitness-app`;
+const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
-const cache = {};
+const AWS_REPO_IMAGE_URL = `${AWS_REPO_URL}/${IMAGE_NAME}`;
+const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`, `existing`];
+const ALLOWED_ENVIRONMENTS = [`production`, `staging`];
 
 /*
- * Executes the given command and returns a promise.
+ * The main function.
  */
-function execute (command) {
+async function main () {
 
-	return new Promise((resolve, reject) => {
+	// Grab the version argument.
+	const versionType = process.argv[2];
+	if (!ALLOWED_VERSION_TYPES.includes(versionType)) {
+		throw new Error(`Version argument is required and must be one of: ${ALLOWED_VERSION_TYPES}.`);
+	}
 
-		const [ commandToRun, ...commandArgs ] = command.split(/\s+/g);
+	// Grab the provider argument.
+	const provider = process.argv[3];
+	if (!provider) {
+		throw new Error(`Provider argument is required.`);
+	}
 
-		const child = spawn(commandToRun, commandArgs, {
-			cwd: WORKING_DIR,
-			env: process.env,
-			shell: true,
-		});
+	// Grab the environment argument.
+	const environment = process.argv[4];
+	if (!ALLOWED_ENVIRONMENTS.includes(environment)) {
+		throw new Error(`Environment argument is required and must be one of: ${ALLOWED_ENVIRONMENTS}.`);
+	}
 
-		let stdout = ``;
-		let stderr = ``;
-
-		child.stdout.on(`data`, data => {
-			stdout += data;
-			process.stdout.write(data);
-		});
-		child.stderr.on(`data`, data => {
-			stderr += data;
-			process.stderr.write(data);
-		});
-
-		child.on(`error`, err => reject(err));
-
-		child.on(`close`, (code) => {
-			if (code) {
-				const err = new Error(`Command exited unexpectedly with error code "${code}"!`);
-				err.stderr = stderr;
-				return reject(err);
-			}
-
-			return resolve(stdout);
-		});
-
-	});
-
-}
-
-// Grab the version argument.
-const versionType = process.argv[2].split(`=`)[1];
-if (versionType !== `major` && versionType !== `minor` && versionType !== `patch`) {
-	throw new Error(`--version flag is required and must be one of "major", "minor" or "patch".`);
-}
-
-// Grab the provider argument.
-const provider = process.argv[3].split(`=`)[1];
-if (!provider) {
-	throw new Error(`--provider flag is required.`);
-}
-
-// Grab the environment argument.
-const environment = process.argv[4].split(`=`)[1];
-if (environment !== `production` && environment !== `staging`) {
-	throw new Error(`--environment flag is required and must be one of "production" or "staging".`);
-}
-
-// Figure out the correct resources to use for the given environment.
-const taskDefinitionOriginal = require(`./${provider}.config.json`);
-const branch = (environment === `production` ? `master` : `develop`);
-const clusterName = `eyewitness-${environment}`;
-const awsLogsGroup = `eyewitness/${provider}/${environment}`;
-const appServiceName = `eyewitness-app-${provider}-${environment}`;
-const readServerServiceName = `eyewitness-read-${provider}-${environment}`;
-
-// Begin!
-Promise.resolve()
+	// Figure out the correct resources to use for the given environment.
+	const branch = (environment === `production` ? `master` : `develop`);
+	const clusterName = `eyewitness-${environment}`;
+	const awsLogsGroup = `eyewitness/${environment}/${provider}`;
+	const serviceName = `${environment}-${provider}`;
+	const taskFamily = serviceName;
+	let version;
 
 	// Switch to the correct branch.
-	.then(() => process.stdout.write(`\n\n[Switching to ${branch} branch]\n`))
-	.then(() => execute(`git checkout ${branch}`))
+	process.stdout.write(`\n\n[Switching to ${branch} branch]\n`);
+	await execute(`git checkout ${branch}`);
 
-	// Bump the version.
-	.then(() => process.stdout.write(`\n\n[Bumping version number]\n`))
-	.then(() => execute(`npm version ${versionType}`))
-	.then(stdout => cache.version = stdout.match(/v(\d+\.\d+\.\d+)/)[1])
+	// Don't do the following if we aren't bumping the version number.
+	if (versionType !== `existing`) {
 
-	// Get Docker login token.
-	.then(() => process.stdout.write(`\n\n[Retrieving Docker login token from AWS]\n`))
-	.then(() => execute(`aws ecr get-login --no-include-email --profile "${AWS_PROFILE}" --region "${AWS_REGION}"`))
-	.then(dockerLoginCommand => cache.dockerLoginCommand = dockerLoginCommand)
+		// Bump the version.
+		process.stdout.write(`\n\n[Bumping version number]\n`);
+		const versionString = await execute(`npm version ${versionType}`);
+		version = versionString.match(/v(\d+\.\d+\.\d+)/)[1];
 
-	// Login to Docker.
-	.then(() => process.stdout.write(`\n\n[Logging into AWS Docker repository]\n`))
-	.then(() => execute(cache.dockerLoginCommand))
+		// Get Docker login token.
+		process.stdout.write(`\n\n[Retrieving Docker login token from AWS]\n`);
+		const dockerLoginCommand = await execute(
+			`aws ecr get-login --no-include-email --profile "${AWS_PROFILE}" --region "${AWS_REGION}"`
+		);
 
-	// Build and tag new Docker image.
-	.then(() => process.stdout.write(`\n\n[Building and tagging Docker image]\n`))
-	.then(() => execute(`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_URL}/${IMAGE_NAME}:latest -t ${AWS_REPO_URL}/${IMAGE_NAME}:${cache.version} .`))
+		// Login to Docker.
+		process.stdout.write(`\n\n[Logging into AWS Docker repository]\n`);
+		await execute(dockerLoginCommand);
 
-	// Push to AWS container repo.
-	.then(() => process.stdout.write(`\n\n[Pushing Docker image to AWS repository]\n`))
-	.then(() => execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:latest`))
-	.then(() => execute(`docker push ${AWS_REPO_URL}/${IMAGE_NAME}:${cache.version}`))
+		// Build and tag new Docker image.
+		process.stdout.write(`\n\n[Building and tagging Docker image]\n`);
+		await execute(
+			`docker build -t ${IMAGE_NAME} -t ${AWS_REPO_IMAGE_URL}:latest -t ${AWS_REPO_IMAGE_URL}:${version} .`
+		);
+
+		// Push to AWS container repo (one after the other to take advantage of layer caching in ECR).
+		process.stdout.write(`\n\n[Pushing Docker image to AWS repository]\n`);
+		await execute(`docker push ${AWS_REPO_IMAGE_URL}:latest`);
+		await execute(`docker push ${AWS_REPO_IMAGE_URL}:${version}`);
+
+		// Push the changes and tag to the remote repo.
+		process.stdout.write(`\n\n[Pushing version change to Git repository]\n`);
+		await execute(`git push && git push origin v${version}`);
+
+	}
 
 	// Update AWS ECS task definitions with new image tag.
-	.then(() => process.stdout.write(`\n\n[Updating AWS ECS task definition]\n`))
-	.then(() => {
+	process.stdout.write(`\n\n[Updating AWS ECS task definition]\n`);
 
-		// Prepare the task definition.
-		const taskDefinition = extender.clone(taskDefinitionOriginal);
-		const appTask = taskDefinition[`eyewitness-app`];
-		const readServerTask = taskDefinition[`eyewitness-read-server`];
-		const appContainer = appTask.containerDefinitions[0];
-		const readServerContainer = readServerTask.containerDefinitions[0];
+	// Prepare the task definition.
+	const taskDefinition = extender.clone(TASK_DEFINITION_ORIGINAL);
+	const botContainer = taskDefinition.containerDefinitions[0];
+	const readServerContainer = taskDefinition.containerDefinitions[1];
 
-		// Set NODE_ENV environment variable on containers.
-		appContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
-		readServerContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
+	// Set NODE_ENV environment variable on containers.
+	botContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
+	readServerContainer.environment.find(item => item.name === `NODE_ENV`).value = environment;
 
-		// Set AWS logs config on containers.
-		appContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
-		appContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
-		readServerContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
-		readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
+	// Set PROVIDER_ID environment variable on containers.
+	botContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
+	readServerContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
 
-		// Prepare the AWS CLI commands.
-		const escapedAppContainerJson = JSON.stringify(appTask.containerDefinitions).replace(/"/g, `\\"`);
-		const escapedReadServerContainerJson = JSON.stringify(readServerTask.containerDefinitions).replace(/"/g, `\\"`);
-		const appArgs = [
-			`--profile "${AWS_PROFILE}"`,
-			`--region "${AWS_REGION}"`,
-			`--output "json"`,
-			`--family "${AWS_TASK_FAMILY}"`,
-			`--container-definitions "${escapedAppContainerJson}"`,
-		].join(` `);
-		const readServerArgs = [
-			`--profile "${AWS_PROFILE}"`,
-			`--region "${AWS_REGION}"`,
-			`--output "json"`,
-			`--family "${AWS_TASK_FAMILY}"`,
-			`--container-definitions "${escapedReadServerContainerJson}"`,
-		].join(` `);
+	// Set container ports.
+	const botPort = PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.bot;
+	const readServerPort =  PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.readServer;
+	botContainer.portMappings[0].containerPort = botPort;
+	readServerContainer.portMappings[0].containerPort = readServerPort;
 
-		// Execute the AWS CLI commands.
-		return Promise.all([
-			execute(`aws ecs register-task-definition ${appArgs}`),
-			execute(`aws ecs register-task-definition ${readServerArgs}`),
-		]);
+	// Set AWS logs config on containers.
+	botContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
+	botContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
+	readServerContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
+	readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
 
-	})
-	.then(([ appTaskDefinition, readServerTaskDefinition ]) => {
-		cache.newTaskDefinitions.app = JSON.parse(appTaskDefinition).taskDefinition;
-		cache.newTaskDefinitions.readServer = JSON.parse(readServerTaskDefinition).taskDefinition;
-	})
+	// Right now AWS ECS requires us to create separate services for each exposed container.
+	const botPseudoTaskDefinition = { containerDefinitions: [botContainer] };
+	const readServerPseudoTaskDefinition = { containerDefinitions: [readServerContainer] };
+
+	const newBotTaskDefinition =
+		await registerTaskDefinition(AWS_PROFILE, AWS_REGION, `${taskFamily}-bot`, botPseudoTaskDefinition);
+	const newReadServerTaskDefinition =
+		await registerTaskDefinition(AWS_PROFILE, AWS_REGION, `${taskFamily}-read-server`, readServerPseudoTaskDefinition);
 
 	// Update AWS ECS services with new task definition.
-	.then(() => process.stdout.write(`\n\n[Updating AWS ECS service]\n`))
-	.then(() => {
+	process.stdout.write(`\n\n[Updating AWS ECS service]\n`);
 
-		// Prepare the AWS CLI commands.
-		const appTaskDefinition = cache.newTaskDefinitions.app;
-		const readServerTaskDefinition = cache.newTaskDefinitions.readServer;
-		const appArgs = [
-			`--profile "${AWS_PROFILE}"`,
-			`--region "${AWS_REGION}"`,
-			`--output "json"`,
-			`--cluster "${clusterName}"`,
-			`--service "${appServiceName}"`,
-			`--task-definition "${appTaskDefinition.family}:${appTaskDefinition.revision}"`,
-		].join(` `);
-		const readServerArgs = [
-			`--profile "${AWS_PROFILE}"`,
-			`--region "${AWS_REGION}"`,
-			`--output "json"`,
-			`--cluster "${clusterName}"`,
-			`--service "${readServerServiceName}"`,
-			`--task-definition "${readServerTaskDefinition.family}:${readServerTaskDefinition.revision}"`,
-		].join(` `);
-
-		// Execute the AWS CLI commands.
-		return Promise.all([
-			execute(`aws ecs update-service ${appArgs}`),
-			execute(`aws ecs update-service ${readServerArgs}`),
-		]);
-
-	})
-
-	// Push the changes and tag to the remote repo.
-	.then(() => process.stdout.write(`\n\n[Pushing version change to Git repository]\n`))
-	.then(() => execute(`git push && git push origin v${cache.version}`))
+	await updateService(AWS_PROFILE, AWS_REGION, clusterName, `${serviceName}-bot`, newBotTaskDefinition);
+	await updateService(AWS_PROFILE, AWS_REGION, clusterName, `${serviceName}-read-server`, newReadServerTaskDefinition);
 
 	// Tidy up.
-	.then(() => {
-		process.stdout.write(`\n\n[Done!]\n`);
-	})
+	process.stdout.write(`\n\n[Done!]\n`);
+
+}
+
+/*
+ * Execute script.
+ */
+main()
 	.catch(err => {
+
 		process.stderr.write(`\n\n[Error!]\n`);
 
 		if ((err.stderr || ``).match(/Git working directory not clean/i)) {
 			process.stderr.write(`Git working directory not clean! You must commit all your changes.\n`);
 		}
 		else {
-			process.stderr.write(`${err.message}\n`);
+			process.stderr.write(`${err.stack}\n`);
 		}
 
 		process.stderr.write(`\n`);
+
 	});

@@ -4,6 +4,9 @@
  * HOOK: News Notifications
  */
 
+const packageJson = require(`../../package.json`);
+const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+
 const moment = require(`moment`);
 
 /*
@@ -16,10 +19,10 @@ async function loadAllUsers (database) {
 /*
  * Returns a dictionary containing the latest unread article record and the user record for the given user, or null.
  */
-async function getLatestUnreadArticleForUser (database, recUser) {
+async function getLatestUnreadPriorityArticleForUser (database, recUser) {
 
 	const conditions = {
-		_readByUsers: { $nin: [recUser._id] },
+		_receivedByUsers: { $nin: [recUser._id] },
 		isPriority: true,
 	};
 	const options = {
@@ -46,7 +49,7 @@ function filterUsersWithOutstandingNews (outstandingNewsUsers) {
 /*
  * The hook itself.
  */
-module.exports = async function newsNotifications (action, variables, { database, sendMessage }) {
+module.exports = async function newsNotifications (action, variables, { database, MessageObject, sendMessage }) {
 
 	const notBeforeHour = variables.provider.notifications.notBeforeHour;
 	const notAfterHour = variables.provider.notifications.notAfterHour;
@@ -57,7 +60,7 @@ module.exports = async function newsNotifications (action, variables, { database
 	if (hours < notBeforeHour || hours > notAfterHour) { return; }
 
 	const recUsers = await loadAllUsers(database);
-	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadArticleForUser(database, recUser));
+	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadPriorityArticleForUser(database, recUser));
 	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
 	const recFilteredUsers = filterUsersWithOutstandingNews(outstandingNewsUsers);
 	const articleChangesToMake = [];
@@ -66,7 +69,13 @@ module.exports = async function newsNotifications (action, variables, { database
 	const sendMessagePromises = recFilteredUsers.map(item => {
 
 		const { recUser, recArticle } = item;
-		const message = {
+		const baseUrl = config.readServer.baseUrl;
+		const port = (config.readServer.portInUrl ? `:${config.readServer.port}` : ``);
+		const articleId = recArticle._id;
+		const feedId = recArticle.feedId;
+		const userId = recUser._id;
+		const readUrl = `${baseUrl}${port}/${feedId}/${articleId}/${userId}`;
+		const message = new MessageObject({
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
 			channelUserId: recUser.channel.userId,
@@ -79,12 +88,16 @@ module.exports = async function newsNotifications (action, variables, { database
 					buttons: [{
 						type: `url`,
 						label: `Read`,
-						payload: recArticle.articleUrl,
+						payload: readUrl,
 						sharing: true,
 					}],
 				}],
 			},
-		};
+			options: [{
+				label: `More stories`,
+				nextUri: `/articles/more`,
+			}],
+		});
 
 		// Remember the change we need to make to the article documents.
 		articleChangesToMake.push({

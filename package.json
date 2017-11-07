@@ -1,34 +1,35 @@
 {
   "name": "eyewitness",
-  "version": "0.0.2",
+  "version": "1.0.5",
   "private": true,
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy-sabc-production": "node ./scripts/deploy/deploy --version=minor --provider=sabc --environment=production",
-    "deploy-sabc-staging": "node ./scripts/deploy/deploy --version=patch --provider=sabc --environment=staging",
+    "deploy": "node ./scripts/deploy/deploy",
+    "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
     "start-development": "npm install &&  npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""
   },
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
   "dependencies": {
-    "@atchai/hippocamp": "^0.1.0",
+    "@atchai/hippocamp": "^0.1.7",
     "cheerio": "^1.0.0-rc.2",
     "config-ninja": "^1.0.2",
-    "moment": "^2.18.1",
+    "escape-regexp": "0.0.1",
+    "moment": "^2.19.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "hippocamp-development": "git+ssh://git@github.com/atchai/hippocamp.git",
     "eslint": "latest",
     "eslint-config-recombix": "latest",
     "eslint-plugin-filenames": "latest",
     "eslint-plugin-json": "latest",
-    "eslint-plugin-node": "^4.2.1",
+    "eslint-plugin-node": "latest",
     "eslint-plugin-promise": "latest",
-    "ngrok": "^2.2.9",
-    "nodemon": "^1.11.0",
+    "hippocamp-development": "git+ssh://git@github.com/atchai/hippocamp.git",
+    "ngrok": "^2.2.23",
+    "nodemon": "^1.12.1",
     "object-extender": "^2.0.3"
   },
   "engines": {

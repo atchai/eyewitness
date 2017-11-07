@@ -7,7 +7,7 @@
 	},
 	"databases": {
 		"mongo": {
-			"connectionString": "mongodb://XXX"
+			"connectionString": null
 		}
 	},
 	"adapters": {
@@ -16,16 +16,17 @@
 			"accessToken": null
 		}
 	},
-	"baseUrl": null,
-	"greetingText": "[GREETING TEXT GOES HERE]",
+	"greetingText": "Welcome to the Eyewitness news bot!",
 	"menu": [{
 		"type": "url",
 		"label": "Send us a story",
 		"payload": "https://www.google.co.uk",
 		"sharing": true
 	}, {
-		"type": "basic",
-		"label": "Restart Bot"
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
 	}],
 	"messageVariables": {
 		"provider": {
@@ -38,10 +39,22 @@
 			}
 		}
 	},
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "5 minutes"
+		},
+		"news-notifications": {
+			"runEvery": "5 minutes"
+		}
+	},
 	"hippocampServer": {
-		"port": 5000
+		"baseUrl": null,
+		"port": 5000,
+		"portInUrl": false
 	},
 	"readServer": {
-		"port": 5001
+		"baseUrl": null,
+		"port": 5001,
+		"portInUrl": false
 	}
 }

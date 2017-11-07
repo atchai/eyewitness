@@ -1,0 +1,41 @@
+{
+	"adapters": {
+		"facebook": {
+			"verifyToken": "XXX",
+			"accessToken": "XXX"
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": null
+		}
+	},
+	"greetingText": "Welcome to BattaBox's news bot!",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://form.jotformeu.com/72784452444361",
+		"sharing": true
+	}, {
+		"type": "basic",
+		"label": "More stories"
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
+	"messageVariables": {
+		"provider": {
+			"name": "BattaBox",
+			"rssFeedUrl": "https://battabox.com/feed/",
+			"timezoneOffset": 1
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app.battabox.com"
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read.battabox.com"
+	}
+}

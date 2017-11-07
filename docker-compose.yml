@@ -12,14 +12,14 @@ volumes:
 
 services:
 
-  app:
+  bot:
     build:
       context: .
       dockerfile: Dockerfile.development
     environment:
       - NODE_ENV=development
       - TZ=Europe/London
-      - ENTRY_POINT=app
+      - ENTRY_POINT=bot
       - PROVIDER_ID=
     volumes:
       - ./app:/src/app

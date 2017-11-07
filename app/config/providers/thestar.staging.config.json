@@ -1,5 +1,9 @@
 {
 	"adapters": {
+		"STAGING_facebook": {
+			"verifyToken": "jjfWKrQfdtDSEC2Zkx42KJ9pIaprpXcJLvfGJ7nb",
+			"accessToken": "EAAXHFF04CrgBAOAwQcO9ZC78wR4bRfDFA8NL0FgrTT0xit2MaT43sMKQUSmmxjg0SfsZAXBZAjlkjTwp7wZBhoCj2o57uZCuYaET1dmmky8pjDyZAV6L4yj6DZAOKo1ezZC5ubDrIYJ7mYAaczJJbfFQKOj3ZB4ZCkdfOk73JRdyRJCgZDZD"
+		},
 		"facebook": {
 			"verifyToken": "jjfWKrQfdtDSEC2Zkx42KJ9pIaprpXcJLvfGJ7nb",
 			"accessToken": "EAAHWcmvsRA8BAKixsHDPDLGZCYzlWWpSQa1fMfmCUpSN1deitHENR6a1VGlysbvZAqWH5THQtsNHmZBizWVLZAFV0CGt39NME7UdtFbdWOpFAPCNsjKfDcJXtyJWW9NXsGRfBB9ZALcC7i7ZAwpStZCPDDnoycquzs5kZABuzmZCTM4VJONJuv6OK"
@@ -7,14 +11,14 @@
 	},
 	"databases": {
 		"mongo": {
-			"connectionString": null
+			"connectionString": "mongodb://eyewitness-user-St6exXR8r9ONTbHimRy7jIDqkyXeehIqJdkDYAS9:vUqMWWj4uQjRPS28IntnCHS6A3uV4SdjYXYQ0rPkuIMCve6lSnqJQzh8oQ4eI1cPR1BzG79xgMfCRPKc@eyewitness-db-thestar-staging-1065078073.eu-west-1.elb.amazonaws.com:47296/eyewitness?authSource=admin"
 		}
 	},
 	"greetingText": "Welcome to The Star's news bot!",
 	"menu": [{
 		"type": "url",
 		"label": "Send us a story",
-		"payload": "https://form.jotformeu.com/72784749044366",
+		"payload": "https://form.jotformeu.com/72542344644355",
 		"sharing": true
 	}, {
 		"type": "basic",
@@ -33,9 +37,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.the-star.co.ke"
+		"baseUrl": "https://eyewitness-app-thestar-staging.atchai.com"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.the-star.co.ke"
+		"baseUrl": "https://eyewitness-read-thestar-staging.atchai.com"
 	}
 }

@@ -1,16 +1,41 @@
 {
 	"adapters": {
 		"facebook": {
-			"verifyToken": "XXXXX",
-			"accessToken": "XXXXX"
+			"verifyToken": "I6v6oP5fRRhw7tKoCOkWqG9iu05EGdRH1HrxiM2b",
+			"accessToken": "EAAXYZCJQhLPwBAFgXgM5oVqwiPu7uvszccaYXgF0JOfyDLG3tK7eQOkJxYx2db0HZBYAAAZAKvMcQNaanngzbclphVh27aFUkn1rPS4n7RYncyzQFmHguZCA0xKMvDT0dnzs00SYRphvYGSqoQawZCmqNCgDSAtHTkO0NDX0sRQZDZD"
 		}
 	},
-	"baseUrl": "sabc.co.za",
+	"databases": {
+		"mongo": {
+			"connectionString": null
+		}
+	},
+	"greetingText": "Welcome to SABC's news bot!",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://form.jotformeu.com/72812934044354",
+		"sharing": true
+	}, {
+		"type": "basic",
+		"label": "More stories"
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
 	"messageVariables": {
 		"provider": {
 			"name": "SABC",
 			"rssFeedUrl": "http://www.sabc.co.za/SABC/RSS/news/TopStoryRSSFeed.xml",
 			"timezoneOffset": 2
 		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-app.sabc.co.za"
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-read.sabc.co.za"
 	}
 }
