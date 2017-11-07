@@ -135,8 +135,18 @@ function calculateHashFromUrl (_input) {
  * Converts multiple RSS feed item to an Eyewitness article.
  */
 async function convertFeedToArticles (variables, feedId, json) {
+
 	const promises = json.rss.channel[0].item.map(item => convertFeedItemToArticle(variables, feedId, item));
-	return await Promise.all(promises);
+	const articles = await Promise.all(promises);
+	const uniqueArticles = [];
+
+	articles.forEach(article => {
+		const existingArticle = uniqueArticles.find(item => item.articleId === article.articleId);
+		if (!existingArticle) { uniqueArticles.push(article); }
+	});
+
+	return uniqueArticles;
+
 }
 
 /*
