@@ -50,12 +50,12 @@ async function main () {
 	const taskFamily = serviceName;
 	let version;
 
-	// Switch to the correct branch.
-	process.stdout.write(`\n\n[Switching to ${branch} branch]\n`);
-	await execute(`git checkout ${branch}`);
-
 	// Don't do the following if we aren't bumping the version number.
 	if (versionType !== `existing`) {
+
+		// Switch to the correct branch.
+		process.stdout.write(`\n\n[Switching to ${branch} branch]\n`);
+		await execute(`git checkout ${branch}`);
 
 		// Bump the version.
 		process.stdout.write(`\n\n[Bumping version number]\n`);
