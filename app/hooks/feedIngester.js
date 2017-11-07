@@ -127,7 +127,7 @@ async function parseXml (xml) {
  * Takes the given URL and calculates a hash for it.
  */
 function calculateHashFromUrl (_input) {
-	const input = _input.toLowerCase();
+	const input = _input.trim().toLowerCase();
 	return crypto.createHash(`md5`).update(input).digest(`hex`);
 }
 
@@ -179,14 +179,16 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 		isPriority = Boolean(matchingValue);
 	}
 
+	const articleUrl = item.link[0].trim().toLowerCase();
+
 	return Object({
 		feedId,
-		articleId: calculateHashFromUrl(item.link[0]),
-		articleUrl: item.link[0],
+		articleId: calculateHashFromUrl(articleUrl),
+		articleUrl,
 		articleDate: articleDate.valueOf(),
-		imageUrl,
-		title,
-		description,
+		imageUrl: imageUrl.trim(),
+		title: title.trim(),
+		description: description.trim(),
 		isPriority,
 	});
 
