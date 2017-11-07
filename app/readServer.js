@@ -55,8 +55,14 @@ async function handleRequests (req, res) {
 
 	// Health check endpoint.
 	if (req.url === `/health-check`) {
-		res.statusCode = 200;
-		return res.end(`OK`);
+		const body = `{"healthy":true}`;
+
+		res.writeHead(200, {
+			'Content-Length': Buffer.byteLength(body),
+			'Content-Type': `application/json`,
+		});
+
+		return res.end(body);
 	}
 
 	// Pull the IDs from the URL.
