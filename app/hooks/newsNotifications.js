@@ -63,10 +63,9 @@ module.exports = async function newsNotifications (action, variables, { database
 	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadPriorityArticleForUser(database, recUser));
 	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
 	const recFilteredUsers = filterUsersWithOutstandingNews(outstandingNewsUsers);
-	const articleChangesToMake = [];
 
 	// Send message to each user.
-	const sendMessagePromises = recFilteredUsers.map(item => {
+	const sendMessagePromises = recFilteredUsers.map(async item => {
 
 		const { recUser, recArticle } = item;
 		const baseUrl = config.readServer.baseUrl;
@@ -98,25 +97,14 @@ module.exports = async function newsNotifications (action, variables, { database
 			}],
 		});
 
-		// Remember the change we need to make to the article documents.
-		articleChangesToMake.push({
-			recArticle,
-			changes: {
-				$addToSet: { _receivedByUsers: recUser._id },
-			},
-		});
+		await sendMessage(recUser, message);
 
-		return sendMessage(item.recUser, message);
+		await database.update(`Article`, recArticle, {
+			$addToSet: { _receivedByUsers: recUser._id },
+		});
 
 	});
 
 	await Promise.all(sendMessagePromises);
-
-	// Update all the article documents.
-	const updateArticlePromises = articleChangesToMake.map(item =>
-		database.update(`Article`, item.recArticle, item.changes)
-	);
-
-	await Promise.all(updateArticlePromises);
 
 };
