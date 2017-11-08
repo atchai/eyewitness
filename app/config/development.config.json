@@ -39,11 +39,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness.eu.ngrok.io",
-		"portInUrl": true
+		"baseUrl": "https://eyewitness.eu.ngrok.io:5000"
 	},
 	"readServer": {
-		"baseUrl": "http://localhost",
-		"portInUrl": true
+		"baseUrl": "http://localhost:5001"
 	}
 }

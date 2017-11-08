@@ -70,11 +70,10 @@ module.exports = async function newsNotifications (action, variables, { database
 
 		const { recUser, recArticle } = item;
 		const baseUrl = config.readServer.baseUrl;
-		const port = (config.readServer.portInUrl ? `:${config.readServer.port}` : ``);
 		const articleId = recArticle._id;
 		const feedId = recArticle.feedId;
 		const userId = recUser._id;
-		const readUrl = `${baseUrl}${port}/${feedId}/${articleId}/${userId}`;
+		const readUrl = `${baseUrl}/${feedId}/${articleId}/${userId}`;
 		const message = new MessageObject({
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
