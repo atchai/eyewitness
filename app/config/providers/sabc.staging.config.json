@@ -37,9 +37,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app-sabc-staging.atchai.com"
+		"baseUrl": "https://eyewitness-sabc-staging.atchai.com:9000"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read-sabc-staging.atchai.com"
+		"baseUrl": "https://eyewitness-sabc-staging.atchai.com:9001"
 	}
 }

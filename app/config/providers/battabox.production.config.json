@@ -33,9 +33,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.battabox.com"
+		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9000"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.battabox.com"
+		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9001"
 	}
 }

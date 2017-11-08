@@ -33,9 +33,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.sabc.co.za"
+		"baseUrl": "https://eyewitness-sabc-production.atchai.com:9000"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.sabc.co.za"
+		"baseUrl": "https://eyewitness-sabc-production.atchai.com:9001"
 	}
 }

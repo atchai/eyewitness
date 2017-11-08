@@ -33,9 +33,9 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-app.the-star.co.ke"
+		"baseUrl": "https://eyewitness-thestar-production.atchai.com:9000"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-read.the-star.co.ke"
+		"baseUrl": "https://eyewitness-thestar-production.atchai.com:9001"
 	}
 }
