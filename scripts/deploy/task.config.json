@@ -2,7 +2,7 @@
 	"containerDefinitions": [{
 		"name": "bot",
 		"image": "614459117250.dkr.ecr.eu-west-1.amazonaws.com/eyewitness-app:latest",
-		"memoryReservation": 96,
+		"memoryReservation": 128,
 		"essential": true,
 		"portMappings": [{
 			"containerPort": 5000,
