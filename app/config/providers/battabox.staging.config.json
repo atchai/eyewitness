@@ -33,7 +33,9 @@
 		"provider": {
 			"name": "BattaBox",
 			"rssFeedUrl": "https://battabox.com/feed/",
-			"timezoneOffset": 1
+			"timezoneOffset": 1,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking-news"
 		}
 	},
 	"hippocampServer": {
