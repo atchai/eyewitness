@@ -5,7 +5,7 @@
 		"memoryReservation": 96,
 		"essential": true,
 		"portMappings": [{
-			"containerPort": -1,
+			"containerPort": 5000,
 			"hostPort": 0,
 			"protocol": "tcp"
 		}],
@@ -33,7 +33,7 @@
 		"memoryReservation": 96,
 		"essential": true,
 		"portMappings": [{
-			"containerPort": -1,
+			"containerPort": 5001,
 			"hostPort": 0,
 			"protocol": "tcp"
 		}],

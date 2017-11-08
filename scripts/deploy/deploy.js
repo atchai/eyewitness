@@ -10,7 +10,6 @@ const extender = require(`object-extender`);
 const { execute, registerTaskDefinition, updateService } = require(`./utilities`);
 
 const TASK_DEFINITION_ORIGINAL = require(`./task.config.json`);
-const PORTS_CONFIG = require(`./ports.config.json`);
 const AWS_PROFILE = `eyewitness-ci`;
 const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
@@ -104,12 +103,6 @@ async function main () {
 	// Set PROVIDER_ID environment variable on containers.
 	botContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
 	readServerContainer.environment.find(item => item.name === `PROVIDER_ID`).value = provider;
-
-	// Set container ports.
-	const botPort = PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.bot;
-	const readServerPort =  PORTS_CONFIG.providers[provider] + PORTS_CONFIG.containerOffsets.readServer;
-	botContainer.portMappings[0].containerPort = botPort;
-	readServerContainer.portMappings[0].containerPort = readServerPort;
 
 	// Set AWS logs config on containers.
 	botContainer.logConfiguration.options[`awslogs-region`] = AWS_REGION;
