@@ -6,9 +6,6 @@
 
 /* eslint no-console: 0 */
 
-// Ensure we always work relative to this script.
-process.chdir(__dirname);
-
 const path = require(`path`);
 const packageJson = require(`../package.json`);
 
