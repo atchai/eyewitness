@@ -14,14 +14,16 @@ const ArticleModel = require(`../models/article`);
 /*
  * Returns the Eyewitness config for the given provider.
  */
-function getEyewitnessConfig (providerId, _env) {
+function getEyewitnessConfig () {
 
-	const env = _env || `development`;
+	const providerId = process.env.PROVIDER_ID;
+	const loadProviderConfig = Boolean(providerId);
+	const env = process.env.NODE_ENV || `development`;
 	const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 	const config = require(`config-ninja`).init(`${providerId}-exportable-config`, `./config`, {
 		localConfig: (localConfigName ? [localConfigName] : []),
-		requireLocalConfig: true,
+		requireLocalConfig: loadProviderConfig,
 	});
 
 	return config;
