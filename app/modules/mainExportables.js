@@ -42,6 +42,9 @@ async function connectToEyewitnessDatabase (providerId) {
 	// Instantiate the database.
 	const database = new DatabaseMongo(config.databases.mongo);
 	Hippocamp.prepareDependencies(database);
+
+	const defaultModels = await Hippocamp.getDefaultModels();
+	defaultModels.forEach(model => database.addModel(model));
 	database.addModel(ArticleModel);
 
 	await database.connect();
