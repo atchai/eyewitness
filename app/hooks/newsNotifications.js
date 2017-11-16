@@ -23,6 +23,7 @@ async function getLatestUnreadPriorityArticleForUser (database, recUser) {
 
 	const conditions = {
 		_receivedByUsers: { $nin: [recUser._id] },
+		isPublished: { $ne: false },
 		isPriority: true,
 	};
 	const options = {

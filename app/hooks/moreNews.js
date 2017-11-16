@@ -14,6 +14,7 @@ async function getUnreceivedArticles (database, recUser, limit = 0) {
 
 	const conditions = {
 		_receivedByUsers: { $nin: [recUser._id] },
+		isPublished: { $ne: false },
 	};
 	const options = {
 		sort: { articleDate: `desc` },

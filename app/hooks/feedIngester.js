@@ -199,6 +199,7 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 		imageUrl: imageUrl.trim(),
 		title: title.trim(),
 		description: description.trim(),
+		isPublished: true,
 		isPriority,
 	});
 
