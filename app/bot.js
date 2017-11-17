@@ -32,7 +32,7 @@ async function main () {
 	const chatbot = new Hippocamp({
 		packageJsonPath: `../package.json`,
 		baseUrl: config.hippocampServer.baseUrl,
-		port: config.hippocampServer.port,
+		port: 5000,
 		enableUserProfile: true,
 		greetingText: config.greetingText,
 		misunderstoodText: null,
