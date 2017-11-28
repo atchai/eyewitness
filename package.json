@@ -14,7 +14,7 @@
   },
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
   "dependencies": {
-    "@atchai/hippocamp": "^0.1.10",
+    "@atchai/hippocamp": "^0.2.8",
     "cheerio": "^1.0.0-rc.2",
     "config-ninja": "^1.0.2",
     "escape-regexp": "0.0.1",
