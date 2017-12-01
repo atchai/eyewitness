@@ -20,7 +20,10 @@ async function pushNewMessagesToUI (data) {
 		returnResponseObject: true,
 	});
 
-	const res = await req.postJson(data);
+	const res = await req.postJson({
+		userId: data.recUser._id.toString(),
+		message: data.message,
+	});
 
 	if (res.statusCode) { throw new Error(`Non 200 HTTP status code returned by the Eyewitness UI.`); }
 	if (!res.body.success) { throw new Error(`The Eyewitness UI returned an error: "${res.body.error}".`); }
