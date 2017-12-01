@@ -43,5 +43,8 @@
 	},
 	"readServer": {
 		"baseUrl": "http://localhost:5001"
+	},
+	"uiServer": {
+		"baseUrl": "http://localhost:7000"
 	}
 }

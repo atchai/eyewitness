@@ -43,5 +43,8 @@
 	},
 	"readServer": {
 		"baseUrl": "https://eyewitness-battabox-staging.atchai.com:9001"
+	},
+	"uiServer": {
+		"baseUrl": "https://eyewitness-battabox-staging.atchai.com:9002"
 	}
 }

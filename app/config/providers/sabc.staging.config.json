@@ -41,5 +41,8 @@
 	},
 	"readServer": {
 		"baseUrl": "https://eyewitness-sabc-staging.atchai.com:9001"
+	},
+	"uiServer": {
+		"baseUrl": "https://eyewitness-sabc-staging.atchai.com:9002"
 	}
 }

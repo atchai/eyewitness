@@ -39,5 +39,8 @@
 	},
 	"readServer": {
 		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9001"
+	},
+	"uiServer": {
+		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9002"
 	}
 }
