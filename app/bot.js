@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV || `development`;
 const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (localConfigName ? [localConfigName] : []),
+	localConfig: (localConfigName ? [ localConfigName ] : []),
 	requireLocalConfig: loadProviderConfig,
 });
 
@@ -26,6 +26,9 @@ const DatabaseMongo = Hippocamp.require(`databases/mongo`);
 const SchedulerSimple = Hippocamp.require(`schedulers/simple`);
 const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 
+/*
+ * The main function.
+ */
 async function main () {
 
 	// A new chatbot!
@@ -88,7 +91,7 @@ async function main () {
  * Run task.
  */
 main()
-	.catch(err => {
+	.catch(err => { // eslint-disable-line promise/prefer-await-to-callbacks
 		console.error(err.stack);
 		process.exit(1);
 	});
