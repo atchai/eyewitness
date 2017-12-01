@@ -19,6 +19,7 @@
     "config-ninja": "^1.0.2",
     "escape-regexp": "0.0.1",
     "moment": "^2.19.1",
+    "request-ninja": "^0.2.6",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
