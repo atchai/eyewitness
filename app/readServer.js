@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV || `development`;
 const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (localConfigName ? [localConfigName] : []),
+	localConfig: (localConfigName ? [ localConfigName ] : []),
 	requireLocalConfig: loadProviderConfig,
 });
 
@@ -126,9 +126,9 @@ async function startReadServer () {
  * Run task.
  */
 Promise.resolve()
-	.then(() => database.connect())
-	.then(() => startReadServer())
-	.catch(err => {
+	.then(() => database.connect()) // eslint-disable-line promise/prefer-await-to-then
+	.then(() => startReadServer()) // eslint-disable-line promise/prefer-await-to-then
+	.catch(err => { // eslint-disable-line promise/prefer-await-to-callbacks
 		console.error(err.stack);
 		process.exit(1);
 	});
