@@ -35,12 +35,14 @@ database.addModel(ArticleModel);
  */
 function parseIncomingUrl (url) {
 
-	const [ , feedId, articleId, userId ] = url.match(/^\/([a-z0-9]+)\/([a-z0-9]+)\/([a-z0-9]+)\/?$/i) || [];
+	const [ , feedId, articleId, userId, noTrackStr ] =
+		url.match(/^\/([a-z0-9]+)\/([a-z0-9]+)\/([a-z0-9]+)\/?(?:\?(no-track(?:=\d)?))?$/i) || [];
 
 	return {
 		feedId,
 		articleId,
 		userId,
+		noTrack: Boolean(noTrackStr === `no-track` || noTrackStr === `no-track=1`),
 	};
 
 }
@@ -63,7 +65,7 @@ async function handleRequests (req, res) {
 	}
 
 	// Pull the IDs from the URL.
-	const { feedId, articleId, userId } = parseIncomingUrl(req.url);
+	const { feedId, articleId, userId, noTrack } = parseIncomingUrl(req.url);
 
 	if (!feedId || !articleId || !userId) {
 		res.statusCode = 400;
@@ -82,9 +84,11 @@ async function handleRequests (req, res) {
 	}
 
 	// Mark the article as read by the given user.
-	await database.update(`Article`, recArticle, {
-		$addToSet: { _readByUsers: userId },
-	});
+	if (!noTrack) {
+		await database.update(`Article`, recArticle, {
+			$addToSet: { _readByUsers: userId },
+		});
+	}
 
 	// Redirect the user to the article URL.
 	res.writeHead(302, { 'Location': recArticle.articleUrl });
