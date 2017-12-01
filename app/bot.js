@@ -25,6 +25,7 @@ const LoggerFilesystem = Hippocamp.require(`loggers/filesystem`);
 const DatabaseMongo = Hippocamp.require(`databases/mongo`);
 const SchedulerSimple = Hippocamp.require(`schedulers/simple`);
 const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
+const { pushNewMessagesToUI } = require(`./modules/miscellaneous`);
 
 /*
  * The main function.
@@ -82,6 +83,10 @@ async function main () {
 
 	// Adapters.
 	await chatbot.configure(new AdapterFacebook(config.adapters.facebook));
+
+	// Register event listeners.
+	chatbot.on(`new-incoming-message`, pushNewMessagesToUI);
+	chatbot.on(`new-outgoing-message`, pushNewMessagesToUI);
 
 	await chatbot.start();
 
