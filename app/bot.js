@@ -38,6 +38,8 @@ async function main () {
 		baseUrl: config.hippocampServer.baseUrl,
 		port: 5000,
 		enableUserProfile: true,
+		enableUserTracking: false,
+		enableEventTracking: false,
 		greetingText: config.greetingText,
 		misunderstoodText: null,
 		menu: config.menu,
