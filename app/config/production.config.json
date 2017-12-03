@@ -14,6 +14,10 @@
 		"facebook": {
 			"verifyToken": null,
 			"accessToken": null
+		},
+		"web": {
+			"endpoint": null,
+			"accessToken": "BO4AHX72iCGqQIbdbu62q08PQHOCmHoRPlkxkv4Y"
 		}
 	},
 	"greetingText": "Welcome to the Eyewitness news bot!",
