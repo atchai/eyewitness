@@ -48,6 +48,6 @@
 		"baseUrl": "http://localhost:5001"
 	},
 	"uiServer": {
-		"baseUrl": "http://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@ui:7000/webhooks/new-message"
+		"baseUrl": "http://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@ui:5002/webhooks/new-message"
 	}
 }
