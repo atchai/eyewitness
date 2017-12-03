@@ -39,6 +39,6 @@
 		"baseUrl": "https://eyewitness-sabc-production.atchai.com:9001"
 	},
 	"uiServer": {
-		"baseUrl": "https://eyewitness-sabc-production.atchai.com:9002"
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-sabc-production.atchai.com:9002"
 	}
 }

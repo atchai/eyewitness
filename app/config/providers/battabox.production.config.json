@@ -41,6 +41,6 @@
 		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9001"
 	},
 	"uiServer": {
-		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9002"
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-battabox-production.atchai.com:9002"
 	}
 }
