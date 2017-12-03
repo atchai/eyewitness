@@ -15,6 +15,7 @@ const RequestNinja = require(`request-ninja`);
 async function pushNewMessagesToUI (data) {
 
 	const uiServerUrl = config.uiServer.baseUrl;
+
 	const req = new RequestNinja(uiServerUrl, {
 		timeout: (1000 * 30),
 		returnResponseObject: true,
@@ -25,8 +26,11 @@ async function pushNewMessagesToUI (data) {
 		message: data.message,
 	});
 
-	if (res.statusCode) { throw new Error(`Non 200 HTTP status code returned by the Eyewitness UI.`); }
-	if (!res.body.success) { throw new Error(`The Eyewitness UI returned an error: "${res.body.error}".`); }
+	if (res.statusCode !== 200) {
+		throw new Error(`Non 200 HTTP status code "${res.statusCode}" returned by the Eyewitness UI.`);
+	}
+
+	if (!res.body || !res.body.success) { throw new Error(`The Eyewitness UI returned an error: "${res.body.error}".`); }
 
 }
 
