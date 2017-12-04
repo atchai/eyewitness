@@ -36,13 +36,13 @@ database.addModel(ArticleModel);
 function parseIncomingUrl (url) {
 
 	const [ , feedId, articleId, userId, noTrackStr ] =
-		url.match(/^\/([a-z0-9]+)\/([a-z0-9]+)\/([a-z0-9]+)\/?(?:\?(no-track(?:=\d)?))?$/i) || [];
+		url.match(/^\/([a-z0-9]+)\/([a-z0-9]+)\/([a-z0-9]+)\/?(?:\?(notrack(?:\=\d)?))?$/i) || [];
 
 	return {
 		feedId,
 		articleId,
 		userId,
-		noTrack: Boolean(noTrackStr === `no-track` || noTrackStr === `no-track=1`),
+		noTrack: Boolean(noTrackStr === `notrack=1` || noTrackStr === `notrack`),
 	};
 
 }
