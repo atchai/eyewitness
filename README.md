@@ -59,3 +59,17 @@ npm run deploy existing battabox staging
 npm run deploy existing sabc staging
 npm run deploy existing thestar staging
 `
+
+## Handy Database Queries
+
+### Total users
+Returns the total number of user documents in the database.
+`db.user.count()`
+
+### Total articles
+Returns the total number of article documents in the database.
+`db.article.count()`
+
+### Total aggregate article reads
+Returns the aggregated number of article reads across all articles.
+`db.article.aggregate([{ $unwind: "$_readByUsers" }, { $group: { _id: {}, count: { "$sum": 1 } } }, { $group: { _id: {}, numReads: { $push: { _readByUsers: "$_id.readByUsers", count: "$count" } } } }])`
