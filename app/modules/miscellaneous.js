@@ -14,7 +14,7 @@ const RequestNinja = require(`request-ninja`);
  */
 async function pushNewMessagesToUI (data) {
 
-	const uiServerUrl = config.uiServer.baseUrl;
+	const uiServerUrl = `${config.uiServer.baseUrl}/webhooks/new-message`;
 
 	const req = new RequestNinja(uiServerUrl, {
 		timeout: (1000 * 30),
