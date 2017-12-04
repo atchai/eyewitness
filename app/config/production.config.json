@@ -52,10 +52,16 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": null
+		"baseUrl": null,
+		"ports": {
+			"internal": 5000
+		}
 	},
 	"readServer": {
-		"baseUrl": null
+		"baseUrl": null,
+		"ports": {
+			"internal": 5001
+		}
 	},
 	"uiServer": {
 		"baseUrl": null
