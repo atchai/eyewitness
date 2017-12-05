@@ -15,8 +15,8 @@ const AWS_REGION = `eu-west-1`;
 const AWS_REPO_URL = `614459117250.dkr.ecr.eu-west-1.amazonaws.com`;
 const IMAGE_NAME = `eyewitness-app`;
 const AWS_REPO_IMAGE_URL = `${AWS_REPO_URL}/${IMAGE_NAME}`;
-const ALLOWED_VERSION_TYPES = [`major`, `minor`, `patch`, `existing`];
-const ALLOWED_ENVIRONMENTS = [`production`, `staging`];
+const ALLOWED_VERSION_TYPES = [ `major`, `minor`, `patch`, `existing` ];
+const ALLOWED_ENVIRONMENTS = [ `production`, `staging` ];
 
 /*
  * The main function.
@@ -111,8 +111,8 @@ async function main () {
 	readServerContainer.logConfiguration.options[`awslogs-group`] = awsLogsGroup;
 
 	// Right now AWS ECS requires us to create separate services for each exposed container.
-	const botPseudoTaskDefinition = { containerDefinitions: [botContainer] };
-	const readServerPseudoTaskDefinition = { containerDefinitions: [readServerContainer] };
+	const botPseudoTaskDefinition = { containerDefinitions: [ botContainer ] };
+	const readServerPseudoTaskDefinition = { containerDefinitions: [ readServerContainer ] };
 
 	const newBotTaskDefinition =
 		await registerTaskDefinition(AWS_PROFILE, AWS_REGION, `${taskFamily}-bot`, botPseudoTaskDefinition);
@@ -134,7 +134,7 @@ async function main () {
  * Execute script.
  */
 main()
-	.catch(err => {
+	.catch(err => { // eslint-disable-line promise/prefer-await-to-callbacks
 
 		process.stderr.write(`\n\n[Error!]\n`);
 
