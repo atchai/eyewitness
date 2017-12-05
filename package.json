@@ -8,7 +8,7 @@
     "deploy": "node ./scripts/deploy/deploy",
     "deploy-all-production": "npm run deploy minor battabox production && npm run deploy existing sabc production && npm run deploy existing thestar production",
     "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
-    "start-development": "npm install && npm update -S && ./node_modules/.bin/nodemon ./app/entryPoint.js",
+    "start-development": "npm install && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""
   },
