@@ -2,20 +2,8 @@
 	"uri": "/introduction",
 	"type": "basic",
 	"actions": [{
-		"type": "send-message",
-		"message": {
-			"text": "Hi {{firstName}}, welcome to {{provider.name}}."
-		}
-	}, {
-		"type": "send-message",
-		"message": {
-			"text": "You can get the latest news and send us stories right here on Messenger."
-		}
-	}, {
-		"type": "send-message",
-		"message": {
-			"text": "Here's our top stories..."
-		}
+		"type": "execute-hook",
+		"hook": "welcomeMessages"
 	}, {
 		"type": "change-step",
 		"nextUri": "/articles"
