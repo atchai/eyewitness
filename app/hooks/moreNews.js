@@ -37,6 +37,9 @@ function prepareNoArticlesMessage (MessageObject, recUser) {
 		channelName: recUser.channel.name,
 		channelUserId: recUser.channel.userId,
 		text: `Whoops! There are no more news articles to read just yet!`,
+		options: [{
+			label: `More stories`,
+		}],
 	});
 
 }
