@@ -103,7 +103,7 @@ async function startReadServer () {
 
 	return await new Promise((resolve, reject) => {
 
-		const port = config.readServer.ports.internal;
+		const port = process.env.PORT || config.readServer.ports.internal;
 		const server = http.createServer(handleRequests);
 
 		server.listen(port, err => {
