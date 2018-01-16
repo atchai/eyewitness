@@ -27,7 +27,7 @@
 	}],
 	"messageVariables": {
 		"provider": {
-			"name": "The Daily Planet",
+			"name": "The Daily Planet - Staging",
 			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
 			"timezoneOffset": 1,
 			"itemPriorityField": "category",
