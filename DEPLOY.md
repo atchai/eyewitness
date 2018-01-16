@@ -50,12 +50,12 @@ The bot is the tool that communicates with users over Facebook Messenger.
 8. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-bot.sometest.com.herokudns.com".
 9. Run `heroku container:push web -a eyewitness-bot` to deploy the bot.
 10. Run `heroku dyno:resize hobby -a eyewitness-bot` to allow us to use SSL on the domain (costs apply, see Heroku pricing).
+11. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-bot`.
 
 ### Setup DNS
 1. Add a CNAME DNS record to your domain "eyewitness-bot" which points to the DNS target given in the previous section.
-2. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-bot`.
-3. When the DNS has updated you should see some output by visiting `https://eyewitness-bot.<DOMAIN_NAME>/health-check` where <DOMAIN_NAME> is replaced with your domain.
-4. In the Facebook app you created earlier, setup the webhook with the URL `https://eyewitness-bot.<DOMAIN_NAME>/api/adapter/facebook` and your verify token.
+2. When the DNS has updated you should see some output by visiting `https://eyewitness-bot.<DOMAIN_NAME>/health-check` where <DOMAIN_NAME> is replaced with your domain.
+3. In the Facebook app you created earlier, setup the webhook with the URL `https://eyewitness-bot.<DOMAIN_NAME>/api/adapter/facebook` and your verify token.
 
 ## Deploy the Read Server
 The read server tracks how many times each story has been read and by which users.
@@ -94,11 +94,11 @@ The user interface is used by admins to message users of the bot, manage the sto
 5. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-ui.sometest.com.herokudns.com".
 6. Run `heroku container:push web -a eyewitness-ui` to deploy the read server.
 7. Run `heroku dyno:resize hobby -a eyewitness-ui` to allow us to use SSL on the domain (costs apply, see Heroku pricing).
+8. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-ui`.
 
 ### Setup DNS
 1. Add a CNAME DNS record to your domain "eyewitness-ui" which points to the DNS target given in the previous section.
-2. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-ui`.
-3. When the DNS has updated you should see some output by visiting `https://eyewitness-ui.<DOMAIN_NAME>/health-check` where <DOMAIN_NAME> is replaced with your domain.
+2. When the DNS has updated you should see some output by visiting `https://eyewitness-ui.<DOMAIN_NAME>/health-check` where <DOMAIN_NAME> is replaced with your domain.
 
 ## Deploying Updates
 Every so often there may be updates to Eyewitness that you want to deploy. In that case follow these steps:
