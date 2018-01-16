@@ -5,8 +5,11 @@
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy": "node ./scripts/deploy/deploy",
-    "deploy-all-production": "npm run deploy minor battabox production && npm run deploy existing sabc production && npm run deploy existing thestar production",
+    "deploy-all-production": "npm run deploy-demo && npm run deploy-battabox && npm run deploy-sabc && npm run deploy-thestar",
+    "deploy-demo-production": "heroku container:push web -a eyewitness-bot-demo && heroku container:push web -a eyewitness-rs-demo",
+    "deploy-battabox-production": "heroku container:push web -a eyewitness-bot-battabox && heroku container:push web -a eyewitness-rs-battabox",
+    "deploy-sabc-production": "heroku container:push web -a eyewitness-bot-sabc && heroku container:push web -a eyewitness-rs-sabc",
+    "deploy-thestar-production": "heroku container:push web -a eyewitness-bot-thestar && heroku container:push web -a eyewitness-rs-thestar",
     "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
     "start-development": "npm install && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
