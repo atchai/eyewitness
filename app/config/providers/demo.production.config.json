@@ -27,7 +27,7 @@
 	}],
 	"messageVariables": {
 		"provider": {
-			"name": "BattaBox",
+			"name": "The Daily Planet",
 			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
 			"timezoneOffset": 1,
 			"itemPriorityField": "category",
