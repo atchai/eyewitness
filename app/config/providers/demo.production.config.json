@@ -38,7 +38,7 @@
 		"baseUrl": "https://eyewitness-bot-demo.atchai.com"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-rs-demo.atchai.com"
+		"baseUrl": "http://eyewitness-rs-demo.atchai.com"
 	},
 	"uiServer": {
 		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui-demo.atchai.com"
