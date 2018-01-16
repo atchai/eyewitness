@@ -1,0 +1,46 @@
+{
+	"adapters": {
+		"facebook": {
+			"verifyToken": "<VERIFY_TOKEN>",
+			"accessToken": "<ACCESS_TOKEN>"
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://<USERNAME>:<PASSWORD>@<HOST_PORT>/eyewitness-production?replicaSet=<REPLICA_SET>"
+		}
+	},
+	"greetingText": "Welcome to our news bot!",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://form.jotformeu.com/72784452444361",
+		"sharing": true
+	}, {
+		"type": "basic",
+		"label": "More stories"
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
+	"messageVariables": {
+		"provider": {
+			"name": "<ORGANISATION_NAME>",
+			"rssFeedUrl": "<FEED_URL>",
+			"timezoneOffset": 1,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking-news"
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-bot.<DOMAIN_NAME>"
+	},
+	"readServer": {
+		"baseUrl": "http://eyewitness-rs.<DOMAIN_NAME>"
+	},
+	"uiServer": {
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui.<DOMAIN_NAME>"
+	}
+}

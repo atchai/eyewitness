@@ -1,0 +1,46 @@
+{
+	"adapters": {
+		"facebook": {
+			"verifyToken": "RkYO5y0xy6qDG1O6I0SlR9ZCs5ZmJbrxTzpexvno",
+			"accessToken": "EAADQbpb1FowBACzZBACNWY2jdKErJmmJZCZBi8Q2QCIDqF8VpuMT8JV6CpGkzQkjM3TeVEsCI4ZBQuGTSpehr7kKRGUJSU5pguktx1WDBWgA7Sw6MfnQZCQCnWkSZCZAsR7Jt1bRODLAaIrkegr3VPmDrK1aHV2ScncInSUDQ6MfQZDZD"
+		}
+	},
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://user-NRWNKF9JWVo4T5mBu8Ob:R1LUWkOo3L2yqPQPWnWkvKSeLX63qjyrPZqshk17XjNX7uZ1CbyTUuQk7fjw@ds251747.mlab.com:51747/demo-production"
+		}
+	},
+	"greetingText": "Welcome to The Daily Planet's news bot!",
+	"menu": [{
+		"type": "url",
+		"label": "Send us a story",
+		"payload": "https://form.jotformeu.com/000000000000000",
+		"sharing": true
+	}, {
+		"type": "basic",
+		"label": "More stories"
+	}, {
+		"type": "url",
+		"label": "Privacy policy",
+		"payload": "https://atchai.com/docs/eyewitness-policy/",
+		"sharing": true
+	}],
+	"messageVariables": {
+		"provider": {
+			"name": "BattaBox",
+			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
+			"timezoneOffset": 1,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking-news"
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-bot-demo.atchai.com"
+	},
+	"readServer": {
+		"baseUrl": "https://eyewitness-rs-demo.atchai.com"
+	},
+	"uiServer": {
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui-demo.atchai.com"
+	}
+}
