@@ -35,12 +35,12 @@
 		}
 	},
 	"hippocampServer": {
-		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9000"
+		"baseUrl": "https://eyewitness-bot-battabox.atchai.com"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-battabox-production.atchai.com:9001"
+		"baseUrl": "http://eyewitness-rs-battabox.atchai.com"
 	},
 	"uiServer": {
-		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-battabox-production.atchai.com:9002"
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui-battabox.atchai.com"
 	}
 }
