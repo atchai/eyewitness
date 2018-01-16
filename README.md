@@ -22,42 +22,24 @@ When developing locally I like to use Docker (for environment encapsulation). I 
 ## Deploying Eyewitness
 You must use the "deploy" script to deploy Eyewitness.
 
-To deploy Eyewitness use the "deploy" script `npm run deploy [version-bump] [provider] [environment]` specifying the type of version bump (e.g. patch, minor, major, existing), the provider ID and the environment (production/staging).
-
-You only need to bump the version for the first deployment. Subsequent deploys can use "existing" for the version bump argument to avoid rebuilding the entire Docker image unnecessarily.
-
 ### Production
-If you need to rebuild the Docker image during deployment use one of these commands:
+To deploy one of the media providers' services to production run the appropriate command:
 
 `
-npm run deploy minor battabox production
-npm run deploy minor sabc production
-npm run deploy minor thestar production
-`
-
-If you want to deploy the existing Docker image use one of these commands:
-
-`
-npm run deploy existing battabox production
-npm run deploy existing sabc production
-npm run deploy existing thestar production
+npm run deploy-demo-production
+npm run deploy-battabox-production
+npm run deploy-sabc-production
+npm run deploy-thestar-production
 `
 
 ### Staging
-If you need to rebuild the Docker image during deployment use one of these commands:
+To deploy one of the media providers' services to staging run the appropriate command:
 
 `
-npm run deploy patch battabox staging
-npm run deploy patch sabc staging
-npm run deploy patch thestar staging
-`
-
-If you want to deploy the existing Docker image use one of these commands:
-
-`
-npm run deploy existing battabox staging
-npm run deploy existing sabc staging
-npm run deploy existing thestar staging
+npm run deploy-demo-staging
+npm run deploy-battabox-staging
+npm run deploy-sabc-staging
+npm run deploy-thestar-staging
 `
 
 ## Handy Database Queries
