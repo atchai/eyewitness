@@ -16,8 +16,8 @@ module.exports = function (Schema, Property, Reference) {
 		description: new Property(`string`),
 		isPriority: new Property(`boolean`),
 		isPublished: new Property(`boolean`, true),
-		_receivedByUsers: [new Reference(`User`)],
-		_readByUsers: [new Reference(`User`)],
+		_receivedByUsers: [ new Reference(`User`) ],
+		_readByUsers: [ new Reference(`User`) ],
 		ingestedDate: new Property(`date`, Date.now),
 	});
 
