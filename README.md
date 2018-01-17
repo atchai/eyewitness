@@ -20,7 +20,7 @@ When developing locally I like to use Docker (for environment encapsulation). I 
 3. Open a third terminal window and run the example chatbot with: `docker-compose up app`.
 
 ## Deploying Eyewitness
-You must use the "deploy" script to deploy Eyewitness.
+You must use one of the "deploy" scripts to deploy Eyewitness automatically. For instructions on how to setup the hosting, please refer to the DEPLOY.md file.
 
 ### Production
 To deploy one of the media providers' services to production run the appropriate command:
