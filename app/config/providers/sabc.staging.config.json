@@ -1,12 +1,8 @@
 {
 	"adapters": {
-		"STAGING_facebook": {
-			"verifyToken": "jzMaRwGYyFpPknm9x0HnugFsZ7EULA0QibGHpawe",
-			"accessToken": "EAABpxhPyBiIBAEvxsiTY4Ymuk9ZBeVGmIjXj8pMEVPnIL1KZC6Ytd8QZBbOXegV4tpz2JaaYBIcaHaeJsmRSdkj3pkSM8DoUDptXY4YsEeV05ycxprouQWWOPfYDDKziirZAZB604wtbAZAzfNE5RbV0ArdZCgQ9if35tkJVR9rpQZDZD"
-		},
 		"facebook": {
-			"verifyToken": "jzMaRwGYyFpPknm9x0HnugFsZ7EULA0QibGHpawe",
-			"accessToken": "EAAXYZCJQhLPwBAFgXgM5oVqwiPu7uvszccaYXgF0JOfyDLG3tK7eQOkJxYx2db0HZBYAAAZAKvMcQNaanngzbclphVh27aFUkn1rPS4n7RYncyzQFmHguZCA0xKMvDT0dnzs00SYRphvYGSqoQawZCmqNCgDSAtHTkO0NDX0sRQZDZD"
+			"verifyToken": "iJykRQuuXRRoMxNdsiHRMuCBpkv1J64CFcY1ENDe",
+			"accessToken": "EAABpxhPyBiIBAFck4rdxBNZAqlR8ZCZB01Xfsh241IN7OKd06y9cCHOBcZAdYrRfjls3x8BMPHbtPAByiqqDEnYMQLS9rnNQrkA0otgnfn0ma13ZAaqN1eOCXZAfA4gP75aZA55sNaWnJbbMbAwj5kQvSyZCCEbUr7ao01St1NfoZCwZDZD"
 		}
 	},
 	"databases": {

@@ -1,12 +1,8 @@
 {
 	"adapters": {
-		"STAGING_facebook": {
-			"verifyToken": "jjfWKrQfdtDSEC2Zkx42KJ9pIaprpXcJLvfGJ7nb",
-			"accessToken": "EAAXHFF04CrgBAOAwQcO9ZC78wR4bRfDFA8NL0FgrTT0xit2MaT43sMKQUSmmxjg0SfsZAXBZAjlkjTwp7wZBhoCj2o57uZCuYaET1dmmky8pjDyZAV6L4yj6DZAOKo1ezZC5ubDrIYJ7mYAaczJJbfFQKOj3ZB4ZCkdfOk73JRdyRJCgZDZD"
-		},
 		"facebook": {
-			"verifyToken": "jjfWKrQfdtDSEC2Zkx42KJ9pIaprpXcJLvfGJ7nb",
-			"accessToken": "EAAHWcmvsRA8BAKixsHDPDLGZCYzlWWpSQa1fMfmCUpSN1deitHENR6a1VGlysbvZAqWH5THQtsNHmZBizWVLZAFV0CGt39NME7UdtFbdWOpFAPCNsjKfDcJXtyJWW9NXsGRfBB9ZALcC7i7ZAwpStZCPDDnoycquzs5kZABuzmZCTM4VJONJuv6OK"
+			"verifyToken": "QToYHocybT67ucO1wLolXqrCJvQn8x3hDJa5PZul",
+			"accessToken": "EAAXHFF04CrgBACT7uqxT9bEDli7J8EBW24Kb2glYrnL504Q4o74QJ8PGnoRmx8xfyzMo11LF4GlWJUnCMwgQCVlzYo0Srlh5uykTvMZC2Y83AUp3J83xfxZAFBKZCYNfWsYwZB46j3dsxijvvjhYgsuLtaFuDCgBZCz86aXxaXgZDZD"
 		}
 	},
 	"databases": {
