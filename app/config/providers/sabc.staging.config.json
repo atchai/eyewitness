@@ -2,7 +2,7 @@
 	"adapters": {
 		"facebook": {
 			"verifyToken": "iJykRQuuXRRoMxNdsiHRMuCBpkv1J64CFcY1ENDe",
-			"accessToken": "EAABpxhPyBiIBAFck4rdxBNZAqlR8ZCZB01Xfsh241IN7OKd06y9cCHOBcZAdYrRfjls3x8BMPHbtPAByiqqDEnYMQLS9rnNQrkA0otgnfn0ma13ZAaqN1eOCXZAfA4gP75aZA55sNaWnJbbMbAwj5kQvSyZCCEbUr7ao01St1NfoZCwZDZD"
+			"accessToken": "EAABpxhPyBiIBAJg3CyDcp8QDszylmESjZCAjWd6gdJbPvubbhzmjOKr1Th41e6CPUHEoXTB5rLVYCJrPZCkZAKpfqbIxrDYSGfnaFG4jXM22Mqol03cLuQVuxaITMWU6yGrxjPUZBK7sSs9GzYpMYr5rbVInH2OKriKKc9nDlAZDZD"
 		}
 	},
 	"databases": {
