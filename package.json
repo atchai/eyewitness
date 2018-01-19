@@ -5,7 +5,7 @@
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy-all-production": "npm run deploy-demo && npm run deploy-battabox && npm run deploy-sabc && npm run deploy-thestar",
+    "deploy-all-production": "npm run deploy-demo-production && npm run deploy-battabox-production && npm run deploy-sabc-production && npm run deploy-thestar-production",
     "deploy-demo-production": "heroku container:push web -a eyewitness-bot-demo && heroku container:push web -a eyewitness-rs-demo",
     "deploy-battabox-production": "heroku container:push web -a eyewitness-bot-battabox && heroku container:push web -a eyewitness-rs-battabox",
     "deploy-sabc-production": "heroku container:push web -a eyewitness-bot-sabc && heroku container:push web -a eyewitness-rs-sabc",
