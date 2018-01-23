@@ -1,0 +1,9 @@
+{
+	"matches": {
+		"do advertise flow": "string"
+	},
+	"actions": [{
+		"type": "change-step",
+		"nextUri": "/activities/advertise"
+	}]
+}
