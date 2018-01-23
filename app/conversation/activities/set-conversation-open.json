@@ -1,0 +1,16 @@
+{
+	"uri": "/activities/set-conversation-open",
+	"type": "basic",
+	"actions": [{
+		"type": "update-memory",
+		"memory": {
+			"conversationState": {
+				"operation": "set",
+				"value": "open"
+			}
+		}
+	}, {
+		"type": "change-step",
+		"nextUri": "/activities"
+	}]
+}

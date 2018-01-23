@@ -1,0 +1,22 @@
+{
+	"uri": "/activities/advertise",
+	"type": "basic",
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "Great!"
+		}
+	}],
+	"prompt": {
+		"type": "basic",
+		"text": "Please enter your email and someone from our advertising sales team will contact you shortly.",
+		"memory": {
+			"emailForAdvertising": {
+				"regexp": "\\s*(.+@.+)\\s*",
+				"required": true
+			}
+		},
+		"errorMessage": "Please enter a valid email address.",
+		"nextUri": "/activities/advertise/done"
+	}
+}

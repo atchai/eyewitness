@@ -1,0 +1,12 @@
+{
+	"uri": "/introduction/entry-point-switch",
+	"type": "basic",
+	"actions": [{
+		"type": "change-step",
+		"conditional": "<referral>",
+		"nextUri": "/activities/latest-stories"
+	}, {
+		"type": "change-step",
+		"nextUri": "/activities"
+	}]
+}

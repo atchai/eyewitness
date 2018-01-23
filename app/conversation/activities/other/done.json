@@ -1,0 +1,13 @@
+{
+	"uri": "/activities/other/done",
+	"type": "basic",
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "We'll take a look at your message soon and get back to you if required."
+		}
+	}, {
+		"type": "change-step",
+		"nextUri": "/activities/set-conversation-open"
+	}]
+}

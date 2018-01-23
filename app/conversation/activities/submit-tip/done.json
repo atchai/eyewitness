@@ -1,0 +1,13 @@
+{
+	"uri": "/activities/submit-tip/done",
+	"type": "basic",
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "Thanks! We'll review your information and be in touch if we need anything else."
+		}
+	}, {
+		"type": "change-step",
+		"nextUri": "/activities/set-conversation-open"
+	}]
+}

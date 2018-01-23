@@ -1,0 +1,13 @@
+{
+	"uri": "/activities/advertise/done",
+	"type": "basic",
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "Great, we'll be in touch soon!"
+		}
+	}, {
+		"type": "change-step",
+		"nextUri": "/activities/set-conversation-open"
+	}]
+}

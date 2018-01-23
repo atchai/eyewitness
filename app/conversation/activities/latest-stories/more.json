@@ -1,5 +1,5 @@
 {
-	"uri": "/articles/more",
+	"uri": "/activities/latest-stories/more",
 	"type": "basic",
 	"actions": [{
 		"type": "send-message",
@@ -8,6 +8,6 @@
 		}
 	}, {
 		"type": "change-step",
-		"nextUri": "/articles"
+		"nextUri": "/activities/latest-stories"
 	}]
 }

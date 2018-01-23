@@ -1,0 +1,9 @@
+{
+	"uri": "/activities/other",
+	"type": "basic",
+	"prompt": {
+		"type": "basic",
+		"text": "Please enter your message and one of our team will review it shortly.",
+		"nextUri": "/activities/other/done"
+	}
+}
