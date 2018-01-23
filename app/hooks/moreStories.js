@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * HOOK: More News
+ * HOOK: More Stories
  */
 
 const packageJson = require(`../../package.json`);
@@ -28,7 +28,7 @@ async function getUnreceivedArticles (database, recUser, limit = 0) {
 }
 
 /*
- * Returns the message stating there are no more news articles to read.
+ * Returns the message stating there are no more stories to read.
  */
 function prepareNoArticlesMessage (MessageObject, recUser) {
 
@@ -105,22 +105,22 @@ async function markArticlesAsReceived (database, recUser, recArticles) {
 /*
  * The hook itself.
  */
-module.exports = async function moreNews (action, variables, { database, MessageObject, recUser, sendMessage }) {
+module.exports = async function moreStories (action, variables, { database, MessageObject, recUser, sendMessage }) {
 
 	const maxArticles = 5;
 	const recArticles = await getUnreceivedArticles(database, recUser, maxArticles);
 
-	// Stop here if we have no articles to send.
+	// Stop here if we have no stories to send.
 	if (!recArticles || !recArticles.length) {
 		const noArticlesMessage = prepareNoArticlesMessage(MessageObject, recUser);
 		return await sendMessage(recUser, noArticlesMessage);
 	}
 
-	// Send the news articles.
+	// Send the stories.
 	const message = prepareCarouselMessage(MessageObject, variables, recUser, recArticles);
 	await sendMessage(recUser, message);
 
-	// Mark articles as recieved by the user.
+	// Mark stories as recieved by the user.
 	await markArticlesAsReceived(database, recUser, recArticles);
 
 };
