@@ -22,10 +22,21 @@
 	},
 	"greetingText": "Welcome to the Eyewitness news bot!",
 	"menu": [{
-		"type": "url",
-		"label": "Send us a story",
-		"payload": "https://www.google.co.uk",
-		"sharing": true
+		"type": "basic",
+		"label": "See latest stories",
+		"payload": "latest stories"
+	}, {
+		"type": "nested",
+		"label": "Contact us",
+		"items": [{
+			"type": "basic",
+			"label": "Send us a tip",
+			"payload": "do submit tip flow"
+		}, {
+			"type": "basic",
+			"label": "Advertise",
+			"payload": "do advertise flow"
+		}]
 	}, {
 		"type": "url",
 		"label": "Privacy policy",
