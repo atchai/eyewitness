@@ -84,7 +84,6 @@ function prepareCarouselMessage (MessageObject, variables, recUser, recArticles)
 		},
 		options: [{
 			label: `More stories`,
-			nextUri: `/articles/more`,
 		}],
 	});
 
