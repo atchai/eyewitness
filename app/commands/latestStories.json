@@ -1,0 +1,10 @@
+{
+	"matches": {
+		"latest stories": "string",
+		"latest": "string"
+	},
+	"actions": [{
+		"type": "change-step",
+		"nextUri": "/activities/latest-stories"
+	}]
+}
