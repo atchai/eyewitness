@@ -16,6 +16,7 @@
     "deploy-sabc-staging": "heroku container:push web -a eyewitness-bot-sabc-staging && heroku container:push web -a eyewitness-rs-sabc-staging",
     "deploy-thestar-staging": "heroku container:push web -a eyewitness-bot-thestar-staging && heroku container:push web -a eyewitness-rs-thestar-staging",
     "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
+    "start-local": "./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-development": "npm install && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
     "test": "echo \"Placeholder tests.\""

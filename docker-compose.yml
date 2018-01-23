@@ -25,11 +25,13 @@ services:
       - ./app:/src/app
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
+      # - ./node_modules/@atchai/hippocamp:/src/node_modules/@atchai/hippocamp
     ports:
       - "5000:5000"
     networks:
       - eyewitness-network
     command: npm run start-development
+    # command: npm run start-local
     tty: true
     restart: on-failure
 
