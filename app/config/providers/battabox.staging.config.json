@@ -10,6 +10,11 @@
 			"connectionString": "mongodb://eyewitness-user-ZAnSNJCeNuWgR4LwFLhGh3B4TCf8PuIsUZCV0pj6:xVKahdfIMFRvRbxV4qD6Q78c2bvgn4zN0ZCO32ePMDDrQI8kNz0KMQwkvKzbAm4cDEPJlaxlZgs3Je1L@ds261527.mlab.com:61527/battabox-staging"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "WWGo7jxLOWfbTrMkwq2hVepF8kLj49A2Qbt0ipgi"
+		}
+	},
 	"greetingText": "Welcome to BattaBox's news bot!",
 	"messageVariables": {
 		"provider": {

@@ -10,6 +10,12 @@
 			"connectionString": "mongodb://<USERNAME>:<PASSWORD>@<HOST_PORT>/eyewitness-production?replicaSet=<REPLICA_SET>"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "<DASHBOT_API_TOKEN>",
+			"isDisabled": false
+		}
+	},
 	"greetingText": "Welcome to our news bot!",
 	"messageVariables": {
 		"provider": {

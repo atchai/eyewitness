@@ -10,6 +10,11 @@
 			"connectionString": "mongodb://eyewitness-user-CTxq4CiZodUfoR76ySV8qUV82Jme6mrPDieXlvmb:sLbwSwLeYouuVPZbt7gGnRh9njpCf9gWGcUP9ubi9J0ahy0LHYWrlcFN0tfkWRRd6iplN5PLG2BqKp9W@ds261527.mlab.com:61527/sabc-staging"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "66Kj7xOz2by3jAH3c8K7gbV2d7KUuK07nnXV4e6j"
+		}
+	},
 	"greetingText": "Welcome to SABC's news bot!",
 	"messageVariables": {
 		"provider": {

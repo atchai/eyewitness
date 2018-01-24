@@ -15,6 +15,11 @@
 			"connectionString": "mongodb://mongodb:27017/eyewitness"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "CM1aDjvrWAsZc4kqd65VaeUSbnpeHNuYZSZayiBH"
+		}
+	},
 	"adapters": {
 		"facebook": {
 			"verifyToken": "Ip9BhC027cenge0cXhQ61Dzh3AHmD467egFGXq3U",

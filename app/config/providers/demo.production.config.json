@@ -10,6 +10,11 @@
 			"connectionString": "mongodb://user-NRWNKF9JWVo4T5mBu8Ob:R1LUWkOo3L2yqPQPWnWkvKSeLX63qjyrPZqshk17XjNX7uZ1CbyTUuQk7fjw@ds251747.mlab.com:51747/demo-production"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "CoyxlgPa4ieZYHRwebzsy5PC0Mg0SwzMKo38e1EH"
+		}
+	},
 	"greetingText": "Welcome to The Daily Planet's news bot!",
 	"messageVariables": {
 		"provider": {

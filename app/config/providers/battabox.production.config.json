@@ -10,6 +10,11 @@
 			"connectionString": "mongodb://user-vlaPTZzebcXnaZFlHniE:fSlnOao4tEYJnq29aCGWuhJGMMsjEZ44bh5n5eqdeAuCAp9bgbnwng5db0fd@ds153165-a0.mlab.com:53165,ds153165-a1.mlab.com:53165/eyewitness-production-battabox?replicaSet=rs-ds153165"
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "jDdXrg4wUA7Ym2CQ3Hg2N9JlS4YWxlx3Q0Pd7gud"
+		}
+	},
 	"greetingText": "Welcome to BattaBox's news bot!",
 	"messageVariables": {
 		"provider": {
