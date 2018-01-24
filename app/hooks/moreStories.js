@@ -39,6 +39,8 @@ function prepareNoArticlesMessage (MessageObject, recUser) {
 		text: `Whoops! There are no more stories to read just yet!`,
 		options: [{
 			label: `More stories`,
+		}, {
+			label: `Main menu`,
 		}],
 	});
 
@@ -84,6 +86,8 @@ function prepareCarouselMessage (MessageObject, variables, recUser, recArticles)
 		},
 		options: [{
 			label: `More stories`,
+		}, {
+			label: `Main menu`,
 		}],
 	});
 

@@ -2,13 +2,6 @@
 	"uri": "/introduction",
 	"type": "basic",
 	"actions": [{
-		"type": "update-memory",
-		"memory": {
-			"lastChosenActivity": {
-				"operation": "unset"
-			}
-		}
-	}, {
 		"type": "execute-hook",
 		"hook": "welcomeMessages"
 	}, {

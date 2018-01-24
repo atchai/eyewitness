@@ -10,6 +10,9 @@
 	"prompt": {
 		"type": "basic",
 		"text": "Please enter your email and someone from our advertising sales team will contact you shortly.",
+		"options": [{
+			"label": "Cancel"
+		}],
 		"memory": {
 			"emailForAdvertising": {
 				"regexp": "\\s*(.+@.+)\\s*",

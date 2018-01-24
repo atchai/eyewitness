@@ -1,0 +1,10 @@
+{
+	"matches": {
+		"main menu": "string",
+		"cancel": "string"
+	},
+	"actions": [{
+		"type": "change-step",
+		"nextUri": "/introduction/entry-point-switch"
+	}]
+}
