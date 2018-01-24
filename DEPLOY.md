@@ -30,14 +30,15 @@ The bot is the tool that communicates with users over Facebook Messenger.
 3. Generate your own random string and put it in the "adapters.facebook.verifyToken" property.
 4. Leave "adapters.facebook.accessToken" blank for now as we will get that from Facebook later.
 5. Update the database connection string with the username, password, host and replica set value you got from mLab in the "databases.mongo.connectionString" property.
-6. Add in a greeting message to be displayed to first time users in the "greetingText" property.
-7. Put the name of your organisation in the "messageVariables.provider.name" property.
-8. Put the URL to your RSS feed in the "messageVariables.provider.rssFeedUrl" property.
-9. Put the UTC offset of your organisation in the "messageVariables.provider.timezoneOffset" property.
-10. To setup the breaking news function, you can add the name of the RSS field and the expected value the bot should watch for in the "messageVariables.provider.itemPriorityField" and "messageVariables.provider.itemPriorityValue" properties. For example, the field might be "category" and the value might be "breaking-news".
-11. Put your website's domain name in the "hippocampServer", "readServer", and "uiServer" properties.
-12. Make sure there are no more items to replace that look like "<SOME_ITEM_TO_REPLACE>" anywhere in the config file.
-13. Save and close the file.
+6. Add in your Dashbot.io analytics API key, or set the "isDisabled" property to true if you don't want to use Dashbot.
+7. Add in a greeting message to be displayed to first time users in the "greetingText" property.
+8. Put the name of your organisation in the "messageVariables.provider.name" property.
+9. Put the URL to your RSS feed in the "messageVariables.provider.rssFeedUrl" property.
+10. Put the UTC offset of your organisation in the "messageVariables.provider.timezoneOffset" property.
+11. To setup the breaking news function, you can add the name of the RSS field and the expected value the bot should watch for in the "messageVariables.provider.itemPriorityField" and "messageVariables.provider.itemPriorityValue" properties. For example, the field might be "category" and the value might be "breaking-news".
+12. Put your website's domain name in the "hippocampServer", "readServer", and "uiServer" properties.
+13. Make sure there are no more items to replace that look like "<SOME_ITEM_TO_REPLACE>" anywhere in the config file.
+14. Save and close the file.
 
 ### Setup Heroku
 1. Run `heroku login` to login to Heroku.
