@@ -159,7 +159,7 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 	const timezoneOffset = config.messageVariables.provider.timezoneOffset;
 	const itemPriorityField = variables.provider.itemPriorityField;
 	const itemPriorityValue = variables.provider.itemPriorityValue;
-	let imageUrl = item.enclosure && item.enclosure[0].$.url;
+	let imageUrl = (item.enclosure && item.enclosure[0] && item.enclosure[0].$ ? item.enclosure[0].$.url : ``);
 	let title = item.title[0] || null;
 	let description = item.description[0] || null;
 	let articleDate = moment.utc().add(timezoneOffset, `hours`);
@@ -175,9 +175,9 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 	// If we have page, try to pull out the rich preview values from the meta tags.
 	if (articlePageHtml) {
 		const $dom = cheerio.load(articlePageHtml);
-		imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || imageUrl;
-		title = $dom(`head > meta[property="og:title"]`).attr(`content`) || title;
-		description = $dom(`head > meta[property="og:description"]`).attr(`content`) || description;
+		imageUrl = $dom(`head > meta[property="og:image"]`).attr(`content`) || imageUrl || ``;
+		title = $dom(`head > meta[property="og:title"]`).attr(`content`) || title || ``;
+		description = $dom(`head > meta[property="og:description"]`).attr(`content`) || description || ``;
 	}
 
 	// Check if the item is breaking news.
