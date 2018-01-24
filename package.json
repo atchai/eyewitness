@@ -1,6 +1,6 @@
 {
   "name": "eyewitness",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "private": true,
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
