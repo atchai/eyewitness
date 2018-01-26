@@ -74,11 +74,12 @@ module.exports = async function newsNotifications (action, variables, { database
 		const feedId = recArticle.feedId;
 		const userId = recUser._id;
 		const readUrl = `${baseUrl}/${feedId}/${articleId}/${userId}`;
-		const message = new MessageObject({
-			direction: `outgoing`,
-			channelName: recUser.channel.name,
-			channelUserId: recUser.channel.userId,
-			text: `Breaking news:`,
+
+		const alertMessage = MessageObject.outgoing(recUser, {
+			text: `Breaking news!`,
+		});
+
+		const carouselMessage = MessageObject.outgoing(recUser, {
 			carousel: {
 				sharing: true,
 				elements: [{
@@ -100,7 +101,8 @@ module.exports = async function newsNotifications (action, variables, { database
 			}],
 		});
 
-		await sendMessage(recUser, message);
+		await sendMessage(recUser, alertMessage);
+		await sendMessage(recUser, carouselMessage);
 
 		await database.update(`Article`, recArticle, {
 			$addToSet: { _receivedByUsers: recUser._id },
