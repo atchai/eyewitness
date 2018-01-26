@@ -22,7 +22,7 @@
 			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
 			"timezoneOffset": 1,
 			"itemPriorityField": "category",
-			"itemPriorityValue": "breaking-news"
+			"itemPriorityValue": "breaking news"
 		}
 	},
 	"hippocampServer": {
