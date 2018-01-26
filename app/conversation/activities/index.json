@@ -18,7 +18,7 @@
 				"submit tip": "string",
 				"tip": "string"
 			},
-			"nextUri": "/activities/submit-tip"
+			"nextUri": "/activities/set-conversation-open"
 		}, {
 			"label": "See latest stories",
 			"conditional": "<lastChosenActivity> !== `see latest stories`",
@@ -39,7 +39,7 @@
 				"latest news": "string",
 				"more news": "string"
 			},
-			"nextUri": "/activities/latest-stories"
+			"nextUri": "/activities/set-conversation-open"
 		}, {
 			"label": "Advertise",
 			"conditional": "<lastChosenActivity> !== `advertise`",
@@ -48,21 +48,17 @@
 				"advertising": "string",
 				"adverts": "string"
 			},
-			"nextUri": "/activities/advertise"
+			"nextUri": "/activities/set-conversation-open"
 		}, {
 			"label": "Other",
 			"conditional": "<lastChosenActivity> !== `other`",
 			"matches": {
 				"other": "string"
 			},
-			"nextUri": "/activities/other"
+			"nextUri": "/activities/set-conversation-open"
 		}],
 		"memory": {
 			"lastChosenActivity": {
-				"regexp": "(.+)",
-				"required": true
-			},
-			"enquiryType": {
 				"regexp": "(.+)",
 				"required": true
 			}

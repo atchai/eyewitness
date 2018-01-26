@@ -8,6 +8,6 @@
 		}
 	}, {
 		"type": "change-step",
-		"nextUri": "/activities/set-conversation-open"
+		"nextUri": "/activities/finish-activity"
 	}]
 }

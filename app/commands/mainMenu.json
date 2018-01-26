@@ -1,7 +1,6 @@
 {
 	"matches": {
-		"main menu": "string",
-		"cancel": "string"
+		"main menu": "string"
 	},
 	"actions": [{
 		"type": "change-step",

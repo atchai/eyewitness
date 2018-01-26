@@ -2,15 +2,20 @@
 	"uri": "/activities/set-conversation-open",
 	"type": "basic",
 	"actions": [{
-		"type": "update-memory",
-		"memory": {
-			"conversationState": {
-				"operation": "set",
-				"value": "open"
-			}
-		}
+		"type": "change-step",
+		"conditional": "<lastChosenActivity> === `submit a tip`",
+		"nextUri": "/activities/submit-tip"
 	}, {
 		"type": "change-step",
-		"nextUri": "/activities"
+		"conditional": "<lastChosenActivity> === `see latest stories`",
+		"nextUri": "/activities/latest-stories"
+	}, {
+		"type": "change-step",
+		"conditional": "<lastChosenActivity> === `advertise`",
+		"nextUri": "/activities/advertise"
+	}, {
+		"type": "change-step",
+		"conditional": "<lastChosenActivity> === `other`",
+		"nextUri": "/activities/other"
 	}]
 }
