@@ -95,7 +95,8 @@ module.exports = async function newsNotifications (action, variables, { database
 			},
 			options: [{
 				label: `More stories`,
-				nextUri: `/articles/more`,
+			}, {
+				label: `Main menu`,
 			}],
 		});
 
