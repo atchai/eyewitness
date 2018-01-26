@@ -78,6 +78,7 @@ module.exports = async function newsNotifications (action, variables, { database
 			direction: `outgoing`,
 			channelName: recUser.channel.name,
 			channelUserId: recUser.channel.userId,
+			text: `Breaking news:`,
 			carousel: {
 				sharing: true,
 				elements: [{
