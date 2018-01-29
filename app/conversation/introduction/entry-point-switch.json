@@ -17,7 +17,7 @@
 		"memory": {
 			"lastReferral": {
 				"reference": "<referral>"
-			},
+			}
 		}
 	}, {
 		"type": "change-step",
