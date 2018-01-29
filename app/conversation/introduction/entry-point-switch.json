@@ -10,10 +10,17 @@
 		}
 	}, {
 		"type": "change-step",
-		"conditional": "<referral>",
-		"nextUri": "/activities/latest-stories"
+		"conditional": "!<referral> || <referral> === <lastReferral>",
+		"nextUri": "/activities"
+	}, {
+		"type": "update-memory",
+		"memory": {
+			"lastReferral": {
+				"reference": "<referral>"
+			},
+		}
 	}, {
 		"type": "change-step",
-		"nextUri": "/activities"
+		"nextUri": "/activities/latest-stories"
 	}]
 }
