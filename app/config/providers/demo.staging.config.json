@@ -13,6 +13,9 @@
 	"analytics": {
 		"dashbot": {
 			"apiKey": "QKBltrcWpsLtQf5hAUckG1kHX1G8GUW0XGWL6KJ3"
+		},
+		"segment": {
+			"writeKey": "Uxtdvi7IACkoTgEhmdRFubSh7sF97ZON"
 		}
 	},
 	"greetingText": "Welcome to The Daily Planet's news bot!",
