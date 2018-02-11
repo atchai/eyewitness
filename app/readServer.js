@@ -24,11 +24,13 @@ const Hippocamp = require(`@atchai/hippocamp`);
 const DatabaseMongo = Hippocamp.require(`databases/mongo`);
 const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
 const ArticleModel = require(`./models/article`);
+const UserModel = require(`@atchai/hippocamp/lib/models/user`);
 
 // Instantiate the database.
 const database = new DatabaseMongo(config.databases.mongo);
 Hippocamp.prepareDependencies(database);
 database.addModel(ArticleModel);
+database.addModel(UserModel);
 
 // Initialise Segment.
 const analytics = new AnalyticsSegment(config.analytics.segment);
