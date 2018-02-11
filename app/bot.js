@@ -27,6 +27,7 @@ const SchedulerSimple = Hippocamp.require(`schedulers/simple`);
 const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 const AdapterWeb = Hippocamp.require(`adapters/web`);
 const AnalyticsDashbot = Hippocamp.require(`analytics/dashbot`);
+const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
 const { pushNewMessagesToUI } = require(`./modules/miscellaneous`);
 
 /*
@@ -40,8 +41,9 @@ async function main () {
 		baseUrl: config.hippocampServer.baseUrl,
 		port: process.env.PORT || config.hippocampServer.ports.internal,
 		enableUserProfile: true,
-		enableUserTracking: false,
-		enableEventTracking: false,
+		enableUserTracking: true,
+		enableEventTracking: true,
+		enableMessageTracking: true,
 		greetingText: config.greetingText,
 		misunderstoodText: null,
 		menu: config.menu,
@@ -91,6 +93,7 @@ async function main () {
 
 	// Analytics.
 	await chatbot.configure(new AnalyticsDashbot(config.analytics.dashbot));
+	await chatbot.configure(new AnalyticsSegment(config.analytics.segment));
 
 	// Register event listeners.
 	chatbot.on(`new-incoming-message`, pushNewMessagesToUI);
