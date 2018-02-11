@@ -22,12 +22,16 @@ const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.v
 const http = require(`http`);
 const Hippocamp = require(`@atchai/hippocamp`);
 const DatabaseMongo = Hippocamp.require(`databases/mongo`);
+const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
 const ArticleModel = require(`./models/article`);
 
 // Instantiate the database.
 const database = new DatabaseMongo(config.databases.mongo);
 Hippocamp.prepareDependencies(database);
 database.addModel(ArticleModel);
+
+// Initialise Segment.
+const analytics = new AnalyticsSegment(config.analytics.segment);
 
 /*
  * Pulls the feed, article and user IDs from the URL.
@@ -48,28 +52,55 @@ function parseIncomingUrl (url) {
 }
 
 /*
+ * Handles requests to the health check endpoint.
+ */
+function handleHealthCheckRoute (res) {
+
+	const body = `{"healthy":true}`;
+
+	res.writeHead(200, {
+		'Content-Length': Buffer.byteLength(body),
+		'Content-Type': `application/json`,
+	});
+
+	res.end(body);
+
+}
+
+/*
+ * Sends an error response to the client.
+ */
+function sendErrorResponse (res, statusCode = 400, message = `An unknown error occured.`) {
+	res.statusCode = statusCode;
+	res.end(message);
+}
+
+/*
  * Handles incoming requests.
  */
 async function handleRequests (req, res) {
 
-	// Health check endpoint.
 	if (req.url === `/health-check`) {
-		const body = `{"healthy":true}`;
-
-		res.writeHead(200, {
-			'Content-Length': Buffer.byteLength(body),
-			'Content-Type': `application/json`,
-		});
-
-		return res.end(body);
+		handleHealthCheckRoute(res);
+		return;
 	}
 
 	// Pull the IDs from the URL.
 	const { feedId, articleId, userId, noTrack } = parseIncomingUrl(req.url);
 
 	if (!feedId || !articleId || !userId) {
-		res.statusCode = 400;
-		return res.end(`Invalid URL.`);
+		sendErrorResponse(res, 400, `Invalid URL.`);
+		return;
+	}
+
+	// Check the user exists in the database.
+	const recUser = await database.get(`User`, {
+		_id: userId,
+	});
+
+	if (!recUser) {
+		sendErrorResponse(res, 404, `User not found.`);
+		return;
 	}
 
 	// Check the article exists in the database.
@@ -79,15 +110,22 @@ async function handleRequests (req, res) {
 	});
 
 	if (!recArticle) {
-		res.statusCode = 404;
-		return res.end(`Article not found.`);
+		sendErrorResponse(res, 404, `Article not found.`);
+		return;
 	}
 
-	// Mark the article as read by the given user.
+	// We are allowed to track.
 	if (!noTrack) {
+
+		// Mark the article as read by the given user.
 		await database.update(`Article`, recArticle, {
-			$addToSet: { _readByUsers: userId },
+			$addToSet: { _readByUsers: recUser._id },
 		});
+
+		analytics.trackEvent(recUser, `read-article`, {
+			articleId: recArticle._id.toString(),
+		});
+
 	}
 
 	// Redirect the user to the article URL.
