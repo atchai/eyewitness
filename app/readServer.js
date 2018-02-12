@@ -78,6 +78,24 @@ function sendErrorResponse (res, statusCode = 400, message = `An unknown error o
 }
 
 /*
+ * Tracks the user's reading of an article in our database and via the analytics handler(s).
+ */
+async function trackUserArticleRead (recUser, recArticle) {
+
+	// Mark the article as read by the given user.
+	await database.update(`Article`, recArticle, {
+		$addToSet: { _readByUsers: recUser._id },
+	});
+
+	analytics.trackPageView(recUser, recArticle.articleUrl, recArticle.title, {
+		articleId: recArticle._id.toString(),
+		priority: (recArticle.isPriority ? `breaking-news` : `normal`),
+		status: (recArticle.isPublished ? `published` : `unpublished`),
+	});
+
+}
+
+/*
  * Handles incoming requests.
  */
 async function handleRequests (req, res) {
@@ -116,18 +134,9 @@ async function handleRequests (req, res) {
 		return;
 	}
 
-	// We are allowed to track.
+	// Track the read, if allowed.
 	if (!noTrack) {
-
-		// Mark the article as read by the given user.
-		await database.update(`Article`, recArticle, {
-			$addToSet: { _readByUsers: recUser._id },
-		});
-
-		analytics.trackEvent(recUser, `read-article`, {
-			articleId: recArticle._id.toString(),
-		});
-
+		await trackUserArticleRead(recUser, recArticle);
 	}
 
 	// Redirect the user to the article URL.
