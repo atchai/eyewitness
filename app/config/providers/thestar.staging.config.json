@@ -30,7 +30,7 @@
 		"baseUrl": "https://eyewitness-bot-thestar-staging.atchai.com"
 	},
 	"readServer": {
-		"baseUrl": "https://eyewitness-rs-thestar-staging.atchai.com"
+		"baseUrl": "http://eyewitness-rs-thestar-staging.atchai.com"
 	},
 	"uiServer": {
 		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui-thestar-staging.atchai.com"
