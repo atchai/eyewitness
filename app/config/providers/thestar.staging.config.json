@@ -13,6 +13,9 @@
 	"analytics": {
 		"dashbot": {
 			"apiKey": "3VbKN2bf1EZmpFglstNSFCblHM2eFu7rfDRbZGTC"
+		},
+		"segment": {
+			"writeKey": "FJBKVMYpEh5NyupI2vd94K8aYfRBHAta",
 		}
 	},
 	"greetingText": "Welcome to The Star's news bot!",

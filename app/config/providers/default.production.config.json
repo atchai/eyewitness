@@ -14,6 +14,10 @@
 		"dashbot": {
 			"apiKey": "<DASHBOT_API_TOKEN>",
 			"isDisabled": false
+		},
+		"segment": {
+			"writeKey": "<SEGMENT_WRITE_KEY>",
+			"isDisabled": false
 		}
 	},
 	"greetingText": "Welcome to our news bot!",

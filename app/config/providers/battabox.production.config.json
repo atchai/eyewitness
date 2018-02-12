@@ -13,6 +13,9 @@
 	"analytics": {
 		"dashbot": {
 			"apiKey": "jDdXrg4wUA7Ym2CQ3Hg2N9JlS4YWxlx3Q0Pd7gud"
+		},
+		"segment": {
+			"writeKey": "8fv8B0XE82UJReqW9pw1S0TUfIdvUssj",
 		}
 	},
 	"greetingText": "Welcome to BattaBox's news bot!",
