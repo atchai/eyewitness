@@ -35,10 +35,10 @@
 	"messageVariables": {
 		"provider": {
 			"name": "The Amity Gazette",
-			"rssFeedUrl": "https://battabox.com/feed/",
+			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
 			"timezoneOffset": 0,
 			"itemPriorityField": "category",
-			"itemPriorityValue": "breaking-news"
+			"itemPriorityValue": "breaking news"
 		}
 	},
 	"scheduledTasks": {
