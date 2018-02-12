@@ -18,6 +18,9 @@
 	"analytics": {
 		"dashbot": {
 			"apiKey": "CM1aDjvrWAsZc4kqd65VaeUSbnpeHNuYZSZayiBH"
+		},
+		"segment": {
+			"writeKey": "mgOcLllsL5yfxNzvzavDMuNK4UwncMsf"
 		}
 	},
 	"adapters": {
