@@ -29,10 +29,12 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 
 		if (numRedirects > maxRedirects) {
 			if (rejectOnHttpError) {
-				return reject(new Error(`${maxRedirects} redirects are the maximum allowed.`));
+				reject(new Error(`${maxRedirects} redirects are the maximum allowed.`));
+				return;
 			}
 			else {
-				return resolve(null);
+				resolve(null);
+				return;
 			}
 		}
 
@@ -66,17 +68,20 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 			// Are we redirecting?
 			if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
 				const redirectPromise = downloadUrl(res.headers.location, numRedirects + 1, rejectOnHttpError, sendUA);
-				return resolve(redirectPromise);
+				resolve(redirectPromise);
+				return;
 			}
 
 			// Cope with server errors.
 			if (res.statusCode >= 400) {
 				if (rejectOnHttpError) {
 					const err = new Error(`Request to "${url.toString()}" failed with a status code of "${res.statusCode}".`);
-					return reject(err);
+					reject(err);
+					return;
 				}
 				else {
-					return resolve(null);
+					resolve(null);
+					return;
 				}
 			}
 
@@ -87,10 +92,11 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 
 				if (rejectOnHttpError) {
 					const err = new Error(`Request to "${url.toString()}" failed because of "${_err}".`);
-					return reject(err);
+					reject(err);
+					return;
 				}
 
-				return resolve(null);
+				resolve(null);
 
 			});
 			stream.on(`end`, () => resolve(data));
@@ -101,10 +107,11 @@ async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, s
 
 			if (rejectOnHttpError) {
 				const err = new Error(`Request to "${url.toString()}" failed because of "${_err}".`);
-				return reject(err);
+				reject(err);
+				return;
 			}
 
-			return resolve(null);
+			resolve(null);
 
 		});
 
@@ -150,6 +157,33 @@ async function convertFeedToArticles (variables, feedId, json) {
 }
 
 /*
+ *
+ */
+function getFeedItemArticleDate (item, timezoneOffset) {
+
+	const pubDate = item.pubDate[0].replace(/\s[a-z]{2,}$/i, ``);
+	const dateFormats = [ `ddd, DD MMM YYYY HH:mm:ss`, `ddd, D MMM YYYY H:m:s` ];
+	const articleDate = moment.utc(pubDate, dateFormats).subtract(timezoneOffset, `hours`);
+
+	return articleDate;
+
+}
+
+/*
+ *
+ */
+function getFeedItemIsPriority (item, itemPriorityField, itemPriorityValue) {
+
+	const itemPriorityRegExp = new RegExp(escapeRegExp(itemPriorityValue), `i`);
+	const fieldValues = (Array.isArray(item[itemPriorityField]) ? item[itemPriorityField] : [ item[itemPriorityField] ]);
+	const matchingValue = fieldValues.find(value => value.match(itemPriorityRegExp));
+	const isPriority = Boolean(matchingValue);
+
+	return isPriority;
+
+}
+
+/*
  * Converts a single RSS feed item to an Eyewitness article.
  */
 async function convertFeedItemToArticle (variables, feedId, item) {
@@ -165,13 +199,6 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 	let articleDate = moment.utc().add(timezoneOffset, `hours`);
 	let isPriority = false;
 
-	// Get the date of the article in a format we can use.
-	if (item.pubDate && item.pubDate.length) {
-		const pubDate = item.pubDate[0].replace(/\s[a-z]{2,}$/i, ``);
-		const dateFormats = [`ddd, DD MMM YYYY HH:mm:ss`, `ddd, D MMM YYYY H:m:s`];
-		articleDate = moment.utc(pubDate, dateFormats).subtract(timezoneOffset, `hours`);
-	}
-
 	// If we have page, try to pull out the rich preview values from the meta tags.
 	if (articlePageHtml) {
 		const $dom = cheerio.load(articlePageHtml);
@@ -180,13 +207,14 @@ async function convertFeedItemToArticle (variables, feedId, item) {
 		description = $dom(`head > meta[property="og:description"]`).attr(`content`) || description || ``;
 	}
 
+	// Get the date of the article in a format we can use.
+	if (item.pubDate && item.pubDate.length) {
+		articleDate = getFeedItemArticleDate(item, timezoneOffset);
+	}
+
 	// Check if the item is breaking news.
 	if (itemPriorityField && itemPriorityValue && item[itemPriorityField]) {
-		const itemPriorityRegExp = new RegExp(escapeRegExp(itemPriorityValue), `i`);
-		const fieldValues = (Array.isArray(item[itemPriorityField]) ? item[itemPriorityField] : [item[itemPriorityField]]);
-		const matchingValue = fieldValues.find(value => value.match(itemPriorityRegExp));
-
-		isPriority = Boolean(matchingValue);
+		isPriority = getFeedItemIsPriority(item, itemPriorityField, itemPriorityValue);
 	}
 
 	const articleUrl = item.link[0].trim().toLowerCase();
@@ -228,7 +256,6 @@ async function insertNewArticles (database, feedId, articles) {
  * The hook itself.
  */
 module.exports = async function feedIngester (action, variables, { database }) {
-	/* eslint no-console: 0 */
 
 	const rssFeedUrl = variables.provider.rssFeedUrl;
 	let xml;
@@ -237,7 +264,8 @@ module.exports = async function feedIngester (action, variables, { database }) {
 		xml = await downloadUrl(variables.provider.rssFeedUrl, 0, true, false);
 	}
 	catch (err) {
-		return console.error(`Failed to download RSS feed because of "${err}".`);
+		console.error(`Failed to download RSS feed because of "${err}".`); // eslint-disable-line no-console
+		return;
 	}
 
 	const json = await parseXml(xml);
