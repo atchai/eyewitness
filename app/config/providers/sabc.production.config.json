@@ -23,7 +23,9 @@
 		"provider": {
 			"name": "SABC",
 			"rssFeedUrl": "http://www.sabcnews.com/sabcnews/feed/",
-			"timezoneOffset": 2
+			"timezoneOffset": 2,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking news"
 		}
 	},
 	"hippocampServer": {
