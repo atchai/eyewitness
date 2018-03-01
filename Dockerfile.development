@@ -3,6 +3,7 @@
 # Use the official node base image and allow upgrades to any new minor version on redeploy.
 FROM node:8
 MAINTAINER Atchai <enquiries@atchai.com>
+ENV NODE_ENV=development
 
 # Prepare the software inside the container.
 RUN apt-get update && apt-get upgrade -y
