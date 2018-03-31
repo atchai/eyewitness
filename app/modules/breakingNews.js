@@ -13,7 +13,7 @@ const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
  */
 async function getBatchOfQueuedItems (database, skip = 0) {
 
-	const recQueueItems = await database.get(QUEUE_COLLECTION, {}, {
+	const recQueueItems = await database.find(QUEUE_COLLECTION, {}, {
 		sort: { addedDate: `asc` },
 		skip,
 		limit: BATCH_SIZE,
@@ -112,7 +112,7 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
  */
 async function getBatchOfUsers (database, skip = 0) {
 
-	const recUsers = await database.get(`User`, {
+	const recUsers = await database.find(`User`, {
 		'bot.disabled': { $ne: true },
 	}, {
 		sort: { _id: `asc` }, // Keep the entire result set in a consistent order between queries.
