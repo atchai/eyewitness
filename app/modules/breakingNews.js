@@ -168,7 +168,7 @@ async function queueBreakingNewsItems (database, skip = 0) {
 
 	// Queue the next batch of users recursively AND without creating a huge function stack.
 	const numCompletedUsers = skip + BATCH_SIZE;
-	const fnRecurse = sendQueuedItems.bind(this, database, numCompletedUsers);
+	const fnRecurse = queueBreakingNewsItems.bind(this, database, numCompletedUsers);
 
 	setTimeout(fnRecurse, BATCH_DELAY_MS);
 
