@@ -3,17 +3,131 @@
 const packageJson = require(`../../package.json`);
 const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
 
+const BATCH_SIZE = 1000;
+const BATCH_DELAY_MS = 1000;
+const READ_SERVER_BASE_URL = config.readServer.baseUrl;
+const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
+
 /*
- * Returns an array of all the user documents.
+ * Returns the next batch of queued breaking news items, or an empty array if there are none.
  */
-async function loadAllUsers (database) {
-	return await database.find(`User`, {});
+async function getBatchOfQueuedItems (database, skip = 0) {
+
+	const recQueueItems = await database.get(QUEUE_COLLECTION, {}, {
+		sort: { addedDate: `asc` },
+		skip,
+		limit: BATCH_SIZE,
+	});
+
+	return recQueueItems || [];
+
 }
 
 /*
- * Returns a dictionary containing the latest unread story record and the user record for the given user, or null.
+ * Returns the breaking news messages we need to send to the user.
  */
-async function getLatestUnreadPriorityArticleForUser (database, recUser) {
+function constructBreakingNewMessages (recUser, recArticle, MessageObject) {
+
+	const alertMessage = MessageObject.outgoing(recUser, {
+		text: `Breaking news!`,
+	});
+
+	const carouselMessage = MessageObject.outgoing(recUser, {
+		carousel: {
+			sharing: true,
+			elements: [{
+				label: recArticle.title,
+				text: recArticle.description,
+				imageUrl: recArticle.imageUrl,
+				buttons: [{
+					type: `url`,
+					label: `Read`,
+					payload: `${READ_SERVER_BASE_URL}/${recArticle.feedId}/${recArticle._id}/${recUser._id}`,
+					sharing: true,
+				}],
+			}],
+		},
+		options: [{
+			label: `More stories`,
+		}, {
+			label: `Main menu`,
+		}],
+	});
+
+	return {
+		alertMessage,
+		carouselMessage,
+	};
+
+}
+
+/*
+ * Sends all the queued items recursively.
+ */
+async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) {
+
+	// Get the next batch of items.
+	const recQueueItems = await getBatchOfQueuedItems(database, skip);
+	if (!recQueueItems.length) { return; }
+
+	const expendedQueueItemIds = [];
+	const expendedQueueItemData = [];
+
+	// Send each queued item in turn to their respective users.
+	for (const recQueueItem of recQueueItems) {
+		const { _id, userData, articleData } = recQueueItem;
+		const { alertMessage, carouselMessage } = constructBreakingNewMessages(userData, articleData, MessageObject);
+
+		await sendMessage(userData, alertMessage); // eslint-disable-line no-await-in-loop
+		await sendMessage(userData, carouselMessage); // eslint-disable-line no-await-in-loop
+
+		expendedQueueItemIds.push(_id);
+		expendedQueueItemData.push({ userData, articleData });
+	}
+
+	// Mark as received by users.
+	const markAsReceivedPromises = expendedQueueItemData.map(({ userData, articleData }) =>
+		database.update(`Article`, articleData, {
+			$addToSet: { _receivedByUsers: userData._id },
+		})
+	);
+
+	await Promise.all(markAsReceivedPromises);
+
+	// Delete all the expended item documents from the queue collection.
+	await database.deleteWhere(QUEUE_COLLECTION, {
+		_id: { $in: expendedQueueItemIds },
+	});
+
+	// Send the next batch of items recursively AND without creating a huge function stack.
+	const numCompletedItems = skip + BATCH_SIZE;
+	const fnRecurse = sendQueuedItems.bind(this, database, MessageObject, sendMessage, numCompletedItems);
+
+	setTimeout(fnRecurse, BATCH_DELAY_MS);
+
+}
+
+/*
+ * Returns the next batch of users, or an empty array if there are none.
+ */
+async function getBatchOfUsers (database, skip = 0) {
+
+	const recUsers = await database.get(`User`, {
+		'bot.disabled': { $ne: true },
+	}, {
+		sort: { _id: `asc` }, // Keep the entire result set in a consistent order between queries.
+		skip,
+		limit: BATCH_SIZE,
+	});
+
+	return recUsers || [];
+
+}
+
+/*
+ * Returns the next unread breaking news story for the given user.
+ */
+async function getNextBreakingNewsForUser (database, recUser) {
 
 	const conditions = {
 		_receivedByUsers: { $nin: [ recUser._id ] },
@@ -22,24 +136,42 @@ async function getLatestUnreadPriorityArticleForUser (database, recUser) {
 		isPriority: true,
 	};
 	const options = {
-		sort: { articleDate: `desc` },
+		sort: { articleDate: `asc` },
 	};
 
 	const recArticle = await database.get(`Article`, conditions, options);
-	if (!recArticle) { return null; }
 
-	return {
-		recUser,
-		recArticle,
-	};
+	return recArticle || null;
 
 }
 
 /*
- * Returns an array of users who have outstanding news (i.e. at least 1 unread story).
+ * Queues all the breaking news articles for all the users that need to be sent out.
  */
-function filterUsersWithOutstandingNews (outstandingNewsUsers) {
-	return outstandingNewsUsers.filter(outstandingNewsUser => Boolean(outstandingNewsUser));
+async function queueBreakingNewsItems (database, skip = 0) {
+
+	// Get the next batch of users.
+	const recUsers = await getBatchOfUsers(database, skip);
+	if (!recUsers.length) { return; }
+
+	// Iterate over each user in turn and queue their unread breaking news.
+	for (const recUser of recUsers) {
+		const recArticle = await getNextBreakingNewsForUser(database, recUser); // eslint-disable-line no-await-in-loop
+
+		if (!recArticle) { continue; }
+
+		await database.insert(QUEUE_COLLECTION, { // eslint-disable-line no-await-in-loop
+			userData: recUser,
+			articleData: recArticle,
+		});
+	}
+
+	// Queue the next batch of users recursively AND without creating a huge function stack.
+	const numCompletedUsers = skip + BATCH_SIZE;
+	const fnRecurse = sendQueuedItems.bind(this, database, numCompletedUsers);
+
+	setTimeout(fnRecurse, BATCH_DELAY_MS);
+
 }
 
 /*
@@ -47,57 +179,14 @@ function filterUsersWithOutstandingNews (outstandingNewsUsers) {
  */
 async function sendOutstanding (database, MessageObject, sendMessage) {
 
-	const recUsers = await loadAllUsers(database);
-	const outstandingNewsPromises = recUsers.map(recUser => getLatestUnreadPriorityArticleForUser(database, recUser));
-	const outstandingNewsUsers = await Promise.all(outstandingNewsPromises);
-	const recFilteredUsers = filterUsersWithOutstandingNews(outstandingNewsUsers);
+	// Send out any breaking news stories still in the queue (in case of restart).
+	await sendQueuedItems(database, MessageObject, sendMessage);
 
-	// Send message to each user.
-	const sendMessagePromises = recFilteredUsers.map(async item => {
+	// Queue the next batch of breaking news stories to send out.
+	await queueBreakingNewsItems(database);
 
-		const { recUser, recArticle } = item;
-		const baseUrl = config.readServer.baseUrl;
-		const articleId = recArticle._id;
-		const feedId = recArticle.feedId;
-		const userId = recUser._id;
-		const readUrl = `${baseUrl}/${feedId}/${articleId}/${userId}`;
-
-		const alertMessage = MessageObject.outgoing(recUser, {
-			text: `Breaking news!`,
-		});
-
-		const carouselMessage = MessageObject.outgoing(recUser, {
-			carousel: {
-				sharing: true,
-				elements: [{
-					label: recArticle.title,
-					text: recArticle.description,
-					imageUrl: recArticle.imageUrl,
-					buttons: [{
-						type: `url`,
-						label: `Read`,
-						payload: readUrl,
-						sharing: true,
-					}],
-				}],
-			},
-			options: [{
-				label: `More stories`,
-			}, {
-				label: `Main menu`,
-			}],
-		});
-
-		await sendMessage(recUser, alertMessage);
-		await sendMessage(recUser, carouselMessage);
-
-		await database.update(`Article`, recArticle, {
-			$addToSet: { _receivedByUsers: recUser._id },
-		});
-
-	});
-
-	await Promise.all(sendMessagePromises);
+	// Send out the next batch of breaking news stories.
+	await sendQueuedItems(database, MessageObject, sendMessage);
 
 }
 
