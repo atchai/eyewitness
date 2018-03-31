@@ -74,28 +74,23 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 	if (!recQueueItems.length) { return; }
 
 	const expendedQueueItemIds = [];
-	const expendedQueueItemData = [];
 
 	// Send each queued item in turn to their respective users.
 	for (const recQueueItem of recQueueItems) {
-		const { _id, userData, articleData } = recQueueItem;
-		const { alertMessage, carouselMessage } = constructBreakingNewMessages(userData, articleData, MessageObject);
+		const { _id: itemId, userData, articleData } = recQueueItem;
+		const { alertMessage, carouselMessage } = constructBreakingNewsMessages(userData, articleData, MessageObject);
 
+		// Send the messages.
 		await sendMessage(userData, alertMessage); // eslint-disable-line no-await-in-loop
 		await sendMessage(userData, carouselMessage); // eslint-disable-line no-await-in-loop
 
-		expendedQueueItemIds.push(_id);
-		expendedQueueItemData.push({ userData, articleData });
-	}
+		expendedQueueItemIds.push(String(itemId));
 
-	// Mark as received by users.
-	const markAsReceivedPromises = expendedQueueItemData.map(({ userData, articleData }) =>
-		database.update(`Article`, articleData, {
+		// Mark as received by user.
+		await database.update(`Article`, articleData._id, { // eslint-disable-line no-await-in-loop
 			$addToSet: { _receivedByUsers: userData._id },
-		})
-	);
-
-	await Promise.all(markAsReceivedPromises);
+		});
+	}
 
 	// Delete all the expended item documents from the queue collection.
 	await database.deleteWhere(QUEUE_COLLECTION, {
