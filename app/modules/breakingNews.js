@@ -3,7 +3,8 @@
 const packageJson = require(`../../package.json`);
 const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
 
-const BATCH_SIZE = 1000;
+const BATCH_SIZE_ENQUEUE = 1000;
+const BATCH_SIZE_SEND = 500;
 const BATCH_DELAY_MS = 1000;
 const READ_SERVER_BASE_URL = config.readServer.baseUrl;
 const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
@@ -11,12 +12,12 @@ const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
 /*
  * Returns the next batch of queued breaking news items, or an empty array if there are none.
  */
-async function getBatchOfQueuedItems (database, skip = 0) {
+async function getBatchOfQueuedItems (database, skip = 0, limit = 1) {
 
 	const recQueueItems = await database.find(QUEUE_COLLECTION, {}, {
 		sort: { addedDate: `asc` },
 		skip,
-		limit: BATCH_SIZE,
+		limit,
 	});
 
 	return recQueueItems || [];
@@ -66,8 +67,10 @@ function constructBreakingNewMessages (recUser, recArticle, MessageObject) {
  */
 async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) {
 
+	const batchSize = BATCH_SIZE_SEND;
+
 	// Get the next batch of items.
-	const recQueueItems = await getBatchOfQueuedItems(database, skip);
+	const recQueueItems = await getBatchOfQueuedItems(database, skip, batchSize);
 	if (!recQueueItems.length) { return; }
 
 	const expendedQueueItemIds = [];
@@ -100,7 +103,7 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 	});
 
 	// Send the next batch of items recursively AND without creating a huge function stack.
-	const numCompletedItems = skip + BATCH_SIZE;
+	const numCompletedItems = skip + batchSize;
 	const fnRecurse = sendQueuedItems.bind(this, database, MessageObject, sendMessage, numCompletedItems);
 
 	setTimeout(fnRecurse, BATCH_DELAY_MS);
@@ -110,14 +113,14 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 /*
  * Returns the next batch of users, or an empty array if there are none.
  */
-async function getBatchOfUsers (database, skip = 0) {
+async function getBatchOfUsers (database, skip = 0, limit = 1) {
 
 	const recUsers = await database.find(`User`, {
 		'bot.disabled': { $ne: true },
 	}, {
 		sort: { _id: `asc` }, // Keep the entire result set in a consistent order between queries.
 		skip,
-		limit: BATCH_SIZE,
+		limit,
 	});
 
 	return recUsers || [];
@@ -150,8 +153,10 @@ async function getNextBreakingNewsForUser (database, recUser) {
  */
 async function queueBreakingNewsItems (database, skip = 0) {
 
+	const batchSize = BATCH_SIZE_ENQUEUE;
+
 	// Get the next batch of users.
-	const recUsers = await getBatchOfUsers(database, skip);
+	const recUsers = await getBatchOfUsers(database, skip, batchSize);
 	if (!recUsers.length) { return; }
 
 	// Iterate over each user in turn and queue their unread breaking news.
@@ -167,7 +172,7 @@ async function queueBreakingNewsItems (database, skip = 0) {
 	}
 
 	// Queue the next batch of users recursively AND without creating a huge function stack.
-	const numCompletedUsers = skip + BATCH_SIZE;
+	const numCompletedUsers = skip + batchSize;
 	const fnRecurse = queueBreakingNewsItems.bind(this, database, numCompletedUsers);
 
 	setTimeout(fnRecurse, BATCH_DELAY_MS);
