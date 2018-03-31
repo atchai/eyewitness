@@ -27,7 +27,7 @@ async function getBatchOfQueuedItems (database, skip = 0, limit = 1) {
 /*
  * Returns the breaking news messages we need to send to the user.
  */
-function constructBreakingNewMessages (recUser, recArticle, MessageObject) {
+function constructBreakingNewsMessages (recUser, recArticleCompact, MessageObject) {
 
 	const alertMessage = MessageObject.outgoing(recUser, {
 		text: `Breaking news!`,
@@ -37,13 +37,13 @@ function constructBreakingNewMessages (recUser, recArticle, MessageObject) {
 		carousel: {
 			sharing: true,
 			elements: [{
-				label: recArticle.title,
-				text: recArticle.description,
-				imageUrl: recArticle.imageUrl,
+				label: recArticleCompact.title,
+				text: recArticleCompact.description,
+				imageUrl: recArticleCompact.imageUrl,
 				buttons: [{
 					type: `url`,
 					label: `Read`,
-					payload: `${READ_SERVER_BASE_URL}/${recArticle.feedId}/${recArticle._id}/${recUser._id}`,
+					payload: `${READ_SERVER_BASE_URL}/${recArticleCompact.feedId}/${recArticleCompact._id}/${recUser._id}`,
 					sharing: true,
 				}],
 			}],
@@ -143,8 +143,18 @@ async function getNextBreakingNewsForUser (database, recUser) {
 	};
 
 	const recArticle = await database.get(`Article`, conditions, options);
+	if (!recArticle) { return null; }
 
-	return recArticle || null;
+	// Reduce memory usage.
+	const recArticleCompact = {
+		_id: recArticle._id,
+		feedId: recArticle.feedId,
+		title: recArticle.title,
+		description: recArticle.description,
+		imageUrl: recArticle.imageUrl,
+	};
+
+	return recArticleCompact;
 
 }
 
@@ -161,13 +171,13 @@ async function queueBreakingNewsItems (database, skip = 0) {
 
 	// Iterate over each user in turn and queue their unread breaking news.
 	for (const recUser of recUsers) {
-		const recArticle = await getNextBreakingNewsForUser(database, recUser); // eslint-disable-line no-await-in-loop
+		const recArticleCompact = await getNextBreakingNewsForUser(database, recUser); // eslint-disable-line no-await-in-loop
 
-		if (!recArticle) { continue; }
+		if (!recArticleCompact) { continue; }
 
 		await database.insert(QUEUE_COLLECTION, { // eslint-disable-line no-await-in-loop
 			userData: recUser,
-			articleData: recArticle,
+			articleData: recArticleCompact,
 		});
 	}
 
