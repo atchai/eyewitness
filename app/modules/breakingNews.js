@@ -73,29 +73,27 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 	const recQueueItems = await getBatchOfQueuedItems(database, skip, batchSize);
 	if (!recQueueItems.length) { return; }
 
-	const expendedQueueItemIds = [];
-
 	// Send each queued item in turn to their respective users.
-	for (const recQueueItem of recQueueItems) {
+	const sendPromises = recQueueItems.map(async recQueueItem => {
+
 		const { _id: itemId, userData, articleData } = recQueueItem;
 		const { alertMessage, carouselMessage } = constructBreakingNewsMessages(userData, articleData, MessageObject);
 
-		// Send the messages.
-		await sendMessage(userData, alertMessage); // eslint-disable-line no-await-in-loop
-		await sendMessage(userData, carouselMessage); // eslint-disable-line no-await-in-loop
 
-		expendedQueueItemIds.push(String(itemId));
+		// Send the messages.
+		await sendMessage(userData, alertMessage);
+		await sendMessage(userData, carouselMessage);
 
 		// Mark as received by user.
-		await database.update(`Article`, articleData._id, { // eslint-disable-line no-await-in-loop
+		await database.update(`Article`, articleData._id, {
 			$addToSet: { _receivedByUsers: userData._id },
 		});
-	}
 
-	// Delete all the expended item documents from the queue collection.
-	await database.deleteWhere(QUEUE_COLLECTION, {
-		_id: { $in: expendedQueueItemIds },
+		await database.delete(QUEUE_COLLECTION, itemId);
+
 	});
+
+	await Promise.all(sendPromises);
 
 	// Send the next batch of items recursively AND without creating a huge function stack.
 	const numCompletedItems = skip + batchSize;
