@@ -4,8 +4,8 @@ const packageJson = require(`../../package.json`);
 const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
 
 const BATCH_SIZE_ENQUEUE = 1000;
-const BATCH_SIZE_SEND = 500;
-const BATCH_DELAY_MS = 1000;
+const BATCH_SIZE_SEND = 250;
+const BATCH_DELAY_MS = 5000;
 const READ_SERVER_BASE_URL = config.readServer.baseUrl;
 const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
 
