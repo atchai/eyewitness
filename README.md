@@ -15,9 +15,16 @@ Chatbot to allow people to receive news from providers and submit their own stor
 ## Local Development
 When developing locally I like to use Docker (for environment encapsulation). I also use multiple terminal windows/tabs rather than starting all the Docker containers in one window as this makes it easier to read the application's terminal output.
 
-1. Open a terminal window and run ngrok with: `ngrok http 5000 --region eu -subdomain={{CUSTOM_SUBDOMAIN}}`.
+### Install
+
+1. Setup SSH keys registered with GitHub so that Docker will be able to fetch the `hippocamp` dependency from GitHub.
+These should be saved to `./ssl/id_eyewitness` and `./ssl/id_eyewitness.pub`.
+
+### Run
+
+1. Open a terminal window and run ngrok with: `npm run ngrok` or `ngrok http 5000 --region eu -subdomain={{CUSTOM_SUBDOMAIN}}`.
 2. Open a second terminal window and run MongoDB and MongoClient with: `docker-compose up mongodb mongoclient`.
-3. Open a third terminal window and run the example chatbot with: `docker-compose up app`.
+3. Open a third terminal window and run the example chatbot with: `docker-compose up bot`.
 
 ## Deploying Eyewitness
 You must use one of the "deploy" scripts to deploy Eyewitness automatically. For instructions on how to setup the hosting, please refer to the DEPLOY.md file.

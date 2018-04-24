@@ -2,3 +2,4 @@ node_modules
 *.log
 ssl/*
 !ssl/.gitkeep
+.idea
