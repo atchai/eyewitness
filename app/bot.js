@@ -54,6 +54,7 @@ async function main () {
 			conversation: `./conversation`,
 			hooks: `./hooks`,
 			models: `./models`,
+			flows: `./flows`,
 		},
 		debugMode: (config.env.id === `development`),
 	});
