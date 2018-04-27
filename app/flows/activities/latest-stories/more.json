@@ -7,7 +7,7 @@
 			"text": "OK let's see what other articles we have for you..."
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/latest-stories"
 	}]
 }

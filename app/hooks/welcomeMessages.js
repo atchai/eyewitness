@@ -8,7 +8,7 @@
  * The hook itself.
  */
 module.exports = async function welcomeMessages (
-	action, variables, { database, recUser, MessageObject, sendMessage, changeStep }
+	action, variables, { database, recUser, MessageObject, sendMessage, changeFlow }
 ) {
 
 	// Load the welcome messages.
@@ -18,7 +18,7 @@ module.exports = async function welcomeMessages (
 
 	// Send the default messages if the provider has not added any custom ones via the UI.
 	if (!recWelcomeMessages || !recWelcomeMessages.length) {
-		return await changeStep(`/introduction/default-welcome-messages`);
+		return await changeFlow(`/introduction/default-welcome-messages`);
 	}
 
 	// Send all welcome messages in order.

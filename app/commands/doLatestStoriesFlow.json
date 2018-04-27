@@ -1,15 +1,15 @@
 {
 	"matches": {
-		"do submit tip flow": "string"
+		"do latest stories flow": "string"
 	},
 	"intents": {
-		"SUBMIT_A_TIP": {
+		"SEE_LATEST_STORIES": {
 			"threshold": 0.50,
 			"aggressive": true
 		}
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/activities/submit-tip"
+		"nextUri": "/activities/latest-stories"
 	}]
 }

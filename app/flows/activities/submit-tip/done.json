@@ -7,7 +7,7 @@
 			"text": "Thanks! We'll review your information and be in touch if we need anything else."
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/finish-activity"
 	}]
 }

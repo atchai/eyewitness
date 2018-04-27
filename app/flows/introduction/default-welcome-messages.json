@@ -7,7 +7,7 @@
 			"text": "Hi {{firstName}}, welcome to {{provider.name}} on Facebook!"
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/introduction/entry-point-switch"
 	}]
 }

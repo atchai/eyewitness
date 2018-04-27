@@ -7,7 +7,7 @@
 			"text": "Great, we'll be in touch soon!"
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/finish-activity"
 	}]
 }

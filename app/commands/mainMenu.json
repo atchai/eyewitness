@@ -3,7 +3,7 @@
 		"main menu": "string"
 	},
 	"actions": [{
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/introduction/entry-point-switch"
 	}]
 }

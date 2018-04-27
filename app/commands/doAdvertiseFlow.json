@@ -2,8 +2,14 @@
 	"matches": {
 		"do advertise flow": "string"
 	},
+	"intents": {
+		"ADVERTISE": {
+			"threshold": 0.50,
+			"aggressive": true
+		}
+	},
 	"actions": [{
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/advertise"
 	}]
 }

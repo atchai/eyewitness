@@ -9,7 +9,7 @@
 			}
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"conditional": "!<referral> || <referral> === <lastReferral>",
 		"nextUri": "/activities"
 	}, {
@@ -20,7 +20,7 @@
 			}
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/latest-stories"
 	}]
 }

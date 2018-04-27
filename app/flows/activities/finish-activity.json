@@ -14,7 +14,7 @@
 			}
 		}
 	}, {
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities"
 	}]
 }

@@ -32,6 +32,7 @@
 			"endpoint": "http://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@ui:7000/hippocamp-web-endpoint"
 		}
 	},
+	"enableNlp": true,
 	"messageVariables": {
 		"provider": {
 			"name": "The Amity Gazette",

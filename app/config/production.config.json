@@ -20,6 +20,7 @@
 			"accessToken": "BO4AHX72iCGqQIbdbu62q08PQHOCmHoRPlkxkv4Y"
 		}
 	},
+	"enableNlp": false,
 	"greetingText": "Welcome to the Eyewitness news bot!",
 	"menu": [{
 		"type": "basic",

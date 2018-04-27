@@ -4,7 +4,7 @@
 		"cancel activity": "string"
 	},
 	"actions": [{
-		"type": "change-step",
+		"type": "change-flow",
 		"nextUri": "/activities/cancel-activity"
 	}]
 }
