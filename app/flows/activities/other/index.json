@@ -3,7 +3,7 @@
 	"type": "basic",
 	"prompt": {
 		"type": "basic",
-		"text": "Please enter your message and one of our team will review it shortly.",
+		"text": [ { "value": "Please enter your message and one of our team will review it shortly." } ],
 		"options": [{
 			"label": "Cancel"
 		}],

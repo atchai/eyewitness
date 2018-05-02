@@ -9,7 +9,7 @@
 	}],
 	"prompt": {
 		"type": "basic",
-		"text": "If you want to share a photo or video you can do so by tapping the camera icon.",
+		"text": [ { "value": "If you want to share a photo or video you can do so by tapping the camera icon."} ],
 		"options": [{
 			"label": "Cancel"
 		}],

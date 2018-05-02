@@ -26,9 +26,9 @@
     "cheerio": "^1.0.0-rc.2",
     "config-ninja": "^1.1.0",
     "escape-regexp": "0.0.1",
-    "moment": "^2.19.1",
+    "moment": "^2.22.1",
     "object-extender": "^2.0.3",
-    "request-ninja": "^0.2.6",
+    "request-ninja": "^0.3.2",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
