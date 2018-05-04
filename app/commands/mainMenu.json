@@ -4,6 +4,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/introduction/entry-point-switch"
+		"nextUri": "dynamic:///introduction/entry-point-switch"
 	}]
 }

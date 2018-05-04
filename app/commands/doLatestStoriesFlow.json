@@ -10,6 +10,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/activities/latest-stories"
+		"nextUri": "dynamic:///activities/latest-stories"
 	}]
 }

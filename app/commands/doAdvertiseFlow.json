@@ -10,6 +10,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/activities/advertise"
+		"nextUri": "dynamic:///activities/advertise"
 	}]
 }

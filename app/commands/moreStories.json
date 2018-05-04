@@ -5,6 +5,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/activities/latest-stories/more"
+		"nextUri": "dynamic:///activities/latest-stories/more"
 	}]
 }

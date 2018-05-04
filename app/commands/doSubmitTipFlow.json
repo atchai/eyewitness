@@ -10,6 +10,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "/activities/submit-tip"
+		"nextUri": "dynamic:///activities/submit-tip"
 	}]
 }

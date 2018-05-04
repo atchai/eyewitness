@@ -1,8 +1,0 @@
-{
-	"uri": "/activities/latest-stories",
-	"type": "basic",
-	"actions": [{
-		"type": "execute-hook",
-		"hook": "moreStories"
-	}]
-}
