@@ -42,12 +42,12 @@ npm run deploy-thestar-production
 ### Staging
 To deploy one of the media providers' services to staging run the appropriate command:
 
-`
+```
 npm run deploy-demo-staging
 npm run deploy-battabox-staging
 npm run deploy-sabc-staging
 npm run deploy-thestar-staging
-`
+```
 
 ## Handy Database Queries
 
@@ -61,4 +61,10 @@ Returns the total number of article documents in the database.
 
 ### Total aggregate article reads
 Returns the aggregated number of article reads across all articles.
-`db.article.aggregate([{ $unwind: "$_readByUsers" }, { $group: { _id: {}, count: { "$sum": 1 } } }, { $group: { _id: {}, numReads: { $push: { _readByUsers: "$_id.readByUsers", count: "$count" } } } }])`
+```
+db.article.aggregate([
+    { $unwind: "$_readByUsers" },
+    { $group: { _id: {}, count: { "$sum": 1 } } },
+    { $group: { _id: {}, numReads: { $push: { _readByUsers: "$_id.readByUsers", count: "$count" } } } }
+])
+```
