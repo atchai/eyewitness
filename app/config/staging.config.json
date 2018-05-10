@@ -1,4 +1,5 @@
 {
+	"enableNlp": true,
 	"loggers": {
 		"terminal": {
 			"logLevel": "silly",
