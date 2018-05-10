@@ -1,6 +1,6 @@
 {
 	"matches": {
-		"do submit tip flow": "string"
+		"do submit story flow": "string"
 	},
 	"intents": {
 		"SUBMIT_A_TIP": {
@@ -10,6 +10,6 @@
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "dynamic:///activities/submit-tip"
+		"nextUri": "dynamic:///activities/submit-story"
 	}]
 }
