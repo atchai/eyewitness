@@ -29,15 +29,7 @@ These should be saved to `./ssl/id_eyewitness` and `./ssl/id_eyewitness.pub`.
 ## Deploying Eyewitness
 You must use one of the "deploy" scripts to deploy Eyewitness automatically. For instructions on how to setup the hosting, please refer to the DEPLOY.md file.
 
-### Production
-To deploy one of the media providers' services to production run the appropriate command:
-
-`
-npm run deploy-demo-production
-npm run deploy-battabox-production
-npm run deploy-sabc-production
-npm run deploy-thestar-production
-`
+Deployments need to be performed separately for both the Eyewitness bot and the [Eyewitness UI](https://github.com/atchai/eyewitness-ui) - but the deployment commands are identical.
 
 ### Staging
 To deploy one of the media providers' services to staging run the appropriate command:
@@ -47,6 +39,27 @@ npm run deploy-demo-staging
 npm run deploy-battabox-staging
 npm run deploy-sabc-staging
 npm run deploy-thestar-staging
+```
+or to deploy all:
+
+```
+npm run deploy-all-staging
+```
+
+### Production
+To deploy one of the media providers' services to production run the appropriate command:
+
+```
+npm run deploy-demo-production
+npm run deploy-battabox-production
+npm run deploy-sabc-production
+npm run deploy-thestar-production
+```
+
+or to deploy all:
+
+```
+npm run deploy-all-production
 ```
 
 ## Handy Database Queries
