@@ -3,7 +3,7 @@
 		"do submit story flow": "string"
 	},
 	"intents": {
-		"SUBMIT_A_TIP": {
+		"SUBMIT_A_STORY": {
 			"threshold": 0.50,
 			"aggressive": true
 		}
