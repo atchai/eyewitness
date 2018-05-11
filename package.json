@@ -45,7 +45,7 @@
     "eslint-plugin-promise": "latest",
     "eslint-plugin-vue": "latest",
     "ngrok": "^2.2.23",
-    "nodemon": "^1.17.1"
+    "nodemon": "^1.17.4"
   },
   "engines": {
     "node": ">=8"
