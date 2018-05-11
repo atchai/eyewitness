@@ -52,6 +52,15 @@ For each provider there is a config for production
 `app/config/providers/[provider ID].production.config.json` which inherits from 
 `app/config/production.config.json` 
 
+### Pre-deployment commands
+
+[Install Heroku CLI](https://cli.heroku.com) and then login:
+
+```
+heroku login
+heroku container:login
+```
+
 ### Staging Deployment Commands
 To deploy one of the media providers' services to staging run the appropriate command:
 
