@@ -92,6 +92,22 @@ or to deploy all:
 npm run deploy-all-production
 ```
 
+### Verifying a deployment
+
+After deploying to a staging or production environment you should check it is working.
+
+To verify the bot: 
+
+1. Find the provider name from the bot config file for the provider.
+2. Search for the bot with that name on Facebook messenger (you need to be given access for non-production environments)
+3. You can then type `$whoami` or `$debug` to check version info, and chat to the bot to test features that were changed.
+
+To verify the UI:
+
+1. Find the URL for the UI in the `uiServer` property of the bot config file for the provider.
+2. Open the URL in the browser, log-in with the credentials under `basicAuth` from the config file in the UI repo
+3. Also try appending `/health-check` the URL to check the version number.
+
 ## Handy Database Queries
 
 ### Total users
