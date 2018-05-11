@@ -29,9 +29,30 @@ These should be saved to `./ssl/id_eyewitness` and `./ssl/id_eyewitness.pub`.
 ## Deploying Eyewitness
 You must use one of the "deploy" scripts to deploy Eyewitness automatically. For instructions on how to setup the hosting, please refer to the DEPLOY.md file.
 
-Deployments need to be performed separately for both the Eyewitness bot and the [Eyewitness UI](https://github.com/atchai/eyewitness-ui) - but the deployment commands are identical.
+Deployments need to be performed for:
 
-### Staging
+ - The Eyewitness bot and Read Server - using deploy commands in this repo.
+ - The UI in the [Eyewitness UI repo](https://github.com/atchai/eyewitness-ui)
+ 
+The deployment commands (described below) are identical for both repositories.
+
+### Configuration files
+
+There are a number of configuration files for the different providers and environments (development/staging/production). 
+The configuration files use a system of inheritance to avoid duplication, managed by the [Config-Ninja](https://github.com/saikojosh/Config-Ninja) package.
+
+The config for development is `app/config/development.config.json` which inherits from `app/config/production.config.json`.
+
+For each provider there is a config for staging 
+`app/config/providers/[provider ID].staging.config.json` which inherits from 
+`app/config/staging.config.json` which inherits from
+`app/config/production.config.json` 
+
+For each provider there is a config for production 
+`app/config/providers/[provider ID].production.config.json` which inherits from 
+`app/config/production.config.json` 
+
+### Staging Deployment Commands
 To deploy one of the media providers' services to staging run the appropriate command:
 
 ```
@@ -46,7 +67,7 @@ or to deploy all:
 npm run deploy-all-staging
 ```
 
-### Production
+### Production Deployment Commands
 To deploy one of the media providers' services to production run the appropriate command:
 
 ```
