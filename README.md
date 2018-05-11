@@ -42,6 +42,7 @@ There are a number of configuration files for the different providers and enviro
 The configuration files use a system of inheritance to avoid duplication, managed by the [Config-Ninja](https://github.com/saikojosh/Config-Ninja) package.
 
 The config for development is `app/config/development.config.json` which inherits from `app/config/production.config.json`.
+You may optionally add `app/config/local.config.json` to override the standard development configuration.
 
 For each provider there is a config for staging 
 `app/config/providers/[provider ID].staging.config.json` which inherits from 

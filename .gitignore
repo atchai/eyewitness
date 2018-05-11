@@ -3,3 +3,4 @@ node_modules
 ssl/*
 !ssl/.gitkeep
 .idea
+app/config/local.config.json
