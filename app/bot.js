@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV || `development`;
 const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (providerId ? [ localConfigName ] : [ `local` ]),
+	localConfig: (loadProviderConfig ? [ localConfigName ] : [ `local` ]),
 	requireLocalConfig: loadProviderConfig,
 });
 

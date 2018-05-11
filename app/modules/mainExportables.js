@@ -24,7 +24,7 @@ function getEyewitnessConfig () {
 	const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 	const config = require(`config-ninja`).init(`${providerId}-exportable-config`, `./config`, {
-		localConfig: (localConfigName ? [ localConfigName ] : []),
+		localConfig: (loadProviderConfig ? [ localConfigName ] : [ `local` ]),
 		requireLocalConfig: loadProviderConfig,
 	});
 
