@@ -2,6 +2,8 @@
 
 /*
  * SCHEMA: Welcome Message
+ *
+ * @deprecated - should no longer be required since we now have dynamic flow editing.
  */
 
 module.exports = function (Schema, Property/* , Reference */) {
