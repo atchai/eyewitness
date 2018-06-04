@@ -20,7 +20,15 @@
 			"accessToken": "BO4AHX72iCGqQIbdbu62q08PQHOCmHoRPlkxkv4Y"
 		}
 	},
-	"enableNlp": false,
+	"nlp": {
+		"luis": {
+			"appId": "98912c9c-5cdc-489a-a19d-8d2d409a8a9f",
+			"apiKey": "cb9a76dd72fb46b6b6270c0ccf7991cc",
+			"region": "westus",
+			"spellCheck": true,
+			"isStagingEnv": false
+		}
+	},
 	"greetingText": "Welcome to the Eyewitness news bot!",
 	"menu": [{
 		"type": "basic",

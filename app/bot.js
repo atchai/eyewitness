@@ -45,7 +45,7 @@ async function main () {
 		enableUserTracking: true,
 		enableEventTracking: true,
 		enableMessageTracking: true,
-		enableNlp: config.enableNlp,
+		enableNlp: Boolean(config.nlp.luis),
 		greetingText: config.greetingText,
 		misunderstoodText: null,
 		menu: config.menu,
@@ -96,16 +96,8 @@ async function main () {
 	await chatbot.configure(new AnalyticsDashbot(config.analytics.dashbot));
 	await chatbot.configure(new AnalyticsSegment(config.analytics.segment));
 
-	// NLP service.
-	if (config.enableNlp) {
-		chatbot.configure(new NlpLuis({
-			appId: `98912c9c-5cdc-489a-a19d-8d2d409a8a9f`,
-			apiKey: `cb9a76dd72fb46b6b6270c0ccf7991cc`,
-			region: `westus`,
-			spellCheck: true,
-			isStagingEnv: (config.env.id !== `production`),
-		}));
-	}
+	// NLP services.
+	if (config.nlp.luis) { chatbot.configure(new NlpLuis(config.nlp.luis)); }
 
 	// Register event listeners.
 	chatbot.on(`new-incoming-message`, pushNewMessagesToUI);
