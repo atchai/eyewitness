@@ -18,7 +18,6 @@
 			"writeKey": "Uxtdvi7IACkoTgEhmdRFubSh7sF97ZON"
 		}
 	},
-	"enableNlp": true,
 	"greetingText": "Welcome to The Daily Planet's news bot!",
 	"messageVariables": {
 		"provider": {
