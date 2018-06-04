@@ -55,7 +55,6 @@ async function main () {
 			commands: `./commands`,
 			hooks: `./hooks`,
 			models: `./models`,
-			flows: `./flows`,
 		},
 		debugMode: (config.env.id === `development`),
 	});
