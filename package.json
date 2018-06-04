@@ -15,7 +15,7 @@
     "deploy-battabox-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-battabox-stag/web -t registry.heroku.com/eyewitness-rs-battabox-stag/web . && docker push registry.heroku.com/eyewitness-bot-battabox-stag/web && docker push registry.heroku.com/eyewitness-rs-battabox-stag/web",
     "deploy-sabc-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-sabc-staging/web -t registry.heroku.com/eyewitness-rs-sabc-staging/web . && docker push registry.heroku.com/eyewitness-bot-sabc-staging/web && docker push registry.heroku.com/eyewitness-rs-sabc-staging/web",
     "deploy-thestar-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-thestar-staging/web -t registry.heroku.com/eyewitness-rs-thestar-staging/web . && docker push registry.heroku.com/eyewitness-bot-thestar-staging/web && docker push registry.heroku.com/eyewitness-rs-thestar-staging/web",
-    "ngrok": "ngrok http 5004 --region eu -subdomain=eyewitness",
+    "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
     "start": "export ENTRY_POINT='bot' && npm run start-local",
     "start-local": "./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-development": "npm install && ./node_modules/.bin/nodemon ./app/entryPoint.js",
