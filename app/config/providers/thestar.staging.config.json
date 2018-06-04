@@ -18,6 +18,9 @@
 			"writeKey": "FJBKVMYpEh5NyupI2vd94K8aYfRBHAta"
 		}
 	},
+	"nlp": {
+		"luis": null
+	},
 	"greetingText": "Welcome to The Star's news bot!",
 	"messageVariables": {
 		"provider": {

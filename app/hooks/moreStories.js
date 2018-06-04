@@ -13,7 +13,7 @@ const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.ve
 async function getUnreceivedArticles (database, recUser, limit = 0) {
 
 	const conditions = {
-		_receivedByUsers: { $nin: [recUser._id] },
+		_receivedByUsers: { $nin: [ recUser._id ] },
 		isPublished: { $ne: false },
 	};
 	const options = {
@@ -117,7 +117,8 @@ module.exports = async function moreStories (action, variables, { database, Mess
 	// Stop here if we have no stories to send.
 	if (!recArticles || !recArticles.length) {
 		const noArticlesMessage = prepareNoArticlesMessage(MessageObject, recUser);
-		return await sendMessage(recUser, noArticlesMessage);
+		await sendMessage(recUser, noArticlesMessage);
+		return;
 	}
 
 	// Send the stories.

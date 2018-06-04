@@ -1,15 +1,15 @@
 {
 	"matches": {
-		"do advertise flow": "string"
+		"do latest stories flow": "string"
 	},
 	"intents": {
-		"ADVERTISE": {
+		"SEE_LATEST_STORIES": {
 			"threshold": 0.50,
 			"aggressive": true
 		}
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "dynamic:///activities/advertise"
+		"nextUri": "dynamic:///activities/latest-stories"
 	}]
 }

@@ -18,6 +18,9 @@
 			"writeKey": "Yms7Q3KkcIaUfW7urB0Sxly21wJ6mQDJ"
 		}
 	},
+	"nlp": {
+		"luis": null
+	},
 	"greetingText": "Welcome to SABC's news bot!",
 	"messageVariables": {
 		"provider": {

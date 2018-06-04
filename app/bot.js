@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV || `development`;
 const localConfigName = path.join(`providers`, `${providerId}.${env}`);
 
 const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (localConfigName ? [ localConfigName ] : []),
+	localConfig: (loadProviderConfig ? [ localConfigName ] : [ `local` ]),
 	requireLocalConfig: loadProviderConfig,
 });
 
@@ -28,6 +28,7 @@ const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 const AdapterWeb = Hippocamp.require(`adapters/web`);
 const AnalyticsDashbot = Hippocamp.require(`analytics/dashbot`);
 const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
+const NlpLuis = Hippocamp.require(`nlp/luis`);
 const { pushNewMessagesToUI } = require(`./modules/miscellaneous`);
 
 /*
@@ -44,6 +45,7 @@ async function main () {
 		enableUserTracking: true,
 		enableEventTracking: true,
 		enableMessageTracking: true,
+		enableNlp: Boolean(config.nlp.luis),
 		greetingText: config.greetingText,
 		misunderstoodText: null,
 		menu: config.menu,
@@ -51,7 +53,6 @@ async function main () {
 		allowUserTextReplies: true,
 		directories: {
 			commands: `./commands`,
-			conversation: `./conversation`,
 			hooks: `./hooks`,
 			models: `./models`,
 		},
@@ -95,6 +96,9 @@ async function main () {
 	await chatbot.configure(new AnalyticsDashbot(config.analytics.dashbot));
 	await chatbot.configure(new AnalyticsSegment(config.analytics.segment));
 
+	// NLP services.
+	if (config.nlp.luis) { chatbot.configure(new NlpLuis(config.nlp.luis)); }
+
 	// Register event listeners.
 	chatbot.on(`new-incoming-message`, pushNewMessagesToUI);
 	chatbot.on(`new-outgoing-message`, pushNewMessagesToUI);
@@ -108,6 +112,6 @@ async function main () {
  */
 main()
 	.catch(err => { // eslint-disable-line promise/prefer-await-to-callbacks
-		console.error(err.stack);
+		console.error(err.stack); // eslint-disable-line no-console
 		process.exit(1);
 	});

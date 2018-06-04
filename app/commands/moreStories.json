@@ -4,7 +4,7 @@
 		"more": "string"
 	},
 	"actions": [{
-		"type": "change-step",
-		"nextUri": "/activities/latest-stories/more"
+		"type": "change-flow",
+		"nextUri": "dynamic:///activities/latest-stories/more"
 	}]
 }

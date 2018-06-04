@@ -1,9 +1,0 @@
-{
-	"matches": {
-		"do submit tip flow": "string"
-	},
-	"actions": [{
-		"type": "change-step",
-		"nextUri": "/activities/submit-tip"
-	}]
-}

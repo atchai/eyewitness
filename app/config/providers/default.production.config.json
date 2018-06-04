@@ -20,6 +20,9 @@
 			"isDisabled": false
 		}
 	},
+	"nlp": {
+		"luis": null
+	},
 	"greetingText": "Welcome to our news bot!",
 	"messageVariables": {
 		"provider": {

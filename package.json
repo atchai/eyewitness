@@ -1,19 +1,22 @@
 {
   "name": "eyewitness",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "private": true,
   "description": "Chatbot to allow people to receive news from providers and submit their own stories.",
   "main": "app/entryPoint.js",
   "scripts": {
-    "deploy-all-production": "npm run deploy-battabox-production && npm run deploy-sabc-production && npm run deploy-thestar-production",
+    "deploy-all-production": "npm run deploy-demo-production && npm run deploy-battabox-production && npm run deploy-sabc-production && npm run deploy-thestar-production",
+    "deploy-demo-production": "docker build -f Dockerfile -t registry.heroku.com/eyewitness-bot-demo/web -t registry.heroku.com/eyewitness-rs-demo/web . && docker push registry.heroku.com/eyewitness-bot-demo/web && docker push registry.heroku.com/eyewitness-rs-demo/web",
     "deploy-battabox-production": "docker build -f Dockerfile -t registry.heroku.com/eyewitness-bot-battabox/web -t registry.heroku.com/eyewitness-rs-battabox/web . && docker push registry.heroku.com/eyewitness-bot-battabox/web && docker push registry.heroku.com/eyewitness-rs-battabox/web",
     "deploy-sabc-production": "docker build -f Dockerfile -t registry.heroku.com/eyewitness-bot-sabc/web -t registry.heroku.com/eyewitness-rs-sabc/web . && docker push registry.heroku.com/eyewitness-bot-sabc/web && docker push registry.heroku.com/eyewitness-rs-sabc/web",
     "deploy-thestar-production": "docker build -f Dockerfile -t registry.heroku.com/eyewitness-bot-thestar/web -t registry.heroku.com/eyewitness-rs-thestar/web . && docker push registry.heroku.com/eyewitness-bot-thestar/web && docker push registry.heroku.com/eyewitness-rs-thestar/web",
-    "deploy-all-staging": "npm run deploy-battabox-staging && npm run deploy-sabc-staging && npm run deploy-thestar-staging",
+    "deploy-all-staging": "npm run deploy-demo-staging && npm run deploy-battabox-staging && npm run deploy-sabc-staging && npm run deploy-thestar-staging",
+    "deploy-demo-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-demo-staging/web -t registry.heroku.com/eyewitness-rs-demo-staging/web . && docker push registry.heroku.com/eyewitness-bot-demo-staging/web && docker push registry.heroku.com/eyewitness-rs-demo-staging/web",
     "deploy-battabox-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-battabox-stag/web -t registry.heroku.com/eyewitness-rs-battabox-stag/web . && docker push registry.heroku.com/eyewitness-bot-battabox-stag/web && docker push registry.heroku.com/eyewitness-rs-battabox-stag/web",
     "deploy-sabc-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-sabc-staging/web -t registry.heroku.com/eyewitness-rs-sabc-staging/web . && docker push registry.heroku.com/eyewitness-bot-sabc-staging/web && docker push registry.heroku.com/eyewitness-rs-sabc-staging/web",
     "deploy-thestar-staging": "docker build -f Dockerfile.staging -t registry.heroku.com/eyewitness-bot-thestar-staging/web -t registry.heroku.com/eyewitness-rs-thestar-staging/web . && docker push registry.heroku.com/eyewitness-bot-thestar-staging/web && docker push registry.heroku.com/eyewitness-rs-thestar-staging/web",
     "ngrok": "ngrok http 5000 --region eu -subdomain=eyewitness",
+    "start": "export ENTRY_POINT='bot' && npm run start-local",
     "start-local": "./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-development": "npm install && ./node_modules/.bin/nodemon ./app/entryPoint.js",
     "start-production": "node ./app/entryPoint.js",
@@ -21,12 +24,13 @@
   },
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
   "dependencies": {
-    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git#v0.10.7",
+    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git#v0.10.11",
     "cheerio": "^1.0.0-rc.2",
-    "config-ninja": "^1.0.2",
+    "config-ninja": "^1.1.0",
     "escape-regexp": "0.0.1",
-    "moment": "^2.19.1",
-    "request-ninja": "^0.2.6",
+    "moment": "^2.22.1",
+    "object-extender": "^2.0.3",
+    "request-ninja": "^0.3.2",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
@@ -41,8 +45,7 @@
     "eslint-plugin-promise": "latest",
     "eslint-plugin-vue": "latest",
     "ngrok": "^2.2.23",
-    "nodemon": "^1.12.1",
-    "object-extender": "^2.0.3"
+    "nodemon": "^1.17.4"
   },
   "engines": {
     "node": ">=8"

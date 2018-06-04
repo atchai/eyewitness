@@ -1,15 +1,15 @@
 {
 	"matches": {
-		"do advertise flow": "string"
+		"do submit story flow": "string"
 	},
 	"intents": {
-		"ADVERTISE": {
+		"SUBMIT_A_STORY": {
 			"threshold": 0.50,
 			"aggressive": true
 		}
 	},
 	"actions": [{
 		"type": "change-flow",
-		"nextUri": "dynamic:///activities/advertise"
+		"nextUri": "dynamic:///activities/submit-story"
 	}]
 }

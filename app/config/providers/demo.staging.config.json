@@ -1,0 +1,40 @@
+{
+	"databases": {
+		"mongo": {
+			"connectionString": "mongodb://user-34kUeovNyUZA7u0AGQ5f:Er3qI1jFjcWVYuZurZb9T8wai2fCmMBMFDqdYe2LqzmMrcrBzXi1E7aUl4i4@ds159187.mlab.com:59187/demo-staging"
+		}
+	},
+	"adapters": {
+		"facebook": {
+			"verifyToken": "pIzEo4LVTyfBT7FIptzJrQkwbV7VeZQ4fp5ygbQb",
+			"accessToken": "EAAEnewpXYdgBAB245Ygg6RVXWZBshFxDrTHyGdnQHjgH23jH7yLacMq9DO0bs6Nee1tbfL4a7PQwdYDGwojhDVlhpbzH4OI9urKWRvRQiBkeCmPgbHjblybkxqP3RRYE2DpZCVjeDLJctV5j8TlE4aBxBOvq1jTxK9mT2XIgZDZD"
+		}
+	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": "QKBltrcWpsLtQf5hAUckG1kHX1G8GUW0XGWL6KJ3"
+		},
+		"segment": {
+			"writeKey": "Uxtdvi7IACkoTgEhmdRFubSh7sF97ZON"
+		}
+	},
+	"greetingText": "Welcome to The Daily Planet's news bot!",
+	"messageVariables": {
+		"provider": {
+			"name": "The Daily Planet - Staging",
+			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
+			"timezoneOffset": 0,
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking news"
+		}
+	},
+	"hippocampServer": {
+		"baseUrl": "https://eyewitness-bot-demo-staging.atchai.com"
+	},
+	"readServer": {
+		"baseUrl": "http://eyewitness-rs-demo-staging.atchai.com"
+	},
+	"uiServer": {
+		"baseUrl": "https://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@eyewitness-ui-demo-staging.atchai.com"
+	}
+}
