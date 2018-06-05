@@ -1,7 +1,7 @@
 # EYEWITNESS CHATBOT - STAGING DOCKERFILE
 
 # Use the official node base image and allow upgrades to any new minor version on redeploy.
-FROM node:8
+FROM node:10
 MAINTAINER Atchai <enquiries@atchai.com>
 ENV NODE_ENV=staging
 
