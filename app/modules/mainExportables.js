@@ -10,7 +10,7 @@
 const path = require(`path`);
 const Hippocamp = require(`@atchai/hippocamp`);
 const ArticleModel = require(`../models/article`);
-const SettingsModel = require(`../models/settings`);
+const GlobalSettingsModel = require(`../models/globalSettings`);
 
 /*
  * Returns the Eyewitness config for the given provider.
@@ -47,7 +47,7 @@ async function connectToEyewitnessDatabase (providerId) {
 	const defaultModels = await Hippocamp.getDefaultModels();
 	defaultModels.forEach(model => database.addModel(model));
 	database.addModel(ArticleModel);
-	database.addModel(SettingsModel);
+	database.addModel(GlobalSettingsModel);
 
 	await database.connect();
 
