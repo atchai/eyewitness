@@ -39,8 +39,8 @@
 		"label": "Contact us",
 		"items": [{
 			"type": "basic",
-			"label": "Send us a tip",
-			"payload": "do submit tip flow"
+			"label": "Send us a story",
+			"payload": "do submit story flow"
 		}, {
 			"type": "basic",
 			"label": "Advertise",
