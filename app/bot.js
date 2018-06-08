@@ -29,7 +29,7 @@ const AdapterWeb = Hippocamp.require(`adapters/web`);
 const AnalyticsDashbot = Hippocamp.require(`analytics/dashbot`);
 const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
 const NlpLuis = Hippocamp.require(`nlp/luis`);
-const { pushNewMessagesToUI } = require(`./modules/miscellaneous`);
+const { pushNewMessagesToUI, pushMemoryChangeToUI } = require(`./modules/miscellaneous`);
 
 /*
  * The main function.
@@ -102,6 +102,7 @@ async function main () {
 	// Register event listeners.
 	chatbot.on(`new-incoming-message`, pushNewMessagesToUI);
 	chatbot.on(`new-outgoing-message`, pushNewMessagesToUI);
+	chatbot.on(`memory-change`, pushMemoryChangeToUI);
 
 	await chatbot.start();
 
