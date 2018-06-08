@@ -24,7 +24,7 @@
   },
   "author": "Atchai <enquiries@atchai.com> (https://atchai.com)",
   "dependencies": {
-    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git#v0.10.14",
+    "@atchai/hippocamp": "git+ssh://git@github.com/atchai/hippocamp.git#v0.10.15",
     "cheerio": "^1.0.0-rc.2",
     "config-ninja": "^1.1.0",
     "escape-regexp": "0.0.1",
