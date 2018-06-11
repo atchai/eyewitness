@@ -1,0 +1,20 @@
+{
+	"matches": {
+		"download feed": "string"
+	},
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "Attempting to download the news feed..."
+		}
+	}, {
+		"type": "execute-hook",
+		"hook": "feedIngester",
+		"errorMessage": "❌ Failed to download the feed."
+	}, {
+		"type": "send-message",
+		"message": {
+			"text": "✅ Successfully downloaded the feed."
+		}
+	}]
+}
