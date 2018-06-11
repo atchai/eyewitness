@@ -256,7 +256,7 @@ async function insertNewArticles (database, feedId, articles) {
 /*
  * The hook itself.
  */
-module.exports = async function feedIngester (action, variables, { database }) {
+module.exports = async function feedIngester (action, variables, { database, sharedLogger }) {
 
 	const rssFeedUrl = variables.provider.rssFeedUrl;
 	let xml;
@@ -272,6 +272,10 @@ module.exports = async function feedIngester (action, variables, { database }) {
 	const json = await parseXml(xml);
 	const feedId = calculateHashFromUrl(rssFeedUrl);
 	const articles = await convertFeedToArticles(variables, feedId, json);
+
+	sharedLogger.verbose(`${articles.length} article(s) ingested from the RSS feed.`, {
+		articles,
+	});
 
 	await insertNewArticles(database, feedId, articles);
 

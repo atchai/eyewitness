@@ -79,7 +79,7 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 		const { _id: itemId, userData, articleData } = recQueueItem;
 		const { alertMessage, carouselMessage } = constructBreakingNewsMessages(userData, articleData, MessageObject);
 
-		console.log(`### USER <${userData._id}> ARTICLE <${articleData.title}>`);
+		console.log(`### USER <${userData._id}> ARTICLE <${articleData._id}> <${articleData.title}>`);
 
 		// Send the messages.
 		await sendMessage(userData, alertMessage);
