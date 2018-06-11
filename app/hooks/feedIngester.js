@@ -18,7 +18,7 @@ const moment = require(`moment`);
 const xml2js = require(`xml2js`);
 
 /*
- * Downloads the given URL.
+ * Downloads the given URL, taking into account redirects.
  */
 async function downloadUrl (input, numRedirects = 0, rejectOnHttpError = true, sendUA = true) {
 
@@ -157,7 +157,7 @@ async function convertFeedToArticles (variables, feedId, json) {
 }
 
 /*
- *
+ * Pulls out the date of the article in UTC.
  */
 function getFeedItemArticleDate (item, timezoneOffset) {
 
@@ -170,7 +170,8 @@ function getFeedItemArticleDate (item, timezoneOffset) {
 }
 
 /*
- *
+ * Returns true if the given article is prioritised (i.e. it is breaking news) based on the field (e.g. categories) and
+ * the required value of that field (configured on a per-provider basis in the config files).
  */
 function getFeedItemIsPriority (item, itemPriorityField, itemPriorityValue) {
 
