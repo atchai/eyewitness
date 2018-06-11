@@ -1,4 +1,9 @@
 {
+	"loggers": {
+		"terminal": {
+			"logLevel": "verbose"
+		}
+	},
 	"adapters": {
 		"facebook": {
 			"verifyToken": "iJykRQuuXRRoMxNdsiHRMuCBpkv1J64CFcY1ENDe",
