@@ -49,9 +49,10 @@ The bot is the tool that communicates with users over Facebook Messenger.
 6. Add an environment variable with `heroku config:set ENTRY_POINT=bot -a eyewitness-bot`.
 7. Run `heroku domains:add eyewitness-bot.<DOMAIN_NAME> -a eyewitness-bot` replacing <DOMAIN_NAME> as appropriate.
 8. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-bot.sometest.com.herokudns.com".
-9. Run `heroku container:push web -a eyewitness-bot` to deploy the bot.
-10. Run `heroku dyno:resize hobby -a eyewitness-bot` to allow us to use SSL on the domain (costs apply, see Heroku pricing).
-11. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-bot`.
+9. Run `heroku container:push web -a eyewitness-bot` to push the Docker image to Heroku.
+10. Run `heroku container:release -a eyewitness-bot web` to deploy the bot.
+11. Run `heroku dyno:resize hobby -a eyewitness-bot` to allow us to use SSL on the domain (costs apply, see Heroku pricing).
+12. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-bot`.
 
 ### Setup DNS
 1. Add a CNAME DNS record to your domain "eyewitness-bot" which points to the DNS target given in the previous section.
@@ -68,7 +69,8 @@ The read server tracks how many times each story has been read and by which user
 4. Add an environment variable with `heroku config:set ENTRY_POINT=read-server -a eyewitness-rs`.
 5. Run `heroku domains:add eyewitness-rs.<DOMAIN_NAME> -a eyewitness-rs` replacing <DOMAIN_NAME> as appropriate.
 6. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-rs.sometest.com.herokudns.com".
-7. Run `heroku container:push web -a eyewitness-rs` to deploy the read server.
+7. Run `heroku container:push web -a eyewitness-rs` to push the Docker image to Heroku.
+8. Run `heroku container:release -a eyewitness-rs web` to deploy the read server.
 
 ### Setup DNS
 1. Add a CNAME DNS record to your domain "eyewitness-rs" which points to the DNS target given in the previous section.
@@ -93,7 +95,8 @@ The user interface is used by admins to message users of the bot, manage the sto
 3. Add an environment variable with `heroku config:set PROVIDER_ID=default -a eyewitness-ui`.
 4. Run `heroku domains:add eyewitness-ui.<DOMAIN_NAME> -a eyewitness-ui` replacing <DOMAIN_NAME> as appropriate.
 5. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-ui.sometest.com.herokudns.com".
-6. Run `heroku container:push web -a eyewitness-ui` to deploy the read server.
+7. Run `heroku container:push web -a eyewitness-ui` to push the Docker image to Heroku.
+8. Run `heroku container:release -a eyewitness-ui web` to deploy the UI.
 7. Run `heroku dyno:resize hobby -a eyewitness-ui` to allow us to use SSL on the domain (costs apply, see Heroku pricing).
 8. Enable automatic SSL certificate management with `heroku certs:auto:enable -a eyewitness-ui`.
 
