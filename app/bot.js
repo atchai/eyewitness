@@ -7,24 +7,34 @@
 /* eslint no-console: 0 */
 
 const path = require(`path`);
-const packageJson = require(`../package.json`);
-
-const providerId = process.env.PROVIDER_ID;
-const loadProviderConfig = Boolean(providerId);
-const env = process.env.NODE_ENV || `development`;
-const localConfigName = path.join(`providers`, `${providerId}.${env}`);
-
-const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (loadProviderConfig ? [ localConfigName ] : [ `local` ]),
-	requireLocalConfig: loadProviderConfig,
+const config = require(`config-ninja`).init(`eyewitness-bot-config`, `./config`, {
+	environmentVariables: {
+		enableDotenv: true,
+		dotenvPath: path.join(`..`, `.env`),
+		mapping: {
+			LOGGERS_TERMINAL_LEVEL: `loggers.terminal.logLevel`,
+			DB_MONGO_CONNECTION_STR: `databases.mongo.connectionString`,
+			ANALYTICS_DASHBOT_API_KEY: `analytics.dashbot.apiKey`,
+			ANALYTICS_SEGMENT_WRITE_KEY: `analytics.segment.writeKey`,
+			ADAPTER_FB_VERIFY_TOKEN: `adapters.facebook.verifyToken`,
+			ADAPTER_FB_ACCESS_TOKEN: `adapters.facebook.accessToken`,
+			NLP_LUIS_ENABLED: `nlp.luis.enabled`,
+			NLP_LUIS_APP_ID: `nlp.luis.appId`,
+			NLP_LUIS_API_KEY: `nlp.luis.region`,
+			NLP_LUIS_APP_REGION: `nlp.luis.`,
+			SERVER_URI_BOT: `hippocampServer.baseUrl`,
+			SERVER_URI_READ: `readServer.baseUrl`,
+			SERVER_URI_UI: `uiServer.baseUrl`,
+			PROVIDER_NAME: `messageVariables.provider.name`,
+			PROVIDER_FEED_URI: `messageVariables.provider.rssFeedUrl.timezoneOffset`,
+			PROVIDER_TIMEZONE_OFFSET: `messageVariables.provider.`,
+			PROVIDER_ITEM_PRIORITY_FIELD: `messageVariables.provider.itemPriorityField`,
+			PROVIDER_ITEM_PRIORITY_VALUE: `messageVariables.provider.itemPriorityValue`,
+			GREETING_TEXT: `greetingText`,
+			PRIVACY_POLICY_URI: `privacyPolicyUrl`,
+		},
+	},
 });
-
-const dotenv = require(`dotenv`);
-
-if (config.env.id === `development`) {
-	const envResult = dotenv.config({ path: path.join(`..`, `.env`) });
-	if (!envResult) { throw envResult.error; }
-}
 
 const Hippocamp = require(`@atchai/hippocamp`); // eslint-disable-line node/no-missing-require
 const LoggerTerminal = Hippocamp.require(`loggers/terminal`);
@@ -55,7 +65,28 @@ async function main () {
 		enableNlp: Boolean(config.nlp.luis),
 		greetingText: config.greetingText,
 		misunderstoodText: null,
-		menu: config.menu,
+		menu: [{
+			type: `basic`,
+			label: `See latest stories`,
+			payload: `latest stories`,
+		}, {
+			type: `nested`,
+			label: `Contact us`,
+			items: [{
+				type: `basic`,
+				label: `Send us a story`,
+				payload: `do submit story flow`,
+			}, {
+				type: `basic`,
+				label: `Advertise`,
+				payload: `do advertise flow`,
+			}],
+		}, {
+			type: `url`,
+			label: `Privacy policy`,
+			payload: config.privacyPolicyUrl,
+			sharing: true,
+		}],
 		messageVariables: config.messageVariables,
 		allowUserTextReplies: true,
 		directories: {
