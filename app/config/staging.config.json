@@ -1,8 +1,7 @@
 {
 	"loggers": {
 		"terminal": {
-			"logLevel": "silly",
-			"pretty": false
+			"logLevel": "verbose"
 		}
 	},
 	"nlp": {

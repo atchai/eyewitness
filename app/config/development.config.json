@@ -3,59 +3,6 @@
 		"terminal": {
 			"logLevel": "verbose",
 			"pretty": true
-		},
-		"filesystem": {
-			"logLevel": "silly",
-			"directory": "./logs",
-			"rotation": "hourly"
 		}
-	},
-	"databases": {
-		"mongo": {
-			"connectionString": "mongodb://mongodb:27017/eyewitness"
-		}
-	},
-	"analytics": {
-		"dashbot": {
-			"apiKey": "CM1aDjvrWAsZc4kqd65VaeUSbnpeHNuYZSZayiBH"
-		},
-		"segment": {
-			"writeKey": "mgOcLllsL5yfxNzvzavDMuNK4UwncMsf"
-		}
-	},
-	"adapters": {
-		"facebook": {
-			"verifyToken": "Ip9BhC027cenge0cXhQ61Dzh3AHmD467egFGXq3U",
-			"accessToken": "EAAWiWZCZBizhMBAMiCnTMVgoZBaclC7wjQcSY5Yr7hDHfogvSUAN4kNQ2phoD4gm4L13pxZAvuYv0QVRgZArjwRTkvXWSUrZB3bsWSl2gbnqQWfgxHHOdEUS4hqT9VDAA6RjYt3gfZASyodxuAlP7DQEJYZCXrwt1YNk2baYdbdJZCAZDZD"
-		},
-		"web": {
-			"endpoint": "http://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@ui:7000/hippocamp-web-endpoint"
-		}
-	},
-	"messageVariables": {
-		"provider": {
-			"name": "The Amity Gazette",
-			"rssFeedUrl": "https://eyewitnessdailyplanet.wordpress.com/feed/",
-			"timezoneOffset": 0,
-			"itemPriorityField": "category",
-			"itemPriorityValue": "breaking news"
-		}
-	},
-	"scheduledTasks": {
-		"feed-ingester": {
-			"runEvery": "1 minute"
-		},
-		"news-notifications": {
-			"runEvery": "1 minute"
-		}
-	},
-	"hippocampServer": {
-		"baseUrl": "https://eyewitness.eu.ngrok.io:5000"
-	},
-	"readServer": {
-		"baseUrl": "http://localhost:5001"
-	},
-	"uiServer": {
-		"baseUrl": "http://bot:HN1r9OVx5AO15TlbtpKq0e7oQWASiZ@ui:5002"
 	}
 }

@@ -10,6 +10,14 @@
 			"connectionString": null
 		}
 	},
+	"analytics": {
+		"dashbot": {
+			"apiKey": null,
+		},
+		"segment": {
+			"writeKey": null
+		}
+	},
 	"adapters": {
 		"facebook": {
 			"verifyToken": null,
@@ -17,46 +25,28 @@
 		},
 		"web": {
 			"endpoint": null,
-			"accessToken": "BO4AHX72iCGqQIbdbu62q08PQHOCmHoRPlkxkv4Y"
+			"accessToken": null
 		}
 	},
 	"nlp": {
 		"luis": {
-			"appId": "98912c9c-5cdc-489a-a19d-8d2d409a8a9f",
-			"apiKey": "cb9a76dd72fb46b6b6270c0ccf7991cc",
-			"region": "westus",
+			"isDisabled": "true",
+			"appId": null,
+			"apiKey": null,
+			"region": null,
 			"spellCheck": true,
 			"isStagingEnv": false
 		}
 	},
-	"greetingText": "Welcome to the Eyewitness news bot!",
-	"menu": [{
-		"type": "basic",
-		"label": "See latest stories",
-		"payload": "latest stories"
-	}, {
-		"type": "nested",
-		"label": "Contact us",
-		"items": [{
-			"type": "basic",
-			"label": "Send us a story",
-			"payload": "do submit story flow"
-		}, {
-			"type": "basic",
-			"label": "Advertise",
-			"payload": "do advertise flow"
-		}]
-	}, {
-		"type": "url",
-		"label": "Privacy policy",
-		"payload": "https://atchai.com/docs/eyewitness-policy/",
-		"sharing": true
-	}],
+	"greetingText": null,
+	"privacyPolicyUrl": null,
 	"messageVariables": {
 		"provider": {
 			"name": "Unknown",
 			"rssFeedUrl": null,
-			"timezoneOffset": 0,
+			"timezoneOffset": "0",
+			"itemPriorityField": "category",
+			"itemPriorityValue": "breaking-news",
 			"notifications": {
 				"notBeforeHour": 8,
 				"notAfterHour": 20
