@@ -19,7 +19,14 @@ const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.v
 	requireLocalConfig: loadProviderConfig,
 });
 
-const Hippocamp = require(`@atchai/hippocamp`);
+const dotenv = require(`dotenv`);
+
+if (config.env.id === `development`) {
+	const envResult = dotenv.config({ path: path.join(`..`, `.env`) });
+	if (!envResult) { throw envResult.error; }
+}
+
+const Hippocamp = require(`@atchai/hippocamp`); // eslint-disable-line node/no-missing-require
 const LoggerTerminal = Hippocamp.require(`loggers/terminal`);
 const LoggerFilesystem = Hippocamp.require(`loggers/filesystem`);
 const DatabaseMongo = Hippocamp.require(`databases/mongo`);

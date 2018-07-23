@@ -29,6 +29,7 @@ RUN echo "Host *\n  IdentitiesOnly yes\n  StrictHostKeyChecking no\n  IdentityFi
 WORKDIR /src
 
 # Install our depedencies.
+COPY .env /src/.env
 COPY package.json /src/package.json
 COPY package-lock.json /src/package-lock.json
 RUN npm install
