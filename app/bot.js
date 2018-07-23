@@ -9,7 +9,7 @@
 const path = require(`path`);
 const config = require(`config-ninja`).init(`eyewitness-bot-config`, `./config`, {
 	environmentVariables: {
-		enableDotenv: true,
+		enableDotenv: (process.env.NODE_ENV === `development`),
 		dotenvPath: path.join(`..`, `.env`),
 		mapping: {
 			LOGGERS_TERMINAL_LEVEL: `loggers.terminal.logLevel`,
