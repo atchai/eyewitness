@@ -4,3 +4,5 @@ ssl/*
 !ssl/.gitkeep
 .idea
 app/config/local.config.json
+.env
+.*.env
