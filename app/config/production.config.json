@@ -30,7 +30,7 @@
 	},
 	"nlp": {
 		"luis": {
-			"isDisabled": "true",
+			"isDisabled": true,
 			"appId": null,
 			"apiKey": null,
 			"region": null,
@@ -44,7 +44,7 @@
 		"provider": {
 			"name": "Unknown",
 			"rssFeedUrl": null,
-			"timezoneOffset": "0",
+			"timezoneOffset": 0,
 			"itemPriorityField": "category",
 			"itemPriorityValue": "breaking-news",
 			"notifications": {
