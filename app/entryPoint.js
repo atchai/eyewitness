@@ -19,7 +19,6 @@ switch (process.env.ENTRY_POINT) {
 	default: entryPointFilename = null; break;
 }
 
-if (entryPointFilename) { require(entryPointFilename); }
-
-// Expose some functions to the outside world.
-module.exports = require(`./modules/mainExportables`);
+if (entryPointFilename) {
+	require(entryPointFilename);
+}
