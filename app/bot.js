@@ -40,7 +40,7 @@ async function main () {
 		enableUserTracking: true,
 		enableEventTracking: true,
 		enableMessageTracking: true,
-		enableNlp: Boolean(config.nlp.luis),
+		enableNlp: !config.nlp.luis.isDisabled,
 		greetingText: config.greetingText,
 		misunderstoodText: null,
 		menu: [{
