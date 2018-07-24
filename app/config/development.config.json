@@ -4,5 +4,10 @@
 			"logLevel": "verbose",
 			"pretty": true
 		}
+	},
+	"nlp": {
+		"luis": {
+			"isStagingEnv": true
+		}
 	}
 }
