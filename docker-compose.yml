@@ -23,6 +23,7 @@ services:
     volumes:
       - ./app:/src/app
       - ./lib:/src/lib
+      - ./.env:/src/.env
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
     ports:
@@ -44,6 +45,7 @@ services:
     volumes:
       - ./app:/src/app
       - ./lib:/src/lib
+      - ./.env:/src/.env
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
     ports:
