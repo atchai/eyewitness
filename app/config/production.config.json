@@ -12,7 +12,7 @@
 	},
 	"analytics": {
 		"dashbot": {
-			"apiKey": null,
+			"apiKey": null
 		},
 		"segment": {
 			"writeKey": null
