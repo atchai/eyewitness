@@ -28,7 +28,9 @@ async function pushNewMessagesToUI (data) {
 		throw new Error(`Non 200 HTTP status code "${res.statusCode}" returned by the Eyewitness UI.`);
 	}
 
-	if (!res.body || !res.body.success) { throw new Error(`The Eyewitness UI returned an error: "${res.body.error}".`); }
+	if (!res.body || !res.body.success) {
+		throw new Error(`The Eyewitness UI returned an error: "${res.body.error}".`);
+	}
 
 }
 
