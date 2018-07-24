@@ -22,15 +22,14 @@ services:
       - ENTRY_POINT=bot
     volumes:
       - ./app:/src/app
+      - ./lib:/src/lib
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
-      # - ./node_modules/@atchai/hippocamp:/src/node_modules/@atchai/hippocamp
     ports:
       - "5000:5000"
     networks:
       - eyewitness-network
     command: npm run start-development
-    # command: npm run start-local
     tty: true
     restart: on-failure
 
@@ -44,6 +43,7 @@ services:
       - ENTRY_POINT=read-server
     volumes:
       - ./app:/src/app
+      - ./lib:/src/lib
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
     ports:
