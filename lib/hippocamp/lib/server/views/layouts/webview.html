@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" class="style-{{styleName}}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width">
+
+  <title>{{title}}</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet">
+
+  <style type="text/css">
+    /*
+     * General.
+     */
+    *,
+    *:before,
+    *:after {
+    	box-sizing: border-box;
+    }
+
+    html {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    html,
+    body {
+    	margin: 0;
+    	padding: 0;
+    }
+
+    html {
+      touch-action: manipulation;
+    	font-size: 16px;
+      line-height: 1.5;
+    }
+
+    html.style-default {
+      font-family: 'Lato', sans-serif;
+      background: #ddd;
+    }
+
+    html.style-plain {
+      font-family: sans-serif;
+      background: white;
+    }
+
+    body {
+    	display: flex;
+    	flex-direction: column;
+    	padding: 1.00rem;
+    }
+
+    /*
+     * Loader.
+     */
+    #loader {
+      position: fixed;
+      display: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      background: rgba(100, 100, 100, 0.20);
+    }
+
+    body.loading > #loader {
+      display: flex;
+    }
+
+    body.loading > *:not(#loader) {
+    	filter: blur(2px);
+    }
+
+    .loader,
+    .loader:before,
+    .loader:after {
+      background: #333;
+      -webkit-animation: load1 1s infinite ease-in-out;
+      animation: load1 1s infinite ease-in-out;
+      width: 1em;
+      height: 4em;
+    }
+
+    .loader {
+      color: #333;
+      text-indent: -9999em;
+      margin: auto;
+      position: relative;
+      font-size: 11px;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+
+    .loader:before,
+    .loader:after {
+      position: absolute;
+      top: 0;
+      content: '';
+    }
+
+    .loader:before {
+      left: -1.5em;
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+
+    .loader:after {
+      left: 1.5em;
+    }
+
+    @-webkit-keyframes load1 {
+      0%,
+      80%,
+      100% {
+        box-shadow: 0 0;
+        height: 4em;
+      }
+      40% {
+        box-shadow: 0 -2em;
+        height: 5em;
+      }
+    }
+
+    @keyframes load1 {
+      0%,
+      80%,
+      100% {
+        box-shadow: 0 0;
+        height: 4em;
+      }
+      40% {
+        box-shadow: 0 -2em;
+        height: 5em;
+      }
+    }
+
+    /*
+     * Instructions.
+     */
+    .instructions {
+      text-align: center;
+      font-weight: bold;
+      margin: 0 0.50rem;
+      margin-bottom: 1.00rem;
+    }
+
+    /*
+     * Form.
+     */
+    form {
+    	padding-bottom: 6.00rem;
+    }
+
+    form > .field-container {
+      border-width: 1px;
+      border-style: solid;
+    	border-radius: 0.50rem;
+    	max-width: 50.00rem;
+    	margin: 0 auto;
+      overflow: hidden;
+    }
+
+    html.style-default form > .field-container {
+      border-color: #ddd;
+    }
+
+    html.style-plain form > .field-container {
+      border-color: white;
+    }
+
+    form > .field-container > .row {
+    	display: flex;
+      align-items: center;
+    	padding-left: 1.00rem;
+    	padding-right: 1.00rem;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+    	background: white;
+    	cursor: pointer;
+    	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    form > .field-container > .row:last-child {
+    	border-bottom: 0;
+    }
+
+    html.style-default form > .field-container > .row {
+      border-bottom-color: #ddd;
+      padding-top: 1.50rem;
+      padding-bottom: 1.50rem;
+    }
+
+    html.style-plain form > .field-container > .row {
+      border-bottom-color: white;
+      padding-top: 1.00rem;
+      padding-bottom: 1.00rem;
+    }
+
+    form > .field-container > .row > .label-text {
+      flex: 1;
+    }
+
+    form > .field-container > .row > .checkbox {
+      flex-shrink: 0;
+    	position: relative;
+    	margin-right: 1.00rem;
+    	width: 1.50rem;
+    	height: 1.50rem;
+    }
+
+    html.style-default form > .field-container > .row > .checkbox {
+      background: #eee;
+      border-radius: 0.30rem;
+      box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    html.style-plain form > .field-container > .row > .checkbox {
+      background: white;
+      border-radius: 0;
+      border: 1px solid black;
+    }
+
+    form > .field-container > .row > .checkbox > input {
+    	visibility: hidden;
+    }
+
+    form > .field-container > .row > .checkbox > .tick {
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 100%;
+    	opacity: 0;
+    	transition: opacity 0.2s ease-out;
+    }
+
+    form > .field-container > .row > .checkbox > .tick > .icon {
+    	position: absolute;
+    	top: 2px;
+    	left: 4px;
+    	width: 1.60rem;
+    	height: 0.60rem;
+      border-width: 4px;
+      border-style: solid;
+    	border-top: 0;
+    	border-right: 0;
+    	transform: rotate(-45deg);
+    }
+
+    html.style-default form > .field-container > .row > .checkbox > .tick > .icon {
+      border-color: #53AE60;
+    }
+
+    html.style-plain form > .field-container > .row > .checkbox > .tick > .icon {
+      border-color: black;
+    }
+
+    form > .field-container > .row > .checkbox > input:checked + .tick {
+    	opacity: 1.00;
+    }
+
+    form > .field-container > input[type="submit"] {
+    	position: absolute;
+    	visibility: hidden;
+    }
+
+    form > .saver {
+      display: flex;
+    	position: fixed;
+    	bottom: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 5.00rem;
+    	line-height: 5.00rem;
+    	text-align: center;
+      padding: 1.00rem;
+    }
+
+    html.style-default form > .saver {
+      background: #ddd;
+      border-top: 1px solid #efefef;
+      box-shadow: 0 0px 20px rgba(0, 0, 0, 0.40);
+    }
+
+    html.style-plain form > .saver {
+      background: white;
+      border: none;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    form > .saver > button {
+      flex: 1;
+    	font: inherit;
+    	padding: 0.50rem 1.00rem;
+    	margin: 0 0.50rem;
+    	line-height: normal;
+    	border: 0;
+    	border-radius: 0.50rem;
+    	cursor: pointer;
+    	-webkit-user-select: none;
+    	   -moz-user-select: none;
+    	    -ms-user-select: none;
+    		      user-select: none;
+    }
+
+    form > .saver > button:first-child {
+      margin-left: 0;
+    }
+
+    form > .saver > button:last-child {
+      margin-right: 0;
+    }
+
+    html.style-default form > .saver > button {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      border: 0;
+    }
+
+    html.style-plain form > .saver > button {
+      box-shadow: none;
+      border: 1px solid black;
+    }
+
+    html.style-default form > .saver > button.cancel {
+    	background: #DB4545;
+      color: white;
+    }
+
+    html.style-plain form > .saver > button.cancel {
+    	background: white;
+      color: black;
+    }
+
+    html.style-default form > .saver > button.save {
+    	background: #53AE60;
+      color: white;
+    }
+
+    html.style-plain form > .saver > button.save {
+      background: #0084FF;
+      border-color: transparent;
+      color: white;
+    }
+
+    html.style-default form > .saver > button:hover {
+    	color: black;
+    }
+
+    html.style-plain form > .saver > button:hover {
+      background: #0069CC;
+      border-color: transparent;
+      color: white;
+    }
+
+    /* NON-TOUCHSCREENS */
+    @media (pointer: fine) {
+
+    	form > .field-container > .row:hover > .checkbox:not(:checked) > .tick {
+    		opacity: 0.40;
+    	}
+
+    	form > .field-container > .row:hover > .checkbox > input:checked + .tick {
+    		opacity: 0.80;
+    	}
+
+    }
+
+    /* SMALL HEIGHT */
+    @media only screen and (max-height: 400px)  {
+
+    	form {
+    		padding-bottom: 5.00rem;
+    	}
+
+    	form > .saver {
+    		height: 4.00rem;
+    		line-height: 4.00rem;
+    	}
+
+    }
+
+
+    {{{webviewCss}}}
+  </style>
+
+  <script type="application/javascript">
+    /*
+     * Global method to close the window inside chat apps.
+     */
+    window.closeWindow = function () {
+      MessengerExtensions.requestCloseBrowser(function(){}, function (err) {
+        window.close();
+      });
+    }
+
+    /*
+     * Once we have a working DOM.
+     */
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // Only one form is allowed per webview.
+    	var form = document.forms[0];
+
+    	form.addEventListener('submit', function (event) {
+
+        // Prevent traditional submission of the form.
+        event.preventDefault();
+
+        document.body.className = 'loading';
+
+        // If the webview defines a validation function.
+        if (typeof validateForm === 'function') {
+          var validateResult = validateForm(form);
+          if (!validateResult) {
+            document.body.className = '';
+            return;
+          }
+        }
+
+        // Serialise the form without ES6.
+        var fieldPairs = [];
+
+        for (var index = 0; index < form.elements.length; index++) {
+          var element = form.elements[index];
+          var name = (element.name || element.id);
+          var type = element.type.toLowerCase();
+          var value = element.value;
+
+          // No disabled elements.
+          if (element.disabled) { continue; }
+
+          switch (type) {
+
+            // Do not submit buttons.
+            case 'submit':
+            case 'button':
+              continue;
+
+            // Do not submit unticked checkboxes.
+            case 'checkbox':
+            case 'radio':
+              if  (!element.checked) { continue; }
+              break;
+
+          }
+
+          fieldPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
+        }
+
+        // Submit the form values via AJAX.
+        var xhr = new XMLHttpRequest();
+        var requestBody = fieldPairs.join('&');
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) { // 4 means the request is done.
+
+            if (xhr.status !== 200) {
+              document.body.className = '';
+              return alert('Whoops! There was a connection error: "' + xhr.status + '".');
+            }
+
+            return closeWindow();
+
+          }
+        };
+
+        xhr.open(form.method, form.action);
+        xhr.send(requestBody);
+
+      });
+
+    });
+
+    /*
+     * JS specific to the loaded webview.
+     */
+    {{{webviewJs}}}
+  </script>
+</head>
+
+<body>
+
+  <script>
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'Messenger'));
+  </script>
+
+  <div id="loader"><div class="loader"></div></div>
+
+  <div id="webview-container">
+    {{#if instructions}}<div class="instructions">{{instructions}}</div>{{/if}}
+    {{{webviewHtml}}}
+  </div>
+
+</body>
+</html>

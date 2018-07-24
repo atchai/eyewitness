@@ -1,0 +1,27 @@
+{
+	"matches": {
+		"$debug": "string"
+	},
+	"intents": {
+
+	},
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "Project: {{appInfo.name}} v{{appInfo.version}}."
+		}
+	}, {
+		"type": "send-message",
+		"message": {
+			"text": "Engine: {{engineInfo.name}} v{{engineInfo.version}}."
+		}
+	}, {
+		"type": "send-message",
+		"message": {
+			"text": "Environment: {{appInfo.environment}}."
+		}
+	}, {
+		"type": "execute-hook",
+		"hook": "userinfo"
+	}]
+}

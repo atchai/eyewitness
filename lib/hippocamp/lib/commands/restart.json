@@ -1,0 +1,19 @@
+{
+	"matches": {
+		"restart": "string",
+		"restart bot": "string",
+		"restart chatbot": "string",
+		"reset": "string",
+		"quit": "string"
+	},
+	"intents": {
+		"RESTART_THE_BOT": {
+			"threshold": 0.95,
+			"aggressive": true
+		}
+	},
+	"actions": [{
+		"type": "change-flow",
+		"nextUri": "/"
+	}]
+}

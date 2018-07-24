@@ -1,0 +1,22 @@
+{
+	"matches": {
+		"get started": "string",
+		"start": "string",
+		"go": "string",
+		"hello": "string",
+		"helo": "string",
+		"hi": "string",
+		"yo": "string",
+		"boo": "string"
+	},
+	"intents": {
+		"GREETING": {
+			"threshold": 0.95,
+			"aggressive": true
+		}
+	},
+	"actions": [{
+		"type": "change-flow",
+		"nextUri": "/"
+	}]
+}

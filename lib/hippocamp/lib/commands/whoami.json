@@ -1,0 +1,17 @@
+{
+	"matches": {
+		"$whoami": "string"
+	},
+	"intents": {
+		"ABOUT_THE_BOT": {
+			"threshold": 0.75,
+			"aggressive": true
+		}
+	},
+	"actions": [{
+		"type": "send-message",
+		"message": {
+			"text": "I am {{appInfo.name}} {{appInfo.version}} running in the {{appInfo.environment}} environment."
+		}
+	}]
+}

@@ -1,0 +1,9 @@
+{
+	"matches": {
+		"$flowinfo": "string"
+	},
+	"actions": [{
+		"type": "execute-hook",
+		"hook": "flowinfo"
+	}]
+}

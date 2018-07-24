@@ -1,0 +1,81 @@
+{
+  "name": "@atchai/hippocamp",
+  "version": "0.10.28",
+  "description": "Chatbot conversation engine.",
+  "keywords": [
+    "chat",
+    "bot",
+    "chatbot",
+    "convo",
+    "conversation"
+  ],
+  "main": "lib/hippocamp.js",
+  "scripts": {
+    "start-example-app": "npm install && npm update -S && ./node_modules/.bin/nodemon --ext js,json,html,css ./examples/one/app/app.js",
+    "ngrok": "ngrok http 5000 --region eu -subdomain=hippocamp",
+    "test": "npm run test-unit && npm run test-functional",
+    "test-functional": "npm run test-workflow && npm run test-storage && npm run test-restarted && npm run test-scheduler && npm run test-profile",
+    "test-workflow": "mocha ./tests/functional/workflowBot.js",
+    "test-storage": "mocha ./tests/functional/storageBot.js",
+    "test-restarted": "mocha --exit ./tests/functional/restartedBot.js",
+    "test-scheduler": "mocha ./tests/functional/schedulerBot.js",
+    "test-profile": "mocha ./tests/functional/profileBot.js",
+    "test-unit": "mocha ./tests/unit/*.js"
+  },
+  "author": "Josh Cole <hello@recombix.com> (http://www.JoshuaCole.me)",
+  "contributors": [
+    {
+      "name": "Josh Cole",
+      "email": "hello@recombix.com"
+    },
+    {
+      "name": "Justin Emery",
+      "email": "justin@recombix.com"
+    }
+  ],
+  "dependencies": {
+    "analytics-node": "^3.3.0",
+    "chance": "^1.0.16",
+    "cli-color": "^1.2.0",
+    "dashbot": "^9.9.1",
+    "deep-property": "^1.1.0",
+    "deep-sort": "^0.1.2",
+    "escape-regexp": "^0.0.1",
+    "form-data": "^2.3.2",
+    "handlebars": "^4.0.11",
+    "html-minifier": "^3.5.16",
+    "jsome": "^2.5.0",
+    "longjohn": "^0.2.12",
+    "middleware-engine": "^0.1.1",
+    "mime": "^2.3.1",
+    "mockgoose": "^7.3.5",
+    "moment": "^2.22.2",
+    "mongoose": "^4.13.14",
+    "object-extender": "^2.0.3",
+    "request-ninja": "^0.3.2",
+    "safe-eval": "^0.3.0",
+    "semver": "^5.5.0",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.0",
+    "eslint-config-recombix": "latest",
+    "eslint-config-vue": "latest",
+    "eslint-plugin-disable": "latest",
+    "eslint-plugin-filenames": "latest",
+    "eslint-plugin-html": "latest",
+    "eslint-plugin-json": "latest",
+    "eslint-plugin-node": "latest",
+    "eslint-plugin-promise": "latest",
+    "eslint-plugin-vue": "latest",
+    "mocha": "^5.2.0",
+    "ngrok": "^2.3.0",
+    "nodemon": "^1.17.5"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "license": "MIT"
+}

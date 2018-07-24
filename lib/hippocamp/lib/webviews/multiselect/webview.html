@@ -1,0 +1,20 @@
+<form action="{{webviewBaseUrl}}" method="POST">
+
+	<div class="field-container">
+		{{#each items}}
+			<label for="{{value}}" class="row">
+				<span class="checkbox">
+					<input id="{{value}}" name="{{value}}" type="checkbox">
+					<div class="tick"><div class="icon"></div></div>
+				</span>
+				<span class="label-text">{{label}}</span>
+			</label>
+		{{/each}}
+	</div>
+
+	<div class="saver">
+		{{#if cancelButton}}<button type="button" class="cancel" onclick="closeWindow()">{{cancelButton}}</button>{{/if}}
+		<button type="submit" class="save">{{submitButton}}</button>
+	</div>
+
+</form>

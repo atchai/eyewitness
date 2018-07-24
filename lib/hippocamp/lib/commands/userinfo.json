@@ -1,0 +1,9 @@
+{
+	"matches": {
+		"$userinfo": "string"
+	},
+	"actions": [{
+		"type": "execute-hook",
+		"hook": "userinfo"
+	}]
+}
