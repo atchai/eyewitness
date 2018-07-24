@@ -1,7 +1,6 @@
 'use strict';
 
-const packageJson = require(`../../package.json`);
-const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+const config = require(`config-ninja`).use(`eyewitness-bot-config`);
 
 const BATCH_SIZE_ENQUEUE = 1000;
 const BATCH_SIZE_SEND = 500;

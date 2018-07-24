@@ -4,8 +4,7 @@
  * HOOK: More Stories
  */
 
-const packageJson = require(`../../package.json`);
-const config = require(`config-ninja`).use(`${packageJson.name}-${packageJson.version}-config`);
+const config = require(`config-ninja`).use(`eyewitness-bot-config`);
 
 /*
  * Returns an array of all the articles the given user has not yet received, sorted newest first.

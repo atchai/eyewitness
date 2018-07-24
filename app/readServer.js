@@ -6,18 +6,7 @@
 
 /* eslint no-console: 0 */
 
-const path = require(`path`);
-const packageJson = require(`../package.json`);
-
-const providerId = process.env.PROVIDER_ID;
-const loadProviderConfig = Boolean(providerId);
-const env = process.env.NODE_ENV || `development`;
-const localConfigName = path.join(`providers`, `${providerId}.${env}`);
-
-const config = require(`config-ninja`).init(`${packageJson.name}-${packageJson.version}-config`, `./config`, {
-	localConfig: (loadProviderConfig ? [ localConfigName ] : [ `local` ]),
-	requireLocalConfig: loadProviderConfig,
-});
+const config = require(`./modules/initConfig`);
 
 const http = require(`http`);
 const Hippocamp = require(`@atchai/hippocamp`);
