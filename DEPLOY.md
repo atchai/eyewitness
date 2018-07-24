@@ -46,7 +46,7 @@ The bot is the tool that communicates with users over Facebook Messenger.
 3. Run `heroku create eyewitness-bot --region eu` to create an empty app on Heroku for the bot.
 4. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-bot`.
 5. Add an environment variable with `heroku config:set PROVIDER_ID=default -a eyewitness-bot`.
-6. Add an environment variable with `heroku config:set ENTRY_POINT=bot -a eyewitness-bot`.
+6. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
 7. Run `heroku domains:add eyewitness-bot.<DOMAIN_NAME> -a eyewitness-bot` replacing <DOMAIN_NAME> as appropriate.
 8. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-bot.sometest.com.herokudns.com".
 9. Run `heroku container:push web -a eyewitness-bot` to push the Docker image to Heroku.
@@ -65,8 +65,8 @@ The read server tracks how many times each story has been read and by which user
 ### Setup Heroku
 1. Run `heroku create eyewitness-rs --region eu` to create an empty app on Heroku for the read server.
 2. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-rs`.
-3. Add an environment variable with `heroku config:set PROVIDER_ID=default -a eyewitness-rs`.
-4. Add an environment variable with `heroku config:set ENTRY_POINT=read-server -a eyewitness-rs`.
+3. Add an environment variable with `heroku config:set ENTRY_POINT=read-server -a eyewitness-rs`.
+4. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
 5. Run `heroku domains:add eyewitness-rs.<DOMAIN_NAME> -a eyewitness-rs` replacing <DOMAIN_NAME> as appropriate.
 6. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-rs.sometest.com.herokudns.com".
 7. Run `heroku container:push web -a eyewitness-rs` to push the Docker image to Heroku.
@@ -92,7 +92,7 @@ The user interface is used by admins to message users of the bot, manage the sto
 ### Setup Heroku
 1. Run `heroku create eyewitness-ui --region eu` to create an empty app on Heroku for the user interface.
 2. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-ui`.
-3. Add an environment variable with `heroku config:set PROVIDER_ID=default -a eyewitness-ui`.
+3. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
 4. Run `heroku domains:add eyewitness-ui.<DOMAIN_NAME> -a eyewitness-ui` replacing <DOMAIN_NAME> as appropriate.
 5. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-ui.sometest.com.herokudns.com".
 7. Run `heroku container:push web -a eyewitness-ui` to push the Docker image to Heroku.
