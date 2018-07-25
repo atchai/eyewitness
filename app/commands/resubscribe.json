@@ -1,0 +1,18 @@
+{
+	"matches": {
+		"resubscribe": "string"
+	},
+	"actions": [{
+		"type": "update-memory",
+		"memory": {
+			"unsubscribed": {
+				"operation": "unset"
+			}
+		}
+	}, {
+		"type": "send-message",
+		"message": {
+			"text": "You are now subscribed to breaking news alerts."
+		}
+	}]
+}
