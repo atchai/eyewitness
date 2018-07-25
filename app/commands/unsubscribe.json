@@ -1,0 +1,26 @@
+{
+	"matches": {
+		"unsubscribe": "string"
+	},
+	"actions": [{
+		"type": "send-message",
+		"conditional": "<unsubscribed>",
+		"message": {
+			"text": "You're already unsubscribed from breaking news alerts."
+		}
+	}, {
+		"type": "send-message",
+		"conditional": "!<unsubscribed>",
+		"message": {
+			"text": "You've been unsubscribed from breaking news alerts."
+		}
+	}, {
+		"type": "update-memory",
+		"conditional": "!<unsubscribed>",
+		"memory": {
+			"unsubscribed": {
+				"value": true
+			}
+		}
+	}]
+}

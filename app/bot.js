@@ -52,6 +52,9 @@ async function main () {
 				type: `basic`,
 				label: `Advertise`,
 				payload: `do advertise flow`,
+			}, {
+				type: `basic`,
+				label: `Unsubscribe`,
 			}],
 		}, {
 			type: `url`,

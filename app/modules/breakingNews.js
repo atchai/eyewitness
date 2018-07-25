@@ -54,6 +54,8 @@ function constructBreakingNewsMessages (recUser, recArticleCompact, MessageObjec
 			label: `More stories`,
 		}, {
 			label: `Main menu`,
+		}, {
+			label: `Unsubscribe`,
 		}],
 	});
 
@@ -125,6 +127,7 @@ async function getBatchOfUsers (database, skip = 0, limit = 1) {
 
 	const recUsers = await database.find(`User`, {
 		'bot.disabled': { $ne: true },
+		'appData.unsubscribed': { $ne: true },
 	}, {
 		sort: { _id: `asc` }, // Keep the entire result set in a consistent order between queries.
 		skip,
