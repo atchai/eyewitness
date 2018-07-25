@@ -10,6 +10,7 @@ module.exports = function (Schema, Property) {
 		userData: new Property(`flexible`),
 		articleData: new Property(`flexible`),
 		addedDate: new Property(`date`, Date.now),
+		numTries: new Property(`integer`, 0),
 	});
 
 };
