@@ -1,6 +1,7 @@
 {
 	"matches": {
-		"main menu": "string"
+		"main menu": "string",
+		"menu": "string"
 	},
 	"actions": [{
 		"type": "change-flow",
