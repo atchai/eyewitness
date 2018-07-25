@@ -8,12 +8,6 @@
 
 const config = require(`./modules/initConfig`);
 
-console.log(``);
-console.log(`###`);
-console.log(JSON.stringify(config, null, 2));
-console.log(`###`);
-console.log(``);
-
 const Hippocamp = require(`@atchai/hippocamp`); // eslint-disable-line node/no-missing-require
 const LoggerTerminal = Hippocamp.require(`loggers/terminal`);
 const LoggerFilesystem = Hippocamp.require(`loggers/filesystem`);
