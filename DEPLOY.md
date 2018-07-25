@@ -25,28 +25,39 @@ This guide assumes you'll be using Heroku to host the Eyewitness Bot and User In
 The bot is the tool that communicates with users over Facebook Messenger.
 
 ### Prepare the Config
-1. CD into the "eyewitness" directory.
-2. Open the "/app/config/providers/default.production.config.json" config file.
-3. Generate your own random string and put it in the "adapters.facebook.verifyToken" property.
-4. Leave "adapters.facebook.accessToken" blank for now as we will get that from Facebook later.
-5. Update the database connection string with the username, password, host and replica set value you got from mLab in the "databases.mongo.connectionString" property.
-6. Add in your Dashbot.io analytics API key, or set the "isDisabled" property to true if you don't want to use Dashbot.
-7. Add in a greeting message to be displayed to first time users in the "greetingText" property.
-8. Put the name of your organisation in the "messageVariables.provider.name" property.
-9. Put the URL to your RSS feed in the "messageVariables.provider.rssFeedUrl" property.
-10. Put the UTC offset of your organisation in the "messageVariables.provider.timezoneOffset" property.
-11. To setup the breaking news function, you can add the name of the RSS field and the expected value the bot should watch for in the "messageVariables.provider.itemPriorityField" and "messageVariables.provider.itemPriorityValue" properties. For example, the field might be "category" and the value might be "breaking-news".
-12. Put your website's domain name in the "hippocampServer", "readServer", and "uiServer" properties.
-13. Make sure there are no more items to replace that look like "<SOME_ITEM_TO_REPLACE>" anywhere in the config file.
-14. Save and close the file.
+These are the environment variables you'll need to set on your Heroku apps for the bot and read server:
+
+| Variable                     | Description |
+|------------------------------|-------------|
+| LOGGERS_TERMINAL_LEVEL       | The log level to use e.g. "verbose", "debug", "error", "info". |
+| DB_MONGO_CONNECTION_STR      | The connection string to your MongoDB database. |
+| ANALYTICS_DASHBOT_API_KEY    | Your API key for Dashbot analytics. |
+| ANALYTICS_SEGMENT_WRITE_KEY  | Your write key for Segment analytics. |
+| ADAPTER_FB_VERIFY_TOKEN      | A random string used to verify your webhook with your Facebook app. |
+| ADAPTER_FB_ACCESS_TOKEN      | An access token generated when setting up your Facebook app. |
+| ADAPTER_WEB_ACCESS_TOKEN     | A random string used to verify communications sent between your bot and the UI. |
+| NLP_LUIS_DISABLED            | Set to "true" to disable NLP via LUIS. |
+| NLP_LUIS_APP_ID              | Your LUIS app ID. |
+| NLP_LUIS_API_KEY             | Your LUIS API key. |
+| NLP_LUIS_APP_REGION          | The region where your LUIS app is hosted. |
+| SERVER_URI_BOT               | The URL where your bot is hosted. |
+| SERVER_URI_READ              | The URL where your read server is hosted. |
+| SERVER_URI_UI                | The URL where your UI is hosted. |
+| PROVIDER_NAME                | Your organisation's name or title. |
+| PROVIDER_FEED_URI            | The URL to your RSS feed. |
+| PROVIDER_TIMEZONE_OFFSET     | The number of hours difference between your timezone and UTC. |
+| PROVIDER_ITEM_PRIORITY_FIELD | The field to use for "breaking news" in your RSS feed, e.g. "category" or "tags". |
+| PROVIDER_ITEM_PRIORITY_VALUE | The value to find in your breaking news field, e.g. "breaking news". |
+| GREETING_TEXT                | The text to display to new users visiting your bot for the first time before they send their first message. |
+| PRIVACY_POLICY_URI           | Url to your privacy policy webpage. |
 
 ### Setup Heroku
 1. Run `heroku login` to login to Heroku.
 2. Run `heroku container:login` to login to the Heroku image repository.
 3. Run `heroku create eyewitness-bot --region eu` to create an empty app on Heroku for the bot.
 4. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-bot`.
-5. Add an environment variable with `heroku config:set PROVIDER_ID=default -a eyewitness-bot`.
-6. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
+5. Add an environment variable with `heroku config:set ENTRY_POINT=bot -a eyewitness-rs`.
+6. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command (see `prepare the config` section above).
 7. Run `heroku domains:add eyewitness-bot.<DOMAIN_NAME> -a eyewitness-bot` replacing <DOMAIN_NAME> as appropriate.
 8. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-bot.sometest.com.herokudns.com".
 9. Run `heroku container:push web -a eyewitness-bot` to push the Docker image to Heroku.
@@ -66,7 +77,7 @@ The read server tracks how many times each story has been read and by which user
 1. Run `heroku create eyewitness-rs --region eu` to create an empty app on Heroku for the read server.
 2. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-rs`.
 3. Add an environment variable with `heroku config:set ENTRY_POINT=read-server -a eyewitness-rs`.
-4. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
+4. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command (see `prepare the config` section above).
 5. Run `heroku domains:add eyewitness-rs.<DOMAIN_NAME> -a eyewitness-rs` replacing <DOMAIN_NAME> as appropriate.
 6. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-rs.sometest.com.herokudns.com".
 7. Run `heroku container:push web -a eyewitness-rs` to push the Docker image to Heroku.
@@ -80,19 +91,28 @@ The read server tracks how many times each story has been read and by which user
 The user interface is used by admins to message users of the bot, manage the stories the bot sends out, and more.
 
 ### Prepare the Config
-1. CD into the "eyewitness-ui" directory.
-2. Open the "/app/config/providers/default.production.config.json" config file.
-3. Put the URL of the UI in the "server.externalUri" property, e.g. `https://eyewitness-ui.<DOMAIN_NAME>` replacing <DOMAIN_NAME> as appropriate.
-4. Update the database connection string with the username, password, host and replica set value you got from mlab in the "databases.mongo.connectionString" property.
-5. Put the ID of the Facebook page you created earlier in the "facebookPageId" property.
-6. Put the URL of the bot in the "hippocampServer.baseUrl" property, e.g. `https://eyewitness-bot.<DOMAIN_NAME>` replacing <DOMAIN_NAME> as appropriate.
-7. Make sure there are no more items to replace that look like "<SOME_ITEM_TO_REPLACE>" anywhere in the config file.
-8. Save and close the file.
+These are the environment variables you'll need to set on your Heroku apps for the bot and read server:
+
+| Variable                 | Description |
+|--------------------------|-------------|
+| DB_MONGO_CONNECTION_STR  | The connection string to your MongoDB database. |
+| AUTH_COOKIE_SECRET       | A random string used to sign the login cookie. |
+| USER_PWD_BOT             | A password	for your bot to use to communicate with the UI. |
+| USER_PWD_ADMIN           | A password for humans to use to login to the UI. |
+| FB_PAGE_ID               | The ID or username of the Facebook page your bot is linked to. |
+| UI_SERVER_URI            | The URL where your UI is hosted. |
+| BOT_SERVER_URI           | The URL where your bot is hosted. |
+| BOT_SERVER_ACCESS_TOKEN  | Must be the same random string you set in the ADAPTER_WEB_ACCESS_TOKEN environment variable for the bot. |
+| AWS_S3_ACCESS_KEY_ID     | An AWS access key ID for an IAM user. |
+| AWS_S3_SECRET_ACCESS_KEY | An AWS secret access key for an IAM user. |
+| AWS_S3_REGION            | The region where your AWS S3 bucket is hosted. |
+| AWS_S3_BUCKET            | The name of your AWS S3 bucket. |
+| AWS_S3_KEY_PREFIX        | The key prefix to prepend to media filenames. |
 
 ### Setup Heroku
 1. Run `heroku create eyewitness-ui --region eu` to create an empty app on Heroku for the user interface.
 2. Add an environment variable with `heroku config:set NODE_ENV=production -a eyewitness-ui`.
-3. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command.
+3. Add all the environment variables listed in the `empty.env` file with the appropriate values for your deployment using the `heroku config:set` command (see `prepare the config` section above).
 4. Run `heroku domains:add eyewitness-ui.<DOMAIN_NAME> -a eyewitness-ui` replacing <DOMAIN_NAME> as appropriate.
 5. Take note of the DNS target given to you by the previous command, e.g. "eyewitness-ui.sometest.com.herokudns.com".
 7. Run `heroku container:push web -a eyewitness-ui` to push the Docker image to Heroku.
