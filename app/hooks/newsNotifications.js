@@ -23,6 +23,6 @@ module.exports = async function newsNotifications (action, variables, resources)
 
 	sharedLogger.verbose(`Sending breaking news...`);
 
-	await breakingNews.sendOutstanding(database, MessageObject, sendMessage);
+	await breakingNews.sendOutstanding(database, sharedLogger, MessageObject, sendMessage);
 
 };

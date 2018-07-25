@@ -7,13 +7,16 @@ const BATCH_SIZE_SEND = 500;
 const BATCH_DELAY_MS = 2000;
 const READ_SERVER_BASE_URL = config.readServer.baseUrl;
 const QUEUE_COLLECTION = `BreakingNewsQueuedItem`;
+const ARTICLE_COLLECTION = `Article`;
 
 /*
  * Returns the next batch of queued breaking news items, or an empty array if there are none.
  */
 async function getBatchOfQueuedItems (database, skip = 0, limit = 1) {
 
-	const recQueueItems = await database.find(QUEUE_COLLECTION, {}, {
+	const recQueueItems = await database.find(QUEUE_COLLECTION, {
+		numTries: { $lt: config.breakingNews.maxTries },
+	}, {
 		sort: { addedDate: `asc` },
 		skip,
 		limit,
@@ -64,7 +67,7 @@ function constructBreakingNewsMessages (recUser, recArticleCompact, MessageObjec
 /*
  * Sends all the queued items recursively.
  */
-async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) {
+async function sendQueuedItems (database, sharedLogger, MessageObject, sendMessage, skip = 0) {
 
 	const batchSize = BATCH_SIZE_SEND;
 
@@ -78,14 +81,26 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 		const { _id: itemId, userData, articleData } = recQueueItem;
 		const { alertMessage, carouselMessage } = constructBreakingNewsMessages(userData, articleData, MessageObject);
 
-		console.log(`### USER <${userData._id}> ARTICLE <${articleData._id}> <${articleData.title}>`);
+		sharedLogger.silly(`### USER <${userData._id}> ARTICLE <${articleData._id}> <${articleData.title}>`);
 
 		// Send the messages.
-		await sendMessage(userData, alertMessage);
-		await sendMessage(userData, carouselMessage);
+		try {
+			await sendMessage(userData, alertMessage);
+			await sendMessage(userData, carouselMessage);
+		}
+		catch (err) {
+			sharedLogger.error(`Failed to send breaking news message to user "${userData._id}" because of "${err}".`);
+
+			await database.update(QUEUE_COLLECTION, recQueueItem._id, {
+				$inc: { numTries: 1 },
+			});
+
+			// Skip to next queued item.
+			return;
+		}
 
 		// Mark as received by user.
-		await database.update(`Article`, articleData._id, {
+		await database.update(ARTICLE_COLLECTION, articleData._id, {
 			$addToSet: { _receivedByUsers: userData._id },
 		});
 
@@ -97,7 +112,7 @@ async function sendQueuedItems (database, MessageObject, sendMessage, skip = 0) 
 
 	// Send the next batch of items recursively AND without creating a huge function stack.
 	const numCompletedItems = skip + batchSize;
-	const fnRecurse = sendQueuedItems.bind(this, database, MessageObject, sendMessage, numCompletedItems);
+	const fnRecurse = sendQueuedItems.bind(this, database, sharedLogger, MessageObject, sendMessage, numCompletedItems);
 
 	setTimeout(fnRecurse, BATCH_DELAY_MS);
 
@@ -135,7 +150,7 @@ async function getNextBreakingNewsForUser (database, recUser) {
 		sort: { articleDate: `asc` },
 	};
 
-	const recArticle = await database.get(`Article`, conditions, options);
+	const recArticle = await database.get(ARTICLE_COLLECTION, conditions, options);
 	if (!recArticle) { return null; }
 
 	// Reduce memory usage.
@@ -185,16 +200,16 @@ async function queueBreakingNewsItems (database, skip = 0) {
 /*
  * Sends the most recent outstanding breaking news stories to users.
  */
-async function sendOutstanding (database, MessageObject, sendMessage) {
+async function sendOutstanding (database, sharedLogger, MessageObject, sendMessage) {
 
 	// Send out any breaking news stories still in the queue (in case of restart).
-	await sendQueuedItems(database, MessageObject, sendMessage);
+	await sendQueuedItems(database, sharedLogger, MessageObject, sendMessage);
 
 	// Queue the next batch of breaking news stories to send out.
 	await queueBreakingNewsItems(database);
 
 	// Send out the next batch of breaking news stories.
-	await sendQueuedItems(database, MessageObject, sendMessage);
+	await sendQueuedItems(database, sharedLogger, MessageObject, sendMessage);
 
 }
 
