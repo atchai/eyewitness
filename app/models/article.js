@@ -19,6 +19,7 @@ module.exports = function (Schema, Property, Reference) {
 		_receivedByUsers: [ new Reference(`User`) ],
 		_readByUsers: [ new Reference(`User`) ],
 		ingestedDate: new Property(`date`, Date.now),
+		breakingNewsMessageText: new Property(`string`),
 	}, {
 		indices: [
 			{ isPriority: 1, articleDate: -1, isPublished: 1, _receivedByUsers: 1 },
