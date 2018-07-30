@@ -9,5 +9,13 @@
 		"luis": {
 			"isStagingEnv": true
 		}
+	},
+	"scheduledTasks": {
+		"feed-ingester": {
+			"runEvery": "1 minute"
+		},
+		"news-notifications": {
+			"runEvery": "1 minute"
+		}
 	}
 }
