@@ -32,7 +32,7 @@ async function getBatchOfQueuedItems (database, skip = 0, limit = 1) {
 function constructBreakingNewsMessages (recUser, recArticleCompact, MessageObject) {
 
 	const alertMessage = MessageObject.outgoing(recUser, {
-		text: `Breaking news!`,
+		text: recArticleCompact.breakingNewsMessageText || `Breaking news!`,
 	});
 
 	const carouselMessage = MessageObject.outgoing(recUser, {
@@ -163,6 +163,7 @@ async function getNextBreakingNewsForUser (database, recUser) {
 		title: recArticle.title,
 		description: recArticle.description,
 		imageUrl: recArticle.imageUrl,
+		breakingNewsMessageText: recArticle.breakingNewsMessageText || null,
 	};
 
 	return recArticleCompact;
