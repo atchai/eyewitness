@@ -17,9 +17,6 @@ When developing locally I like to use Docker (for environment encapsulation). I 
 
 ### Install
 
-1. Setup SSH keys registered with GitHub so that Docker will be able to fetch the `hippocamp` dependency from GitHub.
-These should be saved to `./ssl/id_eyewitness` and `./ssl/id_eyewitness.pub`.
-
 ### Run
 
 1. Open a terminal window and run ngrok with: `npm run ngrok` or `ngrok http 5000 --region eu -subdomain={{CUSTOM_SUBDOMAIN}}`.
@@ -33,25 +30,25 @@ Deployments need to be performed for:
 
  - The Eyewitness bot and Read Server - using deploy commands in this repo.
  - The UI in the [Eyewitness UI repo](https://github.com/atchai/eyewitness-ui)
- 
+
 The deployment commands (described below) are identical for both repositories.
 
 ### Configuration files
 
-There are a number of configuration files for the different providers and environments (development/staging/production). 
+There are a number of configuration files for the different providers and environments (development/staging/production).
 The configuration files use a system of inheritance to avoid duplication, managed by the [Config-Ninja](https://github.com/saikojosh/Config-Ninja) package.
 
 The config for development is `app/config/development.config.json` which inherits from `app/config/production.config.json`.
 You may optionally add `app/config/local.config.json` to override the standard development configuration.
 
-For each provider there is a config for staging 
-`app/config/providers/[provider ID].staging.config.json` which inherits from 
+For each provider there is a config for staging
+`app/config/providers/[provider ID].staging.config.json` which inherits from
 `app/config/staging.config.json` which inherits from
-`app/config/production.config.json` 
+`app/config/production.config.json`
 
-For each provider there is a config for production 
-`app/config/providers/[provider ID].production.config.json` which inherits from 
-`app/config/production.config.json` 
+For each provider there is a config for production
+`app/config/providers/[provider ID].production.config.json` which inherits from
+`app/config/production.config.json`
 
 ### Pre-deployment commands
 
@@ -97,7 +94,7 @@ npm run deploy-all-production
 
 After deploying to a staging or production environment you should check it is working.
 
-To verify the bot: 
+To verify the bot:
 
 1. Find the provider name from the bot config file for the provider.
 2. Search for the bot with that name on Facebook messenger (you need to be given access for non-production environments)
