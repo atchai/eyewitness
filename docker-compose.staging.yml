@@ -11,6 +11,15 @@ services:
     environment:
       - NODE_ENV=staging
 
+  read-server:
+    expose:
+      - "5001"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+
   mongodb:
     ports:
       - "27017:27017"
