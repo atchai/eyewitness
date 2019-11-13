@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+  bot:
+    expose:
+      - "5000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+
+  read-server:
+    expose:
+      - "5000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+
+  mongodb:
+    ports:
+      - "27017:27017"
+
+  nginx_bot:
+    image: nginx:latest
+    networks:
+      - eyewitness-network
+    volumes:
+      - ./nginx/bot-production.conf:/etc/nginx/nginx.conf.template
+      - ./nginx/bot_logs:/var/log/nginx/
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    ports:
+      - "5000:5006"
+    command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+
+  nginx_read-server:
+    image: nginx:latest
+    networks:
+      - eyewitness-network
+    volumes:
+      - ./nginx/rs-production.conf:/etc/nginx/nginx.conf.template
+      - ./nginx/rs_logs:/var/log/nginx/
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    ports:
+      - "5001:5007"
+    command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"

@@ -6,9 +6,9 @@ MAINTAINER Atchai <enquiries@atchai.com>
 ENV NODE_ENV=development
 
 # Prepare the software inside the container.
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y \
-      vim \
+RUN apt-get update \
+		&& apt-get upgrade -y \
+		&& apt-get install -y \
       ntp \
     && rm -rf /var/lib/apt/lists/*
 #      ^^ Keep the image size down by removing the packages list.
@@ -20,7 +20,7 @@ RUN echo Europe/London >/etc/timezone && dpkg-reconfigure -f noninteractive tzda
 # Ensure we run commands inside the correct directory.
 WORKDIR /src
 
-# Install our depedencies.
+# Install our dependencies.
 COPY .env /src/.env
 COPY lib /src/lib
 COPY package.json /src/package.json

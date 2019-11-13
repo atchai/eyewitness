@@ -16,8 +16,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.development
+    env_file:
+      - .env
     environment:
-      - NODE_ENV=development
       - TZ=Europe/London
       - ENTRY_POINT=bot
     volumes:
@@ -26,11 +27,8 @@ services:
       - ./.env:/src/.env
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
-    ports:
-      - "5000:5000"
     networks:
       - eyewitness-network
-    command: npm run start-development
     tty: true
     restart: on-failure
 
@@ -38,8 +36,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.development
+    env_file:
+      - .env
     environment:
-      - NODE_ENV=development
       - TZ=Europe/London
       - ENTRY_POINT=read-server
     volumes:
@@ -48,11 +47,8 @@ services:
       - ./.env:/src/.env
       - ./package.json:/src/package.json
       - ./package-lock.json:/src/package-lock.json
-    ports:
-      - "5001:5001"
     networks:
       - eyewitness-network
-    command: npm run start-development
     tty: true
     restart: on-failure
 
@@ -65,13 +61,3 @@ services:
       - mongodb-data:/data/db
     restart: on-failure
 
-  mongoclient:
-    image: mongoclient/mongoclient:2.2.0
-    environment:
-      - MONGO_URL=mongodb://mongodb:27017
-      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://mongodb:27017/eyewitness
-    networks:
-      - eyewitness-network
-    ports:
-      - "3000:3000"
-    restart: on-failure

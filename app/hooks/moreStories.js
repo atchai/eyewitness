@@ -124,7 +124,7 @@ module.exports = async function moreStories (action, variables, { database, Mess
 	const message = prepareCarouselMessage(MessageObject, variables, recUser, recArticles);
 	await sendMessage(recUser, message);
 
-	// Mark stories as recieved by the user.
+	// Mark stories as received by the user.
 	await markArticlesAsReceived(database, recUser, recArticles);
 
 };

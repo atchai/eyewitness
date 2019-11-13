@@ -1,5 +1,7 @@
 # EYEWITNESS DEPLOYMENT NOTES
 
+**References to Heroku are now out of date as the new deployment is based on docker-compose, but this file left in place as it still contains some helpful info**
+
 ## Prerequisites
 This guide assumes you'll be using Heroku to host the Eyewitness Bot and User Interface, and mLab to host the database.
 
@@ -43,6 +45,7 @@ These are the environment variables you'll need to set on your Heroku apps for t
 | SERVER_URI_BOT               | The URL where your bot is hosted. |
 | SERVER_URI_READ              | The URL where your read server is hosted. |
 | SERVER_URI_UI                | The URL where your UI is hosted. |
+| PROVIDER_ID                  | A short lowercase ID for the organisation's to use in domain names. |
 | PROVIDER_NAME                | Your organisation's name or title. |
 | PROVIDER_FEED_URI            | The URL to your RSS feed. |
 | PROVIDER_TIMEZONE_OFFSET     | The number of hours difference between your timezone and UTC. |
