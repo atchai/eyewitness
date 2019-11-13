@@ -16,7 +16,7 @@ const SchedulerSimple = Hippocamp.require(`schedulers/simple`);
 const AdapterFacebook = Hippocamp.require(`adapters/facebook`);
 const AdapterWeb = Hippocamp.require(`adapters/web`);
 const AnalyticsDashbot = Hippocamp.require(`analytics/dashbot`);
-const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
+// const AnalyticsSegment = Hippocamp.require(`analytics/segment`);
 const NlpLuis = Hippocamp.require(`nlp/luis`);
 const { pushNewMessagesToUI, pushMemoryChangeToUI } = require(`./modules/miscellaneous`);
 
@@ -107,7 +107,7 @@ async function main () {
 
 	// Analytics.
 	await chatbot.configure(new AnalyticsDashbot(config.analytics.dashbot));
-	await chatbot.configure(new AnalyticsSegment(config.analytics.segment));
+	// await chatbot.configure(new AnalyticsSegment(config.analytics.segment));
 
 	// NLP services.
 	if (config.nlp.luis) { chatbot.configure(new NlpLuis(config.nlp.luis)); }
