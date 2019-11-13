@@ -17,6 +17,8 @@ When developing locally I like to use Docker (for environment encapsulation). I 
 
 ### Install
 
+You first need to create a local `.env` file which will contain secrets and provider specific config (see **Configuration files** below).
+
 ### Run
 
 1. Open a terminal window and run ngrok with: `npm run ngrok` or `ngrok http 5000 --region eu -subdomain={{CUSTOM_SUBDOMAIN}}`.
@@ -41,14 +43,7 @@ The configuration files use a system of inheritance to avoid duplication, manage
 The config for development is `app/config/development.config.json` which inherits from `app/config/production.config.json`.
 You may optionally add `app/config/local.config.json` to override the standard development configuration.
 
-For each provider there is a config for staging
-`app/config/providers/[provider ID].staging.config.json` which inherits from
-`app/config/staging.config.json` which inherits from
-`app/config/production.config.json`
-
-For each provider there is a config for production
-`app/config/providers/[provider ID].production.config.json` which inherits from
-`app/config/production.config.json`
+No secrets or provider-specific configuration should be stored in the config files. These must be provided as environment variables. See `./app/modules/initConfig.js` for the full list of environment variables and the corresponding config names. See also `empty.env` - this provides a starting point for creating a .env file for a specific environment.
 
 ### Pre-deployment commands
 
