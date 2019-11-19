@@ -90,14 +90,14 @@ async function main () {
 			}],
 			runEvery: config.scheduledTasks[`feed-ingester`].runEvery,
 			maxRuns: 0,
-		}, {
-			taskId: `news-notifications`,
-			actions: [{
-				type: `execute-hook`,
-				hook: `newsNotifications`,
-			}],
-			runEvery: config.scheduledTasks[`news-notifications`].runEvery,
-			maxRuns: 0,
+		// }, {
+		// 	taskId: `news-notifications`,
+		// 	actions: [{
+		// 		type: `execute-hook`,
+		// 		hook: `newsNotifications`,
+		// 	}],
+		// 	runEvery: config.scheduledTasks[`news-notifications`].runEvery,
+		// 	maxRuns: 0,
 		}],
 	}));
 
